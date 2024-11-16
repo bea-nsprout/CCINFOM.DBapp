@@ -23,11 +23,17 @@ DROP TABLE IF EXISTS `production`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `production` (
-  `item_code` varchar(20) DEFAULT NULL,
-  `date_produced` date DEFAULT NULL,
-  `qty_produced` int DEFAULT NULL,
-  `unit` varchar(10) DEFAULT NULL,
-  `warehouse_id` int DEFAULT NULL
+  `production_id` int NOT NULL AUTO_INCREMENT,
+  `item_code` varchar(20) NOT NULL,
+  `date_produced` date NOT NULL,
+  `qty_produced` int NOT NULL,
+  `unit` varchar(10) NOT NULL,
+  `warehouse_id` int NOT NULL,
+  PRIMARY KEY (`production_id`),
+  KEY `item_code` (`item_code`),
+  KEY `warehouse_id` (`warehouse_id`),
+  CONSTRAINT `production_ibfk_1` FOREIGN KEY (`item_code`) REFERENCES `item_masterlist` (`item_code`),
+  CONSTRAINT `production_ibfk_2` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouse` (`warehouse_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -37,7 +43,6 @@ CREATE TABLE `production` (
 
 LOCK TABLES `production` WRITE;
 /*!40000 ALTER TABLE `production` DISABLE KEYS */;
-INSERT INTO `production` VALUES ('0001370000SILV036Y','2021-10-05',50,'ROLL',1),('0001390007GOLD036Y','2021-11-20',100,'ROLL',2),('003200MEDMRBLU072Y','2021-12-25',75,'ROLL',3),('0001010000YGGO036Y','2022-01-15',60,'ROLL',4),('003200MEDMLBLU072Y','2022-02-10',80,'ROLL',5),('003200MEDMYGLD072Y','2022-03-15',100,'ROLL',6),('003200MEDMWHTE072Y','2022-04-20',70,'ROLL',7),('003200BIG0LBLU036Y','2022-05-25',90,'ROLL',8),('003200BIG0RBLU036Y','2022-06-10',80,'ROLL',9),('003200BIG0WHTE036Y','2022-07-15',95,'ROLL',10),('000701004IYGLD036Y','2022-08-01',55,'ROLL',1),('000701004IRED0036Y','2022-09-10',65,'ROLL',2),('000701004IEGRN036Y','2022-10-05',70,'ROLL',3),('000701004IWHTE036Y','2022-11-12',80,'ROLL',4),('0007010050RBLU036Y','2023-01-01',85,'ROLL',5);
 /*!40000 ALTER TABLE `production` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-05 23:13:13
+-- Dump completed on 2024-11-17  0:31:51
