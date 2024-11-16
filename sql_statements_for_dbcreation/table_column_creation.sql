@@ -6,18 +6,21 @@
 CREATE TABLE item_masterlist (
 	item_code varchar(20) PRIMARY KEY NOT NULL,
     item_desc varchar(150) NOT NULL,
-    unit varchar(10) NOT NULL
+    unit varchar(10) NOT NULL,
+    archived boolean NOT NULL DEFAULT false
 );
 
 CREATE TABLE warehouse (
 	warehouse_id int PRIMARY KEY NOT NULL,
     warehouse_name varchar(50) NOT NULL,
-    location varchar(50) NOT NULL
+    location varchar(50) NOT NULL,
+    archived boolean NOT NULL DEFAULT false
 );
 
 CREATE TABLE truck (
 	truck_id varchar(10) PRIMARY KEY NOT NULL,
     warehouse_id int NOT NULL,
+    archived boolean NOT NULL DEFAULT false,
     FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id)
 );
 
@@ -25,7 +28,8 @@ CREATE TABLE personnel (
 	personnel_id int PRIMARY KEY AUTO_INCREMENT ,
     first_name varchar(20) NOT NULL,
     last_name varchar(20) NOT NULL,
-    position varchar(50) NOT NULL
+    position varchar(50) NOT NULL,
+    archived boolean NOT NULL DEFAULT false
 );
 
 -- 4 transaction tables as follows
