@@ -1,44 +1,40 @@
 -- TRANSFER
--- create a new request record
-	INSERT INTO request (transfer_id, 
-						date_transferred,
+-- create a new transfer record
+	INSERT INTO transfer (transfer_id, 
+			date_transferred,
                         truck_id,
                         quantity, 
                         unit, 
                         warehouse_from_id, 
                         warehouse_to_id) VALUES
 	(1, '2024-11-05', 'insertstringname', 100, 'ROLL', 1, 2);
-    
-	UPDATE transfer t
-	JOIN request r ON t.transfer_id = r.transfer_id
-	SET t.item_code = "09009GFDSG", 
-		t.date_transferred = "2024-08-11", 
-		t.quantity = 2, 
-		t.unit = 'Roll',
-		r.qty_balance = r.qty_total - t.quantity
+
+	SET @v1 = 100; -- Assign value to variable
+
+	UPDATE request r
+	SET r.qty_balance = r.qty_total - @v1
 	WHERE t.transfer_id = r.transfer_id;
     
-    UPDATE warehouse_inventory wi
-	JOIN transfer t ON t.item_code = wi.item_code
-	SET wi.quantity = wi.quantity - t.quantity
+    	UPDATE warehouse_inventory wi
+	SET wi.quantity = wi.quantity - @v1
 	WHERE t.transfer_id = 1;
     
 -- Modify an existing record and update qty_balance accordingly
+	SET @old_quantity = (SELECT t1.quantity 
+			FROM transfer t1
+			WHERE t1.transfer_id = 1); -- 1 is some transfer_id
+
 	UPDATE transfer t
-	JOIN warehouse_inventory wi ON t.item_code = wi.item_code
-	JOIN request r ON t.transfer_id = r.transfer_id
 	SET t.item_code = "09009GFDSG", 
 		t.date_transferred = "2024-08-11", 
 		t.unit = 'Roll',
-		r.qty_balance = r.qty_balance + (
-			(SELECT t_old.quantity 
-			FROM transfer t_old 
-			WHERE t_old.transfer_id = t.transfer_id) 
-			- t.quantity
-		),
-		t.quantity = 50 -- some number
-	WHERE t.transfer_id = r.transfer_id;
-        
+		t.quantity = 50 -- New quantity
+	WHERE t.transfer_id = 1; -- 1 is some transfer_id
+
+	UPDATE request r
+	SET r.qty_balance = r.qty_balance + (@old_quantity - t.quantity)
+	WHERE r.transfer_id = 1; -- 1 is some transfer_id
+  
 -- delete existing record
 	-- Update warehouse_inventory to add back the deleted quantity
 	UPDATE warehouse_inventory wi
