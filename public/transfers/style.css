@@ -7,11 +7,11 @@
 body {
     font-family: Arial, sans-serif;
     color: #333;
-    background-color: #f7f7f7;
+    background-color: #F5F9E9;
 }
 
 header {
-    background-color: #F0F4ED;
+    background-color: #36453B;
     padding: 20px;
     display: flex;
     justify-content: space-between;
@@ -21,7 +21,7 @@ header {
 
 header h1 {
     font-size: 24px;
-    color: #333;
+    color: #F5F9E9;
     font-weight: bold;
 }
 
@@ -31,7 +31,7 @@ nav {
 }
 
 nav a {
-    color: #333;
+    color: #F5F9E9;
     text-decoration: none;
     font-weight: bold;
     font-size: 16px;
@@ -41,11 +41,10 @@ nav a.active {
     text-decoration: underline;
 }
 
-/* Page Header */
 .page-header {
     text-align: center;
     padding: 40px 0;
-    background-color: #F0F4ED;
+    background-color: #F5F9E9;
 }
 
 .page-header h2 {
@@ -56,10 +55,9 @@ nav a.active {
 
 .page-header p {
     font-size: 16px;
-    color: #666;
+    color: #333;
 }
 
-/* Search and Filter */
 .search-filter {
     display: flex;
     justify-content: center;
@@ -74,13 +72,12 @@ nav a.active {
 }
 
 .search-filter button {
-    background-color: #555c4e;
+    background-color: #36453B;
     color: #fff;
     cursor: pointer;
     border: none;
 }
 
-/* Transfers Table */
 .transfers-table {
     width: 90%;
     margin: 0 auto;
@@ -95,7 +92,7 @@ nav a.active {
 }
 
 .transfers-table th {
-    background-color: #333;
+    background-color: #36453B;
     color: #fff;
 }
 
@@ -116,9 +113,8 @@ nav a.active {
     color: #fff;
 }
 
-/* Modal Styling */
 .modal {
-    display: none; /* Hidden by default */
+    display: none;
     position: fixed;
     z-index: 1;
     padding-top: 60px;
@@ -155,7 +151,7 @@ nav a.active {
 }
 
 #new-transfer-btn {
-    background-color: #333;
+    background-color: #36453B;
     color: #fff;
     padding: 10px 20px;
     margin: 20px auto;
@@ -166,14 +162,14 @@ nav a.active {
     border-radius: 5px;
 }
 
-/* Footer */
+
 footer {
     margin-top: 40px;
     font-size: 12px;
-    color: #fff;
+    color: #F5F9E9;
     text-align: center;
     padding: 10px 0;
-    background-color: #555c4e;
+    background-color: #36453B;
 }
 
 

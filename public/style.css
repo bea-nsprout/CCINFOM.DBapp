@@ -7,21 +7,20 @@
 body {
     font-family: Arial, sans-serif;
     color: #333;
-    background-color: #1a1a1a;
+    background-color: #F5F9E9;
 }
 
 header {
-    background-color: #F0F4ED;
+    background-color: #36453B;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
     font-size: 24px;
-    color: #333;
+    color: #F5F9E9;
     font-weight: bold;
 }
 
@@ -31,7 +30,7 @@ nav {
 }
 
 nav a {
-    color: #333;
+    color: #F5F9E9;
     text-decoration: none;
     font-weight: bold;
     font-size: 16px;
@@ -47,6 +46,7 @@ nav a {
     text-align: center;
     color: #fff;
     position: relative;
+    background-color: #555c4e;
 }
 
 .hero::before {
@@ -56,7 +56,6 @@ nav a {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
 }
 
 .hero-content {
@@ -76,8 +75,8 @@ nav a {
 
 .hero button {
     padding: 10px 20px;
-    background-color: #f2eeca;
-    color: #333;
+    background-color: #36453B;
+    color: #F5F9E9;
     border: none;
     cursor: pointer;
     font-weight: bold;
@@ -85,7 +84,7 @@ nav a {
 
 .get-in-touch-header {
     background-color: #F0F4ED;
-    padding: 40px 0;
+    padding: 35px 0;
     text-align: center;
 }
 
@@ -99,7 +98,7 @@ nav a {
 .contact-section {
     background-color: #555c4e;
     color: #fff;
-    padding: 60px 20px;
+    padding: 35px 20px;
     text-align: center;
 }
 
@@ -139,7 +138,7 @@ nav a {
 .footer-links div h4 {
     font-size: 16px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .footer-links a {
@@ -151,10 +150,11 @@ nav a {
 }
 
 footer {
-    margin-top: 1px;
+    margin-top: 0px;
     font-size: 12px;
-    color: #fff;
+    color: #F5F9E9;
     text-align: center;
     padding: 10px 0;
-    border-top: 1px solid #444;
+    border-top: 0px solid #444;
+    background-color: #36453B;
 }
