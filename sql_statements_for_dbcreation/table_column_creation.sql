@@ -21,7 +21,7 @@ CREATE TABLE truck (
 	truck_id varchar(10) PRIMARY KEY NOT NULL,
     warehouse_id int NOT NULL,
     archived boolean NOT NULL DEFAULT false,
-    FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id)
+    FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT
 );
 
 CREATE TABLE personnel (
@@ -36,11 +36,11 @@ CREATE TABLE personnel (
 CREATE TABLE warehouse_inventory (
 	item_code varchar(20) NOT NULL,
     warehouse_id int NOT NULL,
-    quantity int NOT NULL,
+    quantity int NOT NULL DEFAULT 0,
     
     PRIMARY KEY (item_code, warehouse_id),
-    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code),
-    FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id)
+    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code) ON DELETE RESTRICT,
+    FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT
     
 );
 
@@ -55,10 +55,10 @@ CREATE TABLE request (
     warehouse_from_id int NOT NULL,    	-- id of W.house that requests were from
     warehouse_to_id int NOT NULL,		-- id of w.house that requests were sent to
     
-    FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id), 
-    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code),
-    FOREIGN KEY (warehouse_from_id) REFERENCES warehouse(warehouse_id),
-    FOREIGN KEY (warehouse_to_id) REFERENCES warehouse(warehouse_id)
+    FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id) ON DELETE RESTRICT, 
+    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code) ON DELETE RESTRICT,
+    FOREIGN KEY (warehouse_from_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT,
+    FOREIGN KEY (warehouse_to_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT
 );
 
 CREATE TABLE transfer (
@@ -73,12 +73,12 @@ CREATE TABLE transfer (
     warehouse_from_id int NOT NULL,    	-- id of W.house that items were from
     warehouse_to_id int NOT NULL,		-- id of w.house that items were sent to
     
-	FOREIGN KEY (request_id) REFERENCES request(request_id), 
-    FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id), 
-    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code), 
-    FOREIGN KEY (truck_id) REFERENCES truck(truck_id), 
-    FOREIGN KEY (warehouse_from_id) REFERENCES warehouse(warehouse_id),
-    FOREIGN KEY (warehouse_to_id) REFERENCES warehouse(warehouse_id)
+	FOREIGN KEY (request_id) REFERENCES request(request_id) ON DELETE RESTRICT, 
+    FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id) ON DELETE RESTRICT, 
+    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code) ON DELETE RESTRICT, 
+    FOREIGN KEY (truck_id) REFERENCES truck(truck_id) ON DELETE RESTRICT, 
+    FOREIGN KEY (warehouse_from_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT,
+    FOREIGN KEY (warehouse_to_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT
 );
 
 CREATE TABLE production (
@@ -89,7 +89,7 @@ CREATE TABLE production (
     unit varchar(10) NOT NULL,
     warehouse_id int NOT NULL, 
     
-    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code), 
-    FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id)
+    FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code) ON DELETE RESTRICT, 
+    FOREIGN KEY (warehouse_id) REFERENCES warehouse(warehouse_id) ON DELETE RESTRICT
 );
 
