@@ -36,11 +36,25 @@
     WHERE item_code = '0001010000TEMP036Y';
     
 -- DELETE AN ITEM: restricted delete
-	-- check if all warehouses have 0 inventory
+	-- check if all warehouses have 0 inventory and no instance in requests/transfer/production
+		SET @itemcode = '0001370000SILV036Y';
+        
 		SELECT NOT EXISTS (
 			SELECT 1
 			FROM warehouse_inventory
-			WHERE item_code = '0001010000TEMP036Y' AND quantity > 0
+			WHERE item_code = @itemcode AND quantity > 0
+		) AND NOT EXISTS (
+			SELECT 1
+			FROM request
+			WHERE item_code = @itemcode
+		) AND NOT EXISTS (
+			SELECT 1
+			FROM production
+			WHERE item_code = @itemcode
+		) AND NOT EXISTS (
+			SELECT 1
+			FROM transfer
+			WHERE item_code = @itemcode
 		) AS no_existing_item;
 			-- return true if no instance of item, PROCEED TO NEXT SQL STATEMENT
 			-- return false if has instance of item, ASK USER TO 'ARCHIVE' ITEM INSTEAD
