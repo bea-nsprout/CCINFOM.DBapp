@@ -9,7 +9,7 @@
 
 		-- if it returns 0, you can add a personnel
 		-- Add a new personnel if it does not exist
-        INSERT INTO personnel (personnel_id, first_name, last_name, position, is_Active) VALUES
+        INSERT INTO personnel (personnel_id, first_name, last_name, position, archived) VALUES
 			(5, 'Mickey', 'Mouse', 'Admin', 1);
             
 -- MODIFY the Personnel Position 
@@ -19,5 +19,5 @@
     
 -- MODIFY the Personnel Active Status
 		UPDATE personnel 
-    SET is_Active = 0
+    SET archived = 0
     WHERE personnel_id = 5;
