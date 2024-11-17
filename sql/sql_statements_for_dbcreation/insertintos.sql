@@ -89,17 +89,17 @@ INSERT INTO personnel (personnel_id, first_name, last_name, position) VALUES
 (24, 'Xander', 'Lewis', 'driver'),
 (25, 'Yvonne', 'Young', 'admin');
 
-INSERT INTO warehouse (warehouse_id, warehouse_name, location) VALUES
-(1, 'Warehouse A', 'Manila, Metro Manila'),
-(2, 'Warehouse B', 'Cebu City, Cebu'),
-(3, 'Warehouse C', 'Davao City, Davao del Sur'),
-(4, 'Warehouse D', 'Quezon City, Metro Manila'),
-(5, 'Warehouse E', 'Taguig, Metro Manila'),
-(6, 'Warehouse F', 'Makati, Metro Manila'),
-(7, 'Warehouse G', 'Iloilo City, Iloilo'),
-(8, 'Warehouse H', 'Cagayan de Oro, Misamis Oriental'),
-(9, 'Warehouse I', 'Zamboanga City, Zamboanga del Sur'),
-(10, 'Warehouse J', 'Batangas City, Batangas');
+INSERT INTO warehouse (warehouse_name, location) VALUES
+('Warehouse A', 'Manila, Metro Manila'),
+('Warehouse B', 'Cebu City, Cebu'),
+('Warehouse C', 'Davao City, Davao del Sur'),
+('Warehouse D', 'Quezon City, Metro Manila'),
+('Warehouse E', 'Taguig, Metro Manila'),
+('Warehouse F', 'Makati, Metro Manila'),
+('Warehouse G', 'Iloilo City, Iloilo'),
+('Warehouse H', 'Cagayan de Oro, Misamis Oriental'),
+('Warehouse I', 'Zamboanga City, Zamboanga del Sur'),
+('Warehouse J', 'Batangas City, Batangas');
 
 INSERT INTO truck (truck_id, warehouse_id) VALUES
 ('TRK001', 1),

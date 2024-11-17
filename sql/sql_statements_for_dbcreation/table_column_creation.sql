@@ -54,6 +54,7 @@ CREATE TABLE request (
     unit varchar(10) NOT NULL,
     warehouse_from_id int NOT NULL,    	-- id of W.house that requests were from
     warehouse_to_id int NOT NULL,		-- id of w.house that requests were sent to
+    status ENUM('PENDING', 'COMPLETE') NOT NULL DEFAULT 'PENDING',
     
     FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id) ON DELETE RESTRICT, 
     FOREIGN KEY (item_code) REFERENCES item_masterlist(item_code) ON DELETE RESTRICT,
