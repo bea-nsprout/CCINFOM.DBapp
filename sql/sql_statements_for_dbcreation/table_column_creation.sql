@@ -11,7 +11,7 @@ CREATE TABLE item_masterlist (
 );
 
 CREATE TABLE warehouse (
-	warehouse_id int PRIMARY KEY NOT NULL,
+	warehouse_id int PRIMARY KEY AUTO_INCREMENT,
     warehouse_name varchar(50) NOT NULL,
     location varchar(50) NOT NULL,
     archived boolean NOT NULL DEFAULT false
