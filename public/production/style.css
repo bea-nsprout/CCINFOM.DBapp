@@ -1,22 +1,38 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base Styles */
 body {
     font-family: Arial, sans-serif;
     color: #333;
     background-color: #F5F9E9;
 }
 
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Header */
 header {
     background-color: #36453B;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
@@ -41,6 +57,7 @@ nav a.active {
     text-decoration: underline;
 }
 
+/* Page Header */
 .page-header {
     text-align: center;
     padding: 40px 0;
@@ -58,6 +75,7 @@ nav a.active {
     color: #333;
 }
 
+/* Search and Filter */
 .search-filter {
     display: flex;
     justify-content: center;
@@ -65,7 +83,9 @@ nav a.active {
     margin: 20px;
 }
 
-.search-filter input, .search-filter select, .search-filter button {
+.search-filter input, 
+.search-filter select, 
+.search-filter button {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -78,6 +98,7 @@ nav a.active {
     border: none;
 }
 
+/* Table Styles */
 .production-table {
     width: 90%;
     margin: 0 auto;
@@ -85,7 +106,8 @@ nav a.active {
     background-color: #fff;
 }
 
-.production-table th, .production-table td {
+.production-table th, 
+.production-table td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
@@ -93,9 +115,10 @@ nav a.active {
 
 .production-table th {
     background-color: #36453B;
-    color: #fff;
+    color: #F5F9E9;
 }
 
+/* Status Badge Styling */
 .status {
     padding: 5px 10px;
     border-radius: 4px;
@@ -113,71 +136,7 @@ nav a.active {
     color: #fff;
 }
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    padding-top: 60px;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-}
-
-.modal-content {
-    background-color: #fefefe;
-    margin: auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 8px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-#new-production-btn {
-    background-color: #36453B;
-    color: #fff;
-    padding: 10px 20px;
-    margin: 20px auto;
-    display: block;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-}
-
-footer {
-    margin-top: 40px;
-    font-size: 12px;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    background-color: #36453B;
-}
-
-
-
-
-
-
-
-
-
+/* Modal Styles */
 .modal {
     display: none;
     position: fixed;
@@ -192,12 +151,13 @@ footer {
 }
 
 .modal-content {
-    background-color: #fff;
+    background-color: #fefefe;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
     width: 300px;
     margin: auto;
+    position: relative;
 }
 
 .modal-content p {
@@ -206,39 +166,28 @@ footer {
     color: #333;
 }
 
-.modal-content button {
-    padding: 10px 20px;
-    margin: 0 10px;
-    border: none;
-    cursor: pointer;
-}
-
 .modal-content .close {
     position: absolute;
     top: 10px;
     right: 10px;
     font-size: 24px;
     cursor: pointer;
+    color: #aaa;
 }
 
+.modal-content .close:hover {
+    color: #333;
+}
 
-
-
-
-button {
-    padding: 8px 16px;
+.modal-content button {
+    padding: 10px 20px;
+    margin: 0 10px;
     border: none;
-    border-radius: 5px;
-    font-size: 14px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    border-radius: 4px;
 }
 
-button:hover {
-    opacity: 0.9;
-}
-
+/* Action Button Styles */
 button.edit {
     background-color: #4e6f4e;
     color: #fff;
@@ -260,4 +209,26 @@ button.delete:hover {
 .vertical-line {
     margin: 0 8px;
     color: #333;
+}
+
+#new-production-btn {
+    background-color: #36453B;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 20px auto;
+    display: block;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Footer */
+footer {
+    margin-top: 40px;
+    font-size: 12px;
+    color: #F5F9E9;
+    text-align: center;
+    padding: 10px 0;
+    background-color: #36453B;
 }

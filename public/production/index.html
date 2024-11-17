@@ -26,16 +26,19 @@
     <div class="search-filter">
         <label for="search">Search:</label>
         <input type="text" id="search" placeholder="Enter production ID or item code...">
+        
         <select id="status-filter">
             <option value="">Filter by Status</option>
             <option value="pending">Pending</option>
             <option value="completed">Completed</option>
         </select>
+        
         <select id="warehouse-filter">
             <option value="">Filter by Warehouse</option>
             <option value="warehouse1">Warehouse 1</option>
             <option value="warehouse2">Warehouse 2</option>
         </select>
+        
         <button>Apply Filters</button>
     </div>
 
@@ -60,19 +63,20 @@
                 <td>Warehouse 1</td>
                 <td><span class="status completed">Completed</span></td>
                 <td>
-                    <button class="edit" onclick="showEditModal()">Edit</button>
+                    <button class="edit" onclick="showModal('editModal')">Edit</button>
                     <span class="vertical-line">|</span>
-                    <button class="delete" onclick="showDeleteModal()">Delete</button>
+                    <button class="delete" onclick="showModal('deleteModal')">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
 
-    <button id="new-production-btn">New Production Record</button>
+    <button id="new-production-btn" onclick="showModal('newProductionModal')">New Production Record</button>
 
-    <div id="new-production-modal" class="modal">
+    <!-- New Production Modal -->
+    <div id="newProductionModal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
+            <span class="close" onclick="closeModal('newProductionModal')">&times;</span>
             <h3>Create New Production Record</h3>
             <form>
                 <label for="item-code">Item Code:</label>
@@ -95,27 +99,29 @@
         </div>
     </div>
 
+    <!-- Edit Confirmation Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('editModal')">&times;</span>
+            <p>Are you sure you want to edit this item?</p>
+            <button onclick="confirmEdit()">Yes</button>
+            <button onclick="closeModal('editModal')">No</button>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('deleteModal')">&times;</span>
+            <p>Are you sure you want to delete this item?</p>
+            <button onclick="confirmDelete()">Yes</button>
+            <button onclick="closeModal('deleteModal')">No</button>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2024 Warehouse Logistics Database System. All Rights Reserved.<br>Designed and Developed by CCINFOM</p>
     </footer>
-
-    <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeEditModal()">&times;</span>
-            <p>Are you sure you want to edit this item?</p>
-            <button onclick="confirmEdit()">Yes</button>
-            <button onclick="closeEditModal()">No</button>
-        </div>
-    </div>
-
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDeleteModal()">&times;</span>
-            <p>Are you sure you want to delete this item?</p>
-            <button onclick="confirmDelete()">Yes</button>
-            <button onclick="closeDeleteModal()">No</button>
-        </div>
-    </div>
 
     <script src="script.js"></script>
 </body>
