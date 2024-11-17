@@ -3,7 +3,7 @@
 
 -- MODIFY update the quantity (ONLY quantity)
 	UPDATE warehouse_inventory
-    SET quantity = 'insertINTquantity'
+    SET quantity = 20 			-- repace with new quantity
     WHERE item_code = 'insertSTRINGitemcode' AND warehouse_id = 'insertINTwarehouseid';
     
 -- VIEW all nonzero items in warehouse
