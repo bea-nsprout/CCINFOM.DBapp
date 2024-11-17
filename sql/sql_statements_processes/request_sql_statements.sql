@@ -19,8 +19,8 @@ SET item_code = '0000123SDF',
     date_requested = '2024-12-01',
     qty_balance = 101, 
     qty_total = 105, 
-    status = 'PENDING'
-WHERE qty_total - qty_balance > 0;
+    status = 'PENDING' -- Default of all requests will be pending
+WHERE request_id = 1 AND qty_total - qty_balance > 0; -- request_id is some ID
 
 -- delete existing record
 	DELETE FROM request
@@ -40,7 +40,7 @@ WHERE qty_total - qty_balance > 0;
     -- given an item code
     SELECT *
     FROM request
-    WHERE item_code = 2;
+    WHERE item_code = '000000AAAAABBBCCCC';
     
 -- view all pending requests
 	SELECT * 
