@@ -36,12 +36,27 @@
     WHERE item_code = '0001010000TEMP036Y';
     
 -- DELETE AN ITEM: restricted delete
-	DELETE FROM item_masterlist 
-    WHERE item_code = '0001010000TEMP036Y';
+	-- check if all warehouses have 0 inventory
+		SELECT NOT EXISTS (
+			SELECT 1
+			FROM warehouse_inventory
+			WHERE item_code = '0001010000TEMP036Y' AND quantity > 0
+		) AS no_existing_item;
+			-- return true if no instance of item, PROCEED TO NEXT SQL STATEMENT
+			-- return false if has instance of item, ASK USER TO 'ARCHIVE' ITEM INSTEAD
+	
+    -- if above statement true, delete all the instances in warehouse inventory; if false, dont! ask user to archive it instead
+		DELETE FROM warehouse_inventory
+        WHERE item_code = '0001010000TEMP036Y';
+    
+    -- delete the actual thing
+		DELETE FROM item_masterlist 
+		WHERE item_code = '0001010000TEMP036Y';
     
 -- VIEW: ALL ITEMS
-	SELECT *
-    FROM item_masterlist;
+	-- view all items WITHOUT filter
+		SELECT *
+        FROM item_masterlist;
     
     -- view all items but with filter
 		SELECT *
