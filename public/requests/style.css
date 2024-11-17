@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+.hero.requests-hero {
+    padding: 50px 20px;
+}
+
 body {
     font-family: Arial, sans-serif;
     color: #333;
@@ -169,4 +173,93 @@ footer {
     text-align: center;
     padding: 10px 0;
     background-color: #555c4e;
+}
+
+
+
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+    margin: auto;
+}
+
+.modal-content p {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+}
+
+.modal-content button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.modal-content .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+
+
+
+
+button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+button.edit {
+    background-color: #4e6f4e;
+    color: #fff;
+}
+
+button.edit:hover {
+    background-color: #45a049;
+}
+
+button.delete {
+    background-color: #f44336;
+    color: #fff;
+}
+
+button.delete:hover {
+    background-color: #e53935;
+}
+
+.vertical-line {
+    margin: 0 8px;
+    color: #333;
 }
