@@ -101,6 +101,18 @@ INSERT INTO warehouse (warehouse_id, warehouse_name, location) VALUES
 (9, 'Warehouse I', 'Zamboanga City, Zamboanga del Sur'),
 (10, 'Warehouse J', 'Batangas City, Batangas');
 
+INSERT INTO truck (truck_id, warehouse_id) VALUES
+('TRK001', 1),
+('TRK002', 2),
+('TRK003', 3),
+('TRK004', 4),
+('TRK005', 5),
+('TRK006', 6),
+('TRK007', 7),
+('TRK008', 8),
+('TRK009', 9),
+('TRK010', 10);
+
 
 INSERT INTO warehouse_inventory (item_code, warehouse_id, quantity) VALUES
 ('0001370000SILV036Y', 1, 100),
@@ -167,16 +179,3 @@ INSERT INTO transfer (transfer_id, request_id, personnel_id, item_code, date_tra
 (18, 18, 8, '003001SMALAGRN036Y', '2024-11-18', 'TRK008', 70, 'ROLL', 8, 9),
 (19, 19, 9, '003001SMALBGRN036Y', '2024-11-19', 'TRK009', 100, 'ROLL', 9, 10),
 (20, 20, 10, '003001SMALBLCK036Y', '2024-11-20', 'TRK010', 60, 'ROLL', 10, 1);
-
-
-INSERT INTO truck (truck_id, warehouse_id) VALUES
-('TRK001', 1),
-('TRK002', 2),
-('TRK003', 3),
-('TRK004', 4),
-('TRK005', 5),
-('TRK006', 6),
-('TRK007', 7),
-('TRK008', 8),
-('TRK009', 9),
-('TRK010', 10);
