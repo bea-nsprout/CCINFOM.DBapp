@@ -1,14 +1,14 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Inventory, { loader as inventoryLoader } from "./routes/inventory";
+
+import "./index.css";
 import Root from "./routes/root";
 import ErrorPage from "./error-page";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
-import "./index.css";
+
 import Home from "./routes/home";
-import Inventory, { loader as inventoryLoader } from "./routes/inventory";
+import Requests from "./routes/requests";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +24,10 @@ const router = createBrowserRouter([
         path: "inventory",
         element: <Inventory />,
         loader: inventoryLoader
+      },
+      {
+        path: "requests",
+        element: <Requests />
       }
     ]
   },
