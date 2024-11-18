@@ -9,6 +9,8 @@ import ErrorPage from "./error-page";
 
 import Home from "./routes/home";
 import Requests from "./routes/requests";
+import Transfers from "./routes/transfers";
+import Production from "./routes/production";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "requests",
         element: <Requests />
+      },
+      {
+        path: "transfers",
+        element: <Transfers />
+      },
+      {
+        path: "production",
+        element: <Production />
       }
     ]
   },

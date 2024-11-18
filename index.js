@@ -19,7 +19,7 @@ const connection = await mysql.createConnection({
 
 app.get("/api/test", cors(), async (req, res) => {
     const [results, fields] = await connection.query('SELECT * FROM item_masterlist')
-    console.log(results)
+    // console.log(results)
     res.send(results)
 })
 
