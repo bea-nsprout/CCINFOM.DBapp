@@ -1,65 +1,34 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Body Styling */
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-color: #f7f7f7;
+  background-color: #f5f9e9;
 }
 
-header {
-  background-color: #f0f4ed;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-  font-size: 24px;
-  color: #333;
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
   font-weight: bold;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-nav {
-  display: flex;
-  gap: 20px;
+button:hover {
+  opacity: 0.9;
 }
 
-nav a {
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-nav a.active {
-  text-decoration: underline;
-}
-
-/* Page Header */
-.page-header {
-  text-align: center;
-  padding: 40px 0;
-  background-color: #f0f4ed;
-}
-
-.page-header h2 {
-  font-size: 32px;
-  color: #333;
-  font-weight: bold;
-}
-
-.page-header p {
-  font-size: 16px;
-  color: #666;
-}
-
-/* Search and Filter */
+/* Search Filter Section */
 .search-filter {
   display: flex;
   justify-content: center;
@@ -76,16 +45,16 @@ nav a.active {
 }
 
 .search-filter button {
-  background-color: #555c4e;
+  background-color: #36453b;
   color: #fff;
   cursor: pointer;
   border: none;
 }
 
-/* Transfers Table */
+/* Table Styling */
 .transfers-table {
   width: 90%;
-  margin: 0 auto;
+  margin: 20px auto;
   border-collapse: collapse;
   background-color: #fff;
 }
@@ -98,10 +67,15 @@ nav a.active {
 }
 
 .transfers-table th {
-  background-color: #333;
-  color: #fff;
+  background-color: #36453b;
+  color: #f5f9e9;
 }
 
+.transfers-table td {
+  color: #333;
+}
+
+/* Status Badge Styling */
 .status {
   padding: 5px 10px;
   border-radius: 4px;
@@ -119,46 +93,9 @@ nav a.active {
   color: #fff;
 }
 
-/* Modal Styling */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 8px;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
+/* New Transfer Button */
 #new-transfer-btn {
-  background-color: #333;
+  background-color: #36453b;
   color: #fff;
   padding: 10px 20px;
   margin: 20px auto;
@@ -167,18 +104,10 @@ nav a.active {
   cursor: pointer;
   font-weight: bold;
   border-radius: 5px;
-}
-
-/* Footer */
-footer {
-  margin-top: 40px;
-  font-size: 12px;
-  color: #fff;
   text-align: center;
-  padding: 10px 0;
-  background-color: #555c4e;
 }
 
+/* Modal Styling */
 .modal {
   display: none;
   position: fixed;
@@ -198,7 +127,8 @@ footer {
   border-radius: 8px;
   text-align: center;
   width: 300px;
-  margin: auto;
+  max-width: 80%;
+  position: relative;
 }
 
 .modal-content p {
@@ -212,6 +142,8 @@ footer {
   margin: 0 10px;
   border: none;
   cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
 }
 
 .modal-content .close {
@@ -220,27 +152,21 @@ footer {
   right: 10px;
   font-size: 24px;
   cursor: pointer;
+  color: #aaa;
 }
 
-button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 5px;
-  font-size: 14px;
-  cursor: pointer;
-  font-weight: bold;
-  transition:
-    background-color 0.3s ease,
-    color 0.3s ease;
+.modal-content .close:hover {
+  color: #333;
 }
 
-button:hover {
-  opacity: 0.9;
-}
-
+/* Edit and Delete Button Styling */
 button.edit {
   background-color: #4e6f4e;
   color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
 }
 
 button.edit:hover {
@@ -250,6 +176,10 @@ button.edit:hover {
 button.delete {
   background-color: #f44336;
   color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
 }
 
 button.delete:hover {

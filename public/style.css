@@ -1,160 +1,160 @@
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    color: #333;
-    background-color: #1a1a1a;
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #1a1a1a;
 }
 
 header {
-    background-color: #F0F4ED;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: #f0f4ed;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-    font-size: 24px;
-    color: #333;
-    font-weight: bold;
+  font-size: 24px;
+  color: #333;
+  font-weight: bold;
 }
 
 nav {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 nav a {
-    color: #333;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 16px;
-    position: relative;
+  color: #333;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  position: relative;
 }
 
 .hero {
-    /* placeholder for img hehe */
-    background-image: url('warehouse.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 100px 20px;
-    text-align: center;
-    color: #fff;
-    position: relative;
+  /* placeholder for img hehe */
+  background-image: url("warehouse.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 100px 20px;
+  text-align: center;
+  color: #fff;
+  position: relative;
 }
 
 .hero::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 .hero-content {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
 }
 
 .hero h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
 .hero h1 {
-    font-size: 36px;
-    margin-bottom: 20px;
+  font-size: 36px;
+  margin-bottom: 20px;
 }
 
 .hero button {
-    padding: 10px 20px;
-    background-color: #f2eeca;
-    color: #333;
-    border: none;
-    cursor: pointer;
-    font-weight: bold;
+  padding: 10px 20px;
+  background-color: #f2eeca;
+  color: #333;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .get-in-touch-header {
-    background-color: #F0F4ED;
-    padding: 40px 0;
-    text-align: center;
+  background-color: #f0f4ed;
+  padding: 40px 0;
+  text-align: center;
 }
 
 .get-in-touch-header h2 {
-    font-size: 32px;
-    font-weight: bold;
-    color: #555c4e; 
-    margin: 0;
+  font-size: 32px;
+  font-weight: bold;
+  color: #555c4e;
+  margin: 0;
 }
 
 .contact-section {
-    background-color: #555c4e;
-    color: #fff;
-    padding: 60px 20px;
-    text-align: center;
+  background-color: #555c4e;
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
 }
 
 .content-container {
-    display: flex;
-    justify-content: space-between;
-    max-width: 1200px;
-    margin: 0 auto;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    gap: 40px;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
 }
 
 .contact-info {
-    max-width: 400px;
-    text-align: left;
+  max-width: 400px;
+  text-align: left;
 }
 
 .contact-info h3 {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 10px;
 }
 
 .contact-info p {
-    margin-bottom: 20px;
-    line-height: 1.6;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
 .footer-links {
-    display: flex;
-    gap: 60px;
-    text-align: left;
+  display: flex;
+  gap: 60px;
+  text-align: left;
 }
 
 .footer-links div h4 {
-    font-size: 16px;
-    font-weight: bold;
-    margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 
 .footer-links a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    margin-bottom: 5px;
-    font-weight: normal;
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 5px;
+  font-weight: normal;
 }
 
 footer {
-    margin-top: 1px;
-    font-size: 12px;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    border-top: 1px solid #444;
+  margin-top: 1px;
+  font-size: 12px;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #444;
 }
