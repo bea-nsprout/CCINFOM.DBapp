@@ -6,6 +6,8 @@ export default function Modal(props) {
                 closeEditModal();
             } else if (event.target == document.getElementById('deleteModal')) {
                 closeDeleteModal();
+            } else if (event.target == document.getElementById('new-request-modal')) {
+                closeNewRequest();
             }
         }
         window.addEventListener('click', exitModal)

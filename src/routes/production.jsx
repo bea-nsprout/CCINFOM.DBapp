@@ -1,4 +1,18 @@
 export default function Production() {
+
+    function showNewProductionRecord () {
+        document.getElementById('new-production-modal').style.display = 'flex';
+    }
+
+    function closeNewProductionRecord() {
+        document.getElementById('new-production-modal').style.display = 'none';
+    }
+
+    function confirmNewProductionRecord() {
+        alert("Transfer Created");
+        closeNewRequest();
+    }
+
     return (
         <>
         <link rel="stylesheet" href="styles/production.css"></link>
@@ -35,11 +49,11 @@ export default function Production() {
                 </tbody>
             </table>
 
-            <button id="new-production-btn" onClick={() => showModal('new-production-modal')}>New Production Record</button>
+            <button id="new-production-btn" onClick={showNewProductionRecord}>New Production Record</button>
 
             <div id="new-production-modal" className="modal">
                 <div className="modal-content">
-                    <span className="close" onClick={() => closeModal('new-production-modal')}>&times;</span>
+                    <span className="close" onClick={closeNewProductionRecord}>&times;</span>
                     <h3>Create New Production Record</h3>
                     <form>
                         <label htmlFor="item-code">Item Code:</label>
@@ -57,7 +71,7 @@ export default function Production() {
                             <option value="warehouse2">Warehouse 2</option>
                         </select>
 
-                        <button type="submit">Submit Production</button>
+                        <button type="submit" onClick={confirmNewProductionRecord}>Submit Production</button>
                     </form>
                 </div>
             </div>
