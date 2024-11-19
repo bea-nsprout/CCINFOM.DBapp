@@ -45,10 +45,11 @@ export default function Root() {
                         </div>
                     </div>
                 </div>
-                <footer>
-                    <p>&copy; 2024 Warehouse Logistics Database System. All Rights Reserved.<br />Designed and Developed by CCINFOM</p>
-                </footer>
             </section>
+
+            <footer>
+                    <p>&copy; 2024 Warehouse Logistics Database System. All Rights Reserved.<br />Designed and Developed by CCINFOM</p>
+            </footer>
         </>
     );
 }

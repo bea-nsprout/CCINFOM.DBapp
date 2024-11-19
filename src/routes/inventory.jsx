@@ -5,63 +5,57 @@ function showEditModal() {
     document.getElementById('editModal').style.display = 'flex';
 }
 
-
 function closeEditModal() {
     document.getElementById('editModal').style.display = 'none';
 }
-
 
 function confirmEdit() {
     alert("Item edited successfully!");
     closeEditModal();
 }
 
-
 function showDeleteModal() {
     document.getElementById('deleteModal').style.display = 'flex';
 }
 
-
 function closeDeleteModal() {
     document.getElementById('deleteModal').style.display = 'none';
 }
-
 
 function confirmDelete() {
     alert("Item deleted successfully!");
     closeDeleteModal();
 }
 
-
 export async function loader() {
-    const results = await fetch("http://localhost:3000/api/test")
-    const data = results.json();
-    return data
+    const results = await fetch("http://localhost:3000/api/test");
+    const data = await results.json();
+    return data;
 }
-
 
 export default function Inventory() {
     useEffect(() => {
         const exitModal = (event) => {
-            if (event.target == document.getElementById('editModal')) {
+            if (event.target === document.getElementById('editModal')) {
                 closeEditModal();
-            } else if (event.target == document.getElementById('deleteModal')) {
+            } else if (event.target === document.getElementById('deleteModal')) {
                 closeDeleteModal();
             }
-        }
-        window.addEventListener('click', exitModal)
+        };
+        
+        window.addEventListener('click', exitModal);
 
         return () => {
-            window.removeEventListener('click', exitModal)
-        }
-    }, [])
+            window.removeEventListener('click', exitModal);
+        };
+    }, []);
 
     const data = useLoaderData();
-    console.log(data)
+    console.log(data);
 
     return (
         <>
-            <link rel="stylesheet" href="/public/styles/inventory.css" type="text/css"></link>
+            <link rel="stylesheet" href="/public/styles/inventory.css" type="text/css" />
             <section className="hero inventory-hero">
                 <div className="hero-content">
                     <h1>Inventory Management</h1>
@@ -84,27 +78,25 @@ export default function Inventory() {
                     </thead>
 
                     <tbody>
-                        {
-                            data.map(item => (
-                                <tr>
-                                    <td>{item.item_code}</td>
-                                    <td>{item.item_desc}</td>
-                                    <td></td>
-                                    <td>{item.unit}</td>
-                                    <td></td>
-                                    <td>
-                                        <button class="edit" onClick="showEditModal()">Edit</button>
-                                        <span class="vertical-line">|</span>
-                                        <button class="delete" onClick="showDeleteModal()">Delete</button>
-                                    </td>
-                                </tr>
-                            ))
-                        }
+                        {data.map((item, index) => (
+                            <tr key={index}>
+                                <td>{item.item_code}</td>
+                                <td>{item.item_desc}</td>
+                                <td></td>
+                                <td>{item.unit}</td>
+                                <td></td>
+                                <td>
+                                    <button className="edit" onClick={showEditModal}>Edit</button>
+                                    <span className="vertical-line">|</span>
+                                    <button className="delete" onClick={showDeleteModal}>Delete</button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
-
                 </table>
             </section>
 
+            {/* Edit Modal */}
             <div id="editModal" className="modal">
                 <div className="modal-content">
                     <span className="close" onClick={closeEditModal}>&times;</span>
@@ -114,6 +106,7 @@ export default function Inventory() {
                 </div>
             </div>
 
+            {/* Delete Modal */}
             <div id="deleteModal" className="modal">
                 <div className="modal-content">
                     <span className="close" onClick={closeDeleteModal}>&times;</span>
@@ -123,5 +116,5 @@ export default function Inventory() {
                 </div>
             </div>
         </>
-    )
+    );
 }

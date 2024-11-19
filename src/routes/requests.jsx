@@ -1,7 +1,13 @@
 export default function Requests() {
+
+
+
+    // java script
+
+
     return (
         <>
-
+            <link rel="stylesheet" href="styles/requests.css"></link>
             <div class="search-filter">
                 <label for="search">Search:</label>
                 <input type="text" id="search" placeholder="Enter request ID or keywords..." />

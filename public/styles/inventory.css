@@ -6,7 +6,7 @@
 
 .inventory-table-section {
     padding: 40px 20px;
-    background-color: #333;
+    background-color: #F5F9E9;
 }
 
 .inventory-table {
@@ -25,7 +25,7 @@
 }
 
 .inventory-table th {
-    background-color: #4b6b3c;
+    background-color: #36453B;
     color: #fff;
     font-weight: bold;
 }
