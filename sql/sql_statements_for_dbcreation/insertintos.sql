@@ -179,9 +179,6 @@ SET wi.quantity = wi.quantity + t.quantity;
 UPDATE request r
 JOIN transfer t ON r.request_id = t.request_id
 SET r.qty_balance = r.qty_balance - t.quantity
-WHERE r.request_id = t.request_id;
-
-
-
+WHERE r.request_id != 0;
 
 
