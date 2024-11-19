@@ -8,11 +8,7 @@ export default function Modal(props) {
       }
     };
     window.addEventListener("click", exitModal);
-
-    return () => {
-      window.removeEventListener("click", exitModal);
-    };
-  }, []);
+  })
 
   return (
     <>
@@ -37,3 +33,4 @@ export default function Modal(props) {
     </>
   );
 }
+

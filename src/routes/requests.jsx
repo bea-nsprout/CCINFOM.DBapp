@@ -1,16 +1,25 @@
 export default function Requests() {
-  // java script
+
+  function showNewRequest() {
+    document.getElementById('new-request-modal').style.display = 'flex';
+  }
+
+  function closeNewRequest() {
+    document.getElementById('new-request-modal').style.display = 'none';
+  }
+
+  function confirmNewRequest() {
+    alert("Request Submitted");
+    closeNewRequest();
+  }
+
 
   return (
     <>
       <link rel="stylesheet" href="styles/requests.css"></link>
       <div class="search-filter">
         <label for="search">Search:</label>
-        <input
-          type="text"
-          id="search"
-          placeholder="Enter request ID or keywords..."
-        />
+        <input type="text" id="search" placeholder="Enter request ID or keywords..." />
         <select id="status-filter">
           <option value="">Filter by Status</option>
           <option value="pending">Pending</option>
@@ -30,14 +39,18 @@ export default function Requests() {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>{}</tbody>
+        <tbody>
+          {
+
+          }
+        </tbody>
       </table>
 
-      <button id="new-request-btn">New Request</button>
+      <button id="new-request-btn" onClick={showNewRequest}>New Request</button>
 
-      <div id="new-request-modal" class="modal">
-        <div class="modal-content">
-          <span class="close">&times;</span>
+      <div id="new-request-modal" className="modal">
+        <div className="modal-content">
+          <span className="close" onClick={closeNewRequest}>&times;</span>
           <h3>Create New Request</h3>
           <form>
             <label for="item-code">Item Code:</label>
@@ -52,10 +65,10 @@ export default function Requests() {
               <option value="warehouse2">Warehouse 2</option>
             </select>
 
-            <button type="submit">Submit Request</button>
+            <button type="submit" onClick={confirmNewRequest}>Submit Request</button>
           </form>
         </div>
       </div>
     </>
-  );
+  )
 }

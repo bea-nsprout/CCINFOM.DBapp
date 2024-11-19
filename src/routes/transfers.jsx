@@ -1,14 +1,26 @@
 export default function Transfers() {
+
+  function showNewTransfer() {
+    document.getElementById('new-transfer-modal').style.display = 'flex';
+  }
+
+  function closeNewTransfer() {
+    document.getElementById('new-transfer-modal').style.display = 'none';
+  }
+
+  function confirmNewTransfer() {
+    alert("Transfer Created");
+    closeNewRequest();
+  }
+
+
+
   return (
     <>
       <link rel="stylesheet" href="styles/transfers.css"></link>
       <div className="search-filter">
         <label htmlFor="search">Search:</label>
-        <input
-          type="text"
-          id="search"
-          placeholder="Enter transfer ID or item code..."
-        />
+        <input type="text" id="search" placeholder="Enter transfer ID or item code..." />
         <select id="status-filter">
           <option value="">Filter by Status</option>
           <option value="pending">Pending</option>
@@ -37,11 +49,11 @@ export default function Transfers() {
         </tbody>
       </table>
 
-      <button id="new-transfer-btn">New Transfer</button>
+      <button id="new-transfer-btn" onClick={showNewTransfer}>New Transfer</button>
 
       <div id="new-transfer-modal" className="modal">
         <div className="modal-content">
-          <span className="close">&times;</span>
+          <span className="close" onClick={closeNewTransfer}>&times;</span>
           <h3>Create New Transfer</h3>
           <form>
             <label htmlFor="item-code">Item Code:</label>
@@ -62,10 +74,10 @@ export default function Transfers() {
               <option value="warehouse2">Warehouse 2</option>
             </select>
 
-            <button type="submit">Submit Transfer</button>
+            <button type="submit" onClick={confirmNewTransfer}>Submit Transfer</button>
           </form>
         </div>
       </div>
     </>
-  );
+  )
 }

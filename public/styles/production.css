@@ -88,7 +88,7 @@ button:hover {
   color: #fff;
 }
 
-/* Modal Styles */
+/* Modal Styling */
 .modal {
   display: none;
   position: fixed;
@@ -103,30 +103,50 @@ button:hover {
 }
 
 .modal-content {
-  background-color: #fefefe;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
-  width: 300px;
-  margin: auto;
+  width: 90%;
+  max-width: 500px;
   position: relative;
 }
 
-.modal-content p {
-  margin-bottom: 20px;
-  font-size: 16px;
+.modal-content h3 {
+  font-size: 24px;
   color: #333;
+  margin-bottom: 20px;
 }
 
-.modal-content button {
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+}
+
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.modal-content button[type="submit"] {
+  background-color: #36453B;
+  color: #fff;
   padding: 10px 20px;
-  margin: 0 10px;
+  margin-top: 20px;
   border: none;
   cursor: pointer;
-  border-radius: 4px;
+  font-weight: bold;
+  border-radius: 5px;
 }
 
-.modal-content .close {
+.close {
   position: absolute;
   top: 10px;
   right: 10px;
@@ -135,7 +155,7 @@ button:hover {
   color: #aaa;
 }
 
-.modal-content .close:hover {
+.close:hover {
   color: #333;
 }
 
