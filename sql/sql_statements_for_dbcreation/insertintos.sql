@@ -143,21 +143,22 @@ INSERT INTO transfer (request_id, personnel_id, date_transferred, truck_id, quan
 
 -- Decrease quantity from the source warehouse
 UPDATE warehouse_inventory wi
-JOIN transfer t ON wi.item_code = t.item_code
+JOIN request r ON wi.item_code = r.item_code
+JOIN transfer t ON r.request_id = t.request_id
 SET wi.quantity = wi.quantity - t.quantity;
 
 -- Increase quantity in the destination warehouse
 UPDATE warehouse_inventory wi
-JOIN transfer t ON wi.item_code = t.item_code
+JOIN request r ON wi.item_code = r.item_code
+JOIN transfer t ON r.request_id = t.request_id
 SET wi.quantity = wi.quantity + t.quantity;
 
 -- Update qty_balance in request:
 UPDATE request r
-JOIN transfer t ON r.request_id = t.request_id
-SET r.qty_balance = r.qty_balance - t.quantity
-WHERE r.request_id != 0;
-
-
-SELECT * 
-FROM  request r
-JOIN transfer t ON r.request_id = t.request_id;
+JOIN (
+    SELECT request_id, SUM(quantity) AS total_transferred
+    FROM transfer
+    GROUP BY request_id
+) t ON r.request_id = t.request_id
+SET r.qty_balance = r.qty_balance - t.total_transferred
+WHERE r.request_id = t.request_id;
