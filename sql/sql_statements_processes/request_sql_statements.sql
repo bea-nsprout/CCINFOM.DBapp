@@ -1,8 +1,7 @@
 -- REQUEST
 
 -- Create a new request record
-INSERT INTO request (request_id, 
-                     personnel_id,
+INSERT INTO request ( personnel_id,
                      date_requested,
                      item_code,
                      qty_balance, 
@@ -11,7 +10,7 @@ INSERT INTO request (request_id,
                      warehouse_from_id, 
                      warehouse_to_id, 
                      status) 
-VALUES (1, 1, '2024-11-01', '0001370000SILV036Y', 100, 100, 'ROLL', 1, 2, 'COMPLETE');
+VALUES (1, '2024-11-01', '0001370000SILV036Y', 100, 100, 'ROLL', 1, 2, 'PENDING');
  
 -- Modify an existing record
 UPDATE request
