@@ -34,7 +34,7 @@ function confirmDelete() {
 
 
 export async function loader() {
-    const results = await fetch("http://localhost:3000/api/test")
+    const results = await fetch("/api/item-masterlist/all")
     const data = results.json();
     return data
 }

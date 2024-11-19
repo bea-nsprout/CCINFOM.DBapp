@@ -4,6 +4,8 @@ import mysql from "mysql2/promise";
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import inventoryRouter from "./api/inventory.js";
+
 dotenv.config();
 
 const app = express();
@@ -15,13 +17,15 @@ const connection = await mysql.createConnection({
     database: 'warehousedb'
 })
 
-// app.use(express.static('public'));
+// nerd shit
+app.use(function (req, res, next) {
+    res.set('X-Clacks-Overhead', 'GNU Terry Pratchet');
+    next();
+});
 
-app.get("/api/test", cors(), async (req, res) => {
-    const [results, fields] = await connection.query('SELECT * FROM item_masterlist')
-    // console.log(results)
-    res.send(results)
-})
+app.use(express.json());
+
+app.use(inventoryRouter(cors, connection));
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
