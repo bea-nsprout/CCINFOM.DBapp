@@ -9,7 +9,7 @@ export default function Production() {
     }
 
     function confirmNewProductionRecord() {
-        alert("Transfer Created");
+        alert("Production Record Added");
         closeNewRequest();
     }
 
