@@ -22,9 +22,15 @@ app.use(function (req, res, next) {
   next();
 });
 
+
 app.use(express.json());
 
 app.use(inventoryRouter(cors, connection));
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.code(500).json({ error: "internal server error." });
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

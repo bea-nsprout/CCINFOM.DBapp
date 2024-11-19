@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Inventory, { loader as inventoryLoader } from "./routes/inventory";
+import Inventory from "./routes/inventory";
 
 import "./index.css";
 import Root from "./routes/root";
@@ -25,7 +25,6 @@ const router = createBrowserRouter([
       {
         path: "inventory",
         element: <Inventory />,
-        loader: inventoryLoader,
       },
       {
         path: "requests",
