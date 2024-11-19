@@ -1,37 +1,36 @@
 -- TRANSFER
--- create a new transfer record
--- Insert a new transfer record
-SET FOREIGN_KEY_CHECKS = 0;
+-- Insert a new transfer record [ FIXED ]
+	SET FOREIGN_KEY_CHECKS = 0;
+	SET @last_transfer_id = LAST_INSERT_ID();
 
-INSERT INTO transfer (request_id, personnel_id, 
-			item_code, date_transferred, truck_id, 
-			quantity, unit, warehouse_from_id, warehouse_to_id)
-VALUES (1, 1, '0001010000YGGO036Y', CURDATE(), 'WOW', 100, 'ROLL', 4, 2);
+	INSERT INTO transfer (request_id, personnel_id, item_code, date_transferred, truck_id, quantity, unit, warehouse_from_id, warehouse_to_id)
+	VALUES (@last_transfer_id + 1, 1, 'ADLER_STREBEL', CURDATE(), 'WOW', 100, 'ROLL', 4, 2); 
+	/* This makes the transfer_id equal to the request_id */
 
-SET FOREIGN_KEY_CHECKS = 1;
+	SET FOREIGN_KEY_CHECKS = 1;
 
--- Assign value to variable (amount transferred)
-SET @v1 = 20;  -- Amount to transfer
+	-- Assign value to variable (amount transferred)
+	SET @v1 = 20;  -- Amount to transfer
 
--- Update the qty_balance in the request table
+	-- Update the qty_balance in the request table
 	UPDATE request r
 	JOIN transfer t ON t.request_id = r.request_id
 	SET r.qty_balance = r.qty_total - @v1
 	WHERE t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
 
--- Update the warehouse_inventory table for the source warehouse (decrease quantity)
+	-- Update the warehouse_inventory table for the source warehouse (decrease quantity)
 	UPDATE warehouse_inventory wi
 	JOIN transfer t ON t.item_code = wi.item_code
 	SET wi.quantity = wi.quantity - @v1
 	WHERE wi.warehouse_id = t.warehouse_from_id
   		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
 
--- Update the warehouse_inventory table for the destination warehouse (increase quantity)
+	-- Update the warehouse_inventory table for the destination warehouse (increase quantity)
 	UPDATE warehouse_inventory wi
 	JOIN transfer t ON t.item_code = wi.item_code
 	SET wi.quantity = wi.quantity + @v1
 	WHERE wi.warehouse_id = t.warehouse_to_id
- 		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
+  		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
 
 -- transfer record
 -- SELECT * 
@@ -46,7 +45,7 @@ SET @v1 = 20;  -- Amount to transfer
 -- FROM warehouse_inventory;
 
     
--- Modify an existing record and update qty_balance accordingly
+-- Modify an existing record and update qty_balance accordingly [ NOT YET FIXED ]
 	SET @old_quantity = (SELECT t1.quantity 
 			FROM transfer t1
 			WHERE t1.transfer_id = 1); -- 1 is some transfer_id
@@ -62,7 +61,7 @@ SET @v1 = 20;  -- Amount to transfer
 	SET r.qty_balance = r.qty_balance + (@old_quantity - t.quantity)
 	WHERE r.transfer_id = 1; -- 1 is some transfer_id
   
--- delete existing record
+-- delete existing record [ FIXED ]
 	-- Update warehouse_inventory to add back the deleted quantity
 	UPDATE warehouse_inventory wi
 	JOIN transfer t ON wi.item_code = t.item_code
@@ -81,13 +80,13 @@ SET @v1 = 20;  -- Amount to transfer
 	DELETE FROM transfer
 	WHERE transfer_id = 1;
 
--- view all request 
+-- view all request [ FIXED ]
     -- given date transferred
     SELECT *
     FROM transfer
 	WHERE date_transferred = '2024-12-01';
     
--- given an item code
+-- given an item code [ FIXED ]
     SELECT *
     FROM transfer
     WHERE item_code = '09009GFDSG';
