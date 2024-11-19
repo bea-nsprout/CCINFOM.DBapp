@@ -1,23 +1,50 @@
 -- TRANSFER
 -- create a new transfer record
-	INSERT INTO transfer (transfer_id, 
-			date_transferred,
-                        truck_id,
-                        quantity, 
-                        unit, 
-                        warehouse_from_id, 
-                        warehouse_to_id) VALUES
-	(1, '2024-11-05', 'insertstringname', 100, 'ROLL', 1, 2);
+-- Insert a new transfer record
+SET FOREIGN_KEY_CHECKS = 0;
 
-	SET @v1 = 100; -- Assign value to variable
+INSERT INTO transfer (request_id, personnel_id, 
+			item_code, date_transferred, truck_id, 
+			quantity, unit, warehouse_from_id, warehouse_to_id)
+VALUES (1, 1, '0001010000YGGO036Y', CURDATE(), 'WOW', 100, 'ROLL', 4, 2);
 
+SET FOREIGN_KEY_CHECKS = 1;
+
+-- Assign value to variable (amount transferred)
+SET @v1 = 20;  -- Amount to transfer
+
+-- Update the qty_balance in the request table
 	UPDATE request r
+	JOIN transfer t ON t.request_id = r.request_id
 	SET r.qty_balance = r.qty_total - @v1
-	WHERE t.transfer_id = r.transfer_id;
-    
-    	UPDATE warehouse_inventory wi
+	WHERE t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
+
+-- Update the warehouse_inventory table for the source warehouse (decrease quantity)
+	UPDATE warehouse_inventory wi
+	JOIN transfer t ON t.item_code = wi.item_code
 	SET wi.quantity = wi.quantity - @v1
-	WHERE t.transfer_id = 1;
+	WHERE wi.warehouse_id = t.warehouse_from_id
+  		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
+
+-- Update the warehouse_inventory table for the destination warehouse (increase quantity)
+	UPDATE warehouse_inventory wi
+	JOIN transfer t ON t.item_code = wi.item_code
+	SET wi.quantity = wi.quantity + @v1
+	WHERE wi.warehouse_id = t.warehouse_to_id
+ 		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
+
+-- transfer record
+-- SELECT * 
+-- FROM transfer;
+
+-- request record
+-- SELECT * 
+-- FROM request;
+
+-- warehouse inventory record
+-- SELECT * 
+-- FROM warehouse_inventory;
+
     
 -- Modify an existing record and update qty_balance accordingly
 	SET @old_quantity = (SELECT t1.quantity 
