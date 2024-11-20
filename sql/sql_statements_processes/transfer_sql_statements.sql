@@ -56,22 +56,26 @@
   
 -- delete existing record [ FIXED ]
 	-- Update warehouse_inventory to add back the deleted quantity
-	UPDATE warehouse_inventory wi
-	JOIN transfer t ON wi.item_code = t.item_code
-	SET 
-		wi.quantity = wi.quantity + t.quantity
-	WHERE t.transfer_id = 1; 
+	-- consult how warehouse inventory will be linked
+	-- 	UPDATE warehouse_inventory wi
+	-- 	JOIN transfer t ON wi.item_code = t.item_code
+	-- 	SET 
+	-- 		wi.quantity = wi.quantity + t.quantity
+	-- 	WHERE t.transfer_id = 1; 
 
 	-- Update request to adjust qty_balance
+    
+    SET @v1 = 14;
+    
 	UPDATE request r
-	JOIN transfer t ON r.transfer_id = t.transfer_id
+	JOIN transfer t ON r.request_id = t.request_id
 	SET 
 		r.qty_balance = r.qty_balance + t.quantity
-	WHERE t.transfer_id = 1; 
+	WHERE t.transfer_id = @v1; 
 
 	-- Delete the transfer record
 	DELETE FROM transfer
-	WHERE transfer_id = 1;
+	WHERE transfer_id = @v1;
 
 -- view all request [ FIXED ]
     -- given date transferred
