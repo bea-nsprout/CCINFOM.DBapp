@@ -1,19 +1,19 @@
 -- REQUEST
 
--- Create a new request record
+-- Create a new request record [ DONE ]
+SET FOREIGN_KEY_CHECKS = 0;
 
-/* Have some Function to Prompt the User again is the request_id already exists */ -- [ DONE ]
 INSERT INTO request (request_id, 
-                     personnel_id,
+					personnel_id,
                      date_requested,
                      item_code,
                      qty_balance, 
                      qty_total, 
-                     unit, 
                      warehouse_from_id, 
-                     warehouse_to_id, 
-                     status) 
-VALUES (1, 1, '2024-11-01', '0001370000SILV036Y', 100, 100, 'ROLL', 1, 2, 'PENDING');
+                     warehouse_to_id) 
+VALUES (@last_request_id ,1 , CURDATE(), 'ADLER_STREBEL', 99, 100, 1, 2);
+
+SET FOREIGN_KEY_CHECKS = 1;
  
 -- Modify an existing record
 UPDATE request
