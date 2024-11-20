@@ -1,36 +1,27 @@
 -- TRANSFER
 -- Insert a new transfer record [ FIXED ]
+	SET @v1 = 90;  -- Amount to transfer
 	SET FOREIGN_KEY_CHECKS = 0;
 	SET @last_transfer_id = LAST_INSERT_ID();
 
-	INSERT INTO transfer (request_id, personnel_id, item_code, date_transferred, truck_id, quantity, unit, warehouse_from_id, warehouse_to_id)
-	VALUES (@last_transfer_id + 1, 1, 'ADLER_STREBEL', CURDATE(), 'WOW', 100, 'ROLL', 4, 2); 
+	INSERT INTO transfer (request_id, personnel_id, date_transferred, truck_id, quantity)
+	VALUES (@last_transfer_id + 1, 1, CURDATE(), 'WOW', @v1); 
 	/* This makes the transfer_id equal to the request_id */
-
+    
 	SET FOREIGN_KEY_CHECKS = 1;
-
-	-- Assign value to variable (amount transferred)
-	SET @v1 = 20;  -- Amount to transfer
-
+	
 	-- Update the qty_balance in the request table
 	UPDATE request r
-	JOIN transfer t ON t.request_id = r.request_id
-	SET r.qty_balance = r.qty_total - @v1
-	WHERE t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
+	SET r.qty_balance = r.qty_balance - @v1
+	WHERE r.request_id = 17; /* Should be the same transfer_id in transfer table */
 
+	-- Ask bea how do I link warehouse_inventory to transfer
 	-- Update the warehouse_inventory table for the source warehouse (decrease quantity)
-	UPDATE warehouse_inventory wi
-	JOIN transfer t ON t.item_code = wi.item_code
-	SET wi.quantity = wi.quantity - @v1
-	WHERE wi.warehouse_id = t.warehouse_from_id
-  		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
-
-	-- Update the warehouse_inventory table for the destination warehouse (increase quantity)
-	UPDATE warehouse_inventory wi
-	JOIN transfer t ON t.item_code = wi.item_code
-	SET wi.quantity = wi.quantity + @v1
-	WHERE wi.warehouse_id = t.warehouse_to_id
-  		AND t.transfer_id = 4; /* Should be the same transfer_id in transfer table */
+	-- 	UPDATE warehouse_inventory wi
+	-- 	JOIN transfer t ON t.item_code = wi.item_code
+	-- 	SET wi.quantity = wi.quantity - @v1
+	-- 	WHERE wi.warehouse_id = t.warehouse_from_id
+	--   		AND t.transfer_id = 17; /* Should be the same transfer_id in transfer table */-- 
 
 -- transfer record
 -- SELECT * 
