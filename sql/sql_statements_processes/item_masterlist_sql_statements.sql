@@ -51,10 +51,6 @@
 			SELECT 1
 			FROM production
 			WHERE item_code = @itemcode
-		) AND NOT EXISTS (
-			SELECT 1
-			FROM transfer
-			WHERE item_code = @itemcode
 		) AS no_existing_item;
 			-- return true if no instance of item, PROCEED TO NEXT SQL STATEMENT
 			-- return false if has instance of item, ASK USER TO 'ARCHIVE' ITEM INSTEAD
