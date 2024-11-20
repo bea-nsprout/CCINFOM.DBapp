@@ -43,8 +43,4 @@
     SELECT *
     FROM request
     WHERE item_code = 2;
-    
--- view all pending requests -- [ DONE ]
-	SELECT * 
-    FROM request
-    WHERE status = 'PENDING';
+
