@@ -17,7 +17,12 @@
     SET position = 'Manager'
     WHERE personnel_id = 5;
     
--- MODIFY the Personnel Active Status
+-- MODIFY, Archive PersonneL
 	UPDATE personnel 
     SET archived = 1
     WHERE personnel_id = 5;
+
+-- MODIFY, Unarichive Personnel
+	UPDATE personnel
+	SET archive = 0 
+	WHERE personnel_id = 5;
