@@ -1,9 +1,7 @@
 -- REQUEST
 
 -- Create a new request record [ DONE ]
-	SET FOREIGN_KEY_CHECKS = 0;
-
-	INSERT INTO request (request_id, 
+	INSERT INTO request (
 		     personnel_id,
                      date_requested,
                      item_code,
@@ -11,9 +9,7 @@
                      qty_total, 
                      warehouse_from_id, 
                      warehouse_to_id) 
-	VALUES (@last_request_id ,1 , CURDATE(), 'ADLER_STREBEL', 99, 100, 1, 2);
-
-	SET FOREIGN_KEY_CHECKS = 1;
+	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 99, 100, 1, 2);
  
 -- Modify an existing record
 	SET @new_qty_balance = 50; /* provide the qty_balance */
@@ -29,6 +25,7 @@
     WHERE request_id = 1 /* Some request_id */ AND qty_balance = 0; /* ask bea */
     
 -- view all request -- [ DONE ]
+	-- add a join to show the item description, in item_masterlist
 	-- given a requestID
 	SELECT * 
     FROM request 
