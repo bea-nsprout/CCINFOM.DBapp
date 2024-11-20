@@ -13,7 +13,7 @@
 	-- Update the qty_balance in the request table
 	UPDATE request r
 	SET r.qty_balance = r.qty_balance - @v1
-	WHERE r.request_id = 17; /* Should be the same transfer_id in transfer table */
+	WHERE r.request_id = 17 AND r.qty_balance >= @v1; /* Should be the same transfer_id in transfer table */
 
 	-- Ask bea how do I link warehouse_inventory to transfer
 	-- Update the warehouse_inventory table for the source warehouse (decrease quantity)
