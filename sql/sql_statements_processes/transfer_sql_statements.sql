@@ -36,21 +36,23 @@
 -- FROM warehouse_inventory;
 
     
--- Modify an existing record and update qty_balance accordingly [ NOT YET FIXED ]
-	SET @old_quantity = (SELECT t1.quantity 
-			FROM transfer t1
-			WHERE t1.transfer_id = 1); -- 1 is some transfer_id
+-- Modify an existing record and update qty_balance accordingly [ FIXED ]
+	SET @v1 = 40; -- New transfer quantity
+	SET @transfer_id = 6; -- Transfer ID to modify
 
-	UPDATE transfer t
-	SET t.item_code = "09009GFDSG", 
-		t.date_transferred = "2024-08-11", 
-		t.unit = 'Roll',
-		t.quantity = 50 -- New quantity
-	WHERE t.transfer_id = 1; -- 1 is some transfer_id
+	UPDATE transfer
+	SET quantity = @v1
+	WHERE transfer_id = @transfer_id;
 
 	UPDATE request r
-	SET r.qty_balance = r.qty_balance + (@old_quantity - t.quantity)
-	WHERE r.transfer_id = 1; -- 1 is some transfer_id
+	JOIN transfer t ON r.request_id = t.request_id
+	SET r.qty_balance = r.qty_total - t.quantity
+	WHERE t.transfer_id = @transfer_id;
+
+	-- SELECT * FROM transfer WHERE transfer_id = @transfer_id;
+	-- SELECT * FROM request r
+	-- JOIN transfer t ON r.request_id = t.request_id
+	-- WHERE t.transfer_id = @transfer_id;
   
 -- delete existing record [ FIXED ]
 	-- Update warehouse_inventory to add back the deleted quantity
