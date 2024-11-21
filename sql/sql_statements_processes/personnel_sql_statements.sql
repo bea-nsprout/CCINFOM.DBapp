@@ -19,10 +19,10 @@
     
 -- MODIFY, Archive PersonneL
 	UPDATE personnel 
-    SET archived = 1
+    SET archived = archived /* 1 */
     WHERE personnel_id = 5;
 
 -- MODIFY, Unarichive Personnel
 	UPDATE personnel
-	SET archive = NOT archived 
+	SET archive = NOT archived /* 0 */
 	WHERE personnel_id = 5;
