@@ -24,5 +24,5 @@
 
 -- MODIFY, Unarichive Personnel
 	UPDATE personnel
-	SET archive = 0 
+	SET archive = NOT archived 
 	WHERE personnel_id = 5;
