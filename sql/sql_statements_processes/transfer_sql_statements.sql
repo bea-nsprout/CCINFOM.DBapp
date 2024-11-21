@@ -1,5 +1,5 @@
 -- TRANSFER 
-	-- Create Transfer
+	-- Create Transfer [ FIXED ]
 	SET @v1 = 90; -- Amount to transfer
 
 	INSERT INTO transfer (request_id, personnel_id, date_transferred, truck_id, quantity)
@@ -36,10 +36,10 @@
 	SET r.qty_balance = r.qty_total - 100 /* Old Quantity */ + @v1 /* New Quantity */
 	WHERE t.transfer_id = @transfer_id;
     
--- SELECT * FROM transfer WHERE transfer_id = @transfer_id;
--- SELECT * FROM request r
--- JOIN transfer t ON r.request_id = t.request_id
--- WHERE t.transfer_id = @transfer_id;
+	-- SELECT * FROM transfer WHERE transfer_id = @transfer_id;
+	-- SELECT * FROM request r
+	-- JOIN transfer t ON r.request_id = t.request_id
+	-- WHERE t.transfer_id = @transfer_id;
     
   
 -- delete existing record [ FIXED ]
