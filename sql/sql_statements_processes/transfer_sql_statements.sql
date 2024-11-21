@@ -73,13 +73,17 @@
 -- view all request [ FIXED ]
     -- given date transferred
     -- join with request then join with masterlist, display the item description
-	SELECT *
-    FROM transfer
-	WHERE date_transferred = '2024-12-01';
+	SELECT transfer.*, im.item_desc
+    FROM transfer 
+    JOIN request r ON transfer.request_id = r.request_id
+    JOIN item_masterlist im ON r.item_code = im.item_code
+	WHERE date_transferred = '2023-04-06';
     
 -- given an item code [ FIXED ]
 	-- join with request then join with masterlist, display the item description
-    SELECT *
-    FROM transfer
-    WHERE item_code = '09009GFDSG';
+	SELECT transfer.*, im.item_code, im.item_desc
+    FROM transfer 
+    JOIN request r ON transfer.request_id = r.request_id
+    JOIN item_masterlist im ON r.item_code = im.item_code
+	WHERE im.item_code = '0001010000YGGO036Y';
     
