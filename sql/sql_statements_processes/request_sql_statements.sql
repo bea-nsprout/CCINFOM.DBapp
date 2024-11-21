@@ -11,7 +11,7 @@
                      warehouse_to_id) 
 	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 99, 100, 1, 2);
  
--- Modify an existing record
+-- Modify an existing record [ DONE ]
 	SET @new_qty_balance = 50; /* provide the qty_balance */
 
 	UPDATE request
