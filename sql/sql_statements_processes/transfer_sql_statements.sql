@@ -1,24 +1,19 @@
--- TRANSFER
-
+-- TRANSFER 
+	-- Create Transfer
 	SET @v1 = 90; -- Amount to transfer
 
--- create a true or false if the request is valid or not
 	INSERT INTO transfer (request_id, personnel_id, date_transferred, truck_id, quantity)
-	VALUES (1, 1, CURDATE(), 'TRK0001', @v1); 
-	/* Ensure request_id exists in the `request` table */
+	VALUES (1, 1, CURDATE(), 'TRK0001', @v1);
 
 	UPDATE request r
 	SET r.qty_balance = r.qty_balance - @v1
-	WHERE r.request_id = 1 /* valid request_id */ AND r.qty_balance >= @v1; 
-	/* Ensure request_id matches the transfer request */
+	WHERE r.request_id = 1 AND r.qty_balance >= @v1; 
 
--- REVISE THIS !!! with join clause 
-	-- UPDATE warehouse_inventory wi
-	-- JOIN transfer t ON t.item_code = wi.item_code /* Assuming item_code is unique */
-	-- SET wi.quantity = wi.quantity - @v1
-	-- WHERE wi.warehouse_id = t.warehouse_from_id
-	--   AND t.request_id = 1; 
-	/* Link the warehouse inventory and transfer records */
+	UPDATE warehouse_inventory wi
+	JOIN request r ON wi.item_code = r.item_code
+	JOIN transfer t ON r.request_id = t.request_id
+	SET wi.quantity = wi.quantity - @v1
+	WHERE wi.warehouse_id = t.warehouse_from_id AND t.request_id = 1 AND wi.quantity >= @v1;
 
 	-- SELECT * FROM transfer WHERE request_id = 1;
 	-- SELECT * FROM request WHERE request_id = 1;
@@ -48,25 +43,19 @@
     
   
 -- delete existing record [ FIXED ]
-	-- Update warehouse_inventory to add back the deleted quantity
-	-- consult how warehouse inventory will be linked
-	-- 	UPDATE warehouse_inventory wi
-	-- 	JOIN transfer t ON wi.item_code = t.item_code
-	-- 	SET 
-	-- 		wi.quantity = wi.quantity + t.quantity
-	-- 	WHERE t.transfer_id = 1; 
+	SET @v1 = 14; /* transfer_id to be deleted */
 
-	-- Update request to adjust qty_balance
-    
-    SET @v1 = 14; /* transfer_id */
-    
+	UPDATE warehouse_inventory wi
+	JOIN request r ON wi.item_code = r.item_code
+	JOIN transfer t ON r.request_id = t.transfer_id
+	SET wi.quantity = wi.quantity + t.quantity
+	WHERE t.transfer_id = @v1;
+
 	UPDATE request r
 	JOIN transfer t ON r.request_id = t.request_id
-	SET 
-		r.qty_balance = r.qty_balance + t.quantity
-	WHERE t.transfer_id = @v1; 
+	SET r.qty_balance = r.qty_balance + t.quantity
+	WHERE t.transfer_id = @v1;
 
-	-- Delete the transfer record
 	DELETE FROM transfer
 	WHERE transfer_id = @v1;
 
