@@ -32,6 +32,8 @@ app.use('/api/trucks', trucksHandler(connection));
 app.use('/api/personnel', personnelRouter(connection));
 app.use('/api/requests', requestRouter(connection));
 
+
+//hi
 app.use((err, req, res, next) => {
   console.log(err);
   res.code(500).json({ error: "internal server error." });
