@@ -36,7 +36,7 @@
 	FROM inventories
 	WHERE warehouse_id = 1;
 
-	-- status
+	-- status [NOT SURE ABOUT THIS]
 	SELECT *
 	FROM inventories
         WHERE archived = true;
