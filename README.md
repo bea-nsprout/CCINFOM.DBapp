@@ -7,11 +7,17 @@ Peoples:
 - **T**an, Ross David
 - **U**y, Bea Antoinette
 
-## Information on Hosting
+## Tech stack
 
-We are hosting on Vercel.
+We are using React for our front end, Vite as ... something, Express.js for our server, mysql for database.
 
 ## Running App
+
+First install `node`. Then install packages using
+```bash
+npm install
+```
+
 
 For development, run
 
@@ -19,12 +25,4 @@ For development, run
 npm run dev
 ```
 
-This runs `nodemon`, which will refresh the server if there are any changes made to the server files.
-
-For server hosting, run
-
-```bash
-npm start
-```
-
-This will run the server.
+This runs `nodemon` for the server and `vite` for the frontend. Any changes will refresh the server or the front end if there are any changes made.
