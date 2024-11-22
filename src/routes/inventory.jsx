@@ -1,5 +1,4 @@
-import { useEffect, React } from "react";
-import { useLoaderData } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 function showEditModal() {
     document.getElementById("editModal").style.display = "flex";
@@ -28,6 +27,8 @@ function confirmDelete() {
 }
 
 export default function Inventory() {
+    const [data, setData] = useState(null);
+
     useEffect(() => {
         const exitModal = (event) => {
             if (event.target === document.getElementById("editModal")) {
@@ -44,6 +45,11 @@ export default function Inventory() {
         };
     }, []);
 
+    useEffect(() => {
+        fetch("/api/item-masterlist/all")
+            .then(response => response.json())
+            .then(d => setData(d));
+    }, [])
 
     return (
         <>
@@ -78,24 +84,26 @@ export default function Inventory() {
                     </thead>
 
                     <tbody>
-                        {/* {data.map((item, index) => (
-              <tr key={index}>
-                <td>{item.item_code}</td>
-                <td>{item.item_desc}</td>
-                <td></td>
-                <td>{item.unit}</td>
-                <td></td>
-                <td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))} */}
+                        {
+                            data == null ? "LOADING" :
+                                data.map((item, index) => (
+                                    <tr key={index}>
+                                        <td>{item.item_code}</td>
+                                        <td>{item.item_desc}</td>
+                                        <td></td>
+                                        <td>{item.unit}</td>
+                                        <td></td>
+                                        <td>
+                                            <button className="edit" onClick={showEditModal}>
+                                                Edit
+                                            </button>
+                                            <span className="vertical-line">|</span>
+                                            <button className="delete" onClick={showDeleteModal}>
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
                     </tbody>
                 </table>
             </section>
