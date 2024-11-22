@@ -19,10 +19,10 @@
 -- Table structure for table `production`
 --
 
-DROP TABLE IF EXISTS `production`;
+DROP TABLE IF EXISTS productions;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `production` (
+CREATE TABLE productions (
   `production_id` int NOT NULL AUTO_INCREMENT,
   `item_code` varchar(20) NOT NULL,
   `date_produced` date NOT NULL,
@@ -41,9 +41,9 @@ CREATE TABLE `production` (
 -- Dumping data for table `production`
 --
 
-LOCK TABLES `production` WRITE;
-/*!40000 ALTER TABLE `production` DISABLE KEYS */;
-/*!40000 ALTER TABLE `production` ENABLE KEYS */;
+LOCK TABLES productions WRITE;
+/*!40000 ALTER TABLE productions DISABLE KEYS */;
+/*!40000 ALTER TABLE productions ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

@@ -1,50 +1,46 @@
 -- REQUEST
 
--- Create a new request record
-INSERT INTO request (request_id, 
-                     personnel_id,
+-- Create a new request record [ DONE ]
+	INSERT INTO requests (
+		     personnel_id,
                      date_requested,
                      item_code,
                      qty_balance, 
                      qty_total, 
-                     unit, 
                      warehouse_from_id, 
-                     warehouse_to_id, 
-                     status) 
-VALUES (1, 1, '2024-11-01', '0001370000SILV036Y', 100, 100, 'ROLL', 1, 2, 'COMPLETE');
+                     warehouse_to_id) 
+	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 99, 100, 1, 2);
  
--- Modify an existing record
-UPDATE request
-SET item_code = '0000123SDF', 
-    date_requested = '2024-12-01',
-    qty_balance = 101, 
-    qty_total = 105, 
-    status = 'PENDING' -- Default of all requests will be pending
-WHERE request_id = 1 AND qty_total - qty_balance > 0; -- request_id is some ID
+-- Modify an existing record [ DONE ]
+	SET @new_qty_balance = 50; /* provide the qty_balance */
 
--- delete existing record
-	DELETE FROM request
-    WHERE request_id = 1 AND qty_balance = 0;
+	UPDATE requests
+	SET
+    	qty_balance = @new_qty_balance 
+		/* provide the request_id */
+	WHERE qty_total >= @new_qty_balance AND request_id = 3;
+
+-- delete existing record -- [ DONE ]
+	DELETE FROM requests
+    WHERE request_id = 1 /* Some request_id */ AND qty_balance = 0; /* ask bea */
     
--- view all request 
+-- view all request -- [ DONE ]
+	-- add a join to show the item description, in item_masterlist
 	-- given a requestID
-	SELECT * 
-    FROM request 
-    WHERE request_id = 1;
+	SELECT r.*,  im.item_desc
+    FROM requests r
+	JOIN item_masterlist im ON r.item_code = im.item_code  
+    WHERE r.request_id = 1;
     
-    -- given date requested
-    SELECT *
-    FROM request
-	WHERE date_requested = '2024-12-01';
+    -- given date requested -- [ DONE ]
+	SELECT r.*, im.item_desc
+    FROM requests r
+	    JOIN item_masterlist im ON r.item_code = im.item_code 
+	WHERE r.date_requested = '2023-01-03';
     
-    -- given an item code
-    SELECT *
-    FROM request
-    WHERE item_code = '000000AAAAABBBCCCC';
-    
--- view all pending requests
-	SELECT * 
-    FROM request
-    WHERE status = 'PENDING';
-    
-    
+    -- given an item code -- [ DONE ]
+    SELECT r.*, im.item_desc
+    FROM requests r
+	    JOIN item_masterlist im ON r.item_code = im.item_code 
+    WHERE im.item_code = '003200BIG0RBLU036Y';
+

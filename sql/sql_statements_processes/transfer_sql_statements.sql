@@ -1,67 +1,78 @@
--- TRANSFER
--- create a new transfer record
-	INSERT INTO transfer (transfer_id, 
-			date_transferred,
-                        truck_id,
-                        quantity, 
-                        unit, 
-                        warehouse_from_id, 
-                        warehouse_to_id) VALUES
-	(1, '2024-11-05', 'insertstringname', 100, 'ROLL', 1, 2);
+-- TRANSFER 
+	-- Create Transfer [ FIXED ]
+	SET @v1 = 90; -- Amount to transfer
 
-	SET @v1 = 100; -- Assign value to variable
+	INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, quantity)
+	VALUES (1, 1, CURDATE(), 'TRK0001', @v1);
 
-	UPDATE request r
-	SET r.qty_balance = r.qty_total - @v1
-	WHERE t.transfer_id = r.transfer_id;
-    
-    	UPDATE warehouse_inventory wi
+	UPDATE requests r
+	SET r.qty_balance = r.qty_balance - @v1
+	WHERE r.request_id = 1 AND r.qty_balance >= @v1; 
+
+	UPDATE inventories wi
+	JOIN requests r ON wi.item_code = r.item_code
+	JOIN transfers t ON r.request_id = t.request_id
 	SET wi.quantity = wi.quantity - @v1
-	WHERE t.transfer_id = 1;
+	WHERE wi.warehouse_id = r.warehouse_from_id AND t.request_id = 1 AND wi.quantity >= @v1;
+
+	-- SELECT * FROM transfer WHERE request_id = 1;
+	-- SELECT * FROM request WHERE request_id = 1;
+	-- SELECT * FROM warehouse_inventory;
     
--- Modify an existing record and update qty_balance accordingly
-	SET @old_quantity = (SELECT t1.quantity 
-			FROM transfer t1
-			WHERE t1.transfer_id = 1); -- 1 is some transfer_id
+-- Modify an existing record and update qty_balance accordingly [ FIXED ]
+	SET @v1 = 50; -- New transfer quantity
+	SET @transfer_id = 6; -- Transfer ID to modify
 
-	UPDATE transfer t
-	SET t.item_code = "09009GFDSG", 
-		t.date_transferred = "2024-08-11", 
-		t.unit = 'Roll',
-		t.quantity = 50 -- New quantity
-	WHERE t.transfer_id = 1; -- 1 is some transfer_id
+	SELECT r.qty_total AS old_qty
+    	FROM requests r
+    	WHERE r.request_id = 2;
+    
+   	UPDATE transfers
+	SET quantity = @v1
+	WHERE transfer_id = @transfer_id;
 
-	UPDATE request r
-	SET r.qty_balance = r.qty_balance + (@old_quantity - t.quantity)
-	WHERE r.transfer_id = 1; -- 1 is some transfer_id
+	UPDATE requests r
+	JOIN transfers t ON r.request_id = t.request_id
+	SET r.qty_balance = r.qty_total - 100 /* Old Quantity */ + @v1 /* New Quantity */
+	WHERE t.transfer_id = @transfer_id;
+    
+	-- SELECT * FROM transfer WHERE transfer_id = @transfer_id;
+	-- SELECT * FROM request r
+	-- JOIN transfer t ON r.request_id = t.request_id
+	-- WHERE t.transfer_id = @transfer_id;
+    
   
--- delete existing record
-	-- Update warehouse_inventory to add back the deleted quantity
-	UPDATE warehouse_inventory wi
-	JOIN transfer t ON wi.item_code = t.item_code
-	SET 
-		wi.quantity = wi.quantity + t.quantity
-	WHERE t.transfer_id = 1; 
+-- delete existing record [ FIXED ]
+	SET @v1 = 14; /* transfer_id to be deleted */
 
-	-- Update request to adjust qty_balance
-	UPDATE request r
-	JOIN transfer t ON r.transfer_id = t.transfer_id
-	SET 
-		r.qty_balance = r.qty_balance + t.quantity
-	WHERE t.transfer_id = 1; 
+	UPDATE inventories wi
+	JOIN requests r ON wi.item_code = r.item_code
+	JOIN transfers t ON r.request_id = t.transfer_id
+	SET wi.quantity = wi.quantity + t.quantity
+	WHERE t.transfer_id = @v1;
 
-	-- Delete the transfer record
-	DELETE FROM transfer
-	WHERE transfer_id = 1;
+	UPDATE requests r
+	JOIN transfers t ON r.request_id = t.request_id
+	SET r.qty_balance = r.qty_balance + t.quantity
+	WHERE t.transfer_id = @v1;
 
--- view all request 
+	DELETE FROM transfers
+	WHERE transfer_id = @v1;
+
+-- view all request [ FIXED ]
     -- given date transferred
-    SELECT *
-    FROM transfer
-	WHERE date_transferred = '2024-12-01';
+    -- join with request then join with masterlist, display the item description
+	SELECT transfers.*, im.item_desc
+    FROM transfers
+    JOIN requests r ON transfers.request_id = r.request_id
+    JOIN item_masterlist im ON r.item_code = im.item_code
+	WHERE date_transferred = '2023-04-06';
     
--- given an item code
-    SELECT *
-    FROM transfer
-    WHERE item_code = '09009GFDSG';
+-- given an item code [ FIXED ]
+	-- join with request then join with masterlist, display the item description
+	SELECT transfers.*, im.item_code, im.item_desc
+    FROM transfers
+    JOIN requests r ON transfers.request_id = r.request_id
+    JOIN item_masterlist im ON r.item_code = im.item_code
+	WHERE im.item_code = '0001010000YGGO036Y';
     

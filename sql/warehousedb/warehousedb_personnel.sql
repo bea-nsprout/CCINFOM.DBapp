@@ -19,10 +19,10 @@
 -- Table structure for table `personnel`
 --
 
-DROP TABLE IF EXISTS `personnel`;
+DROP TABLE IF EXISTS personnels;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `personnel` (
+CREATE TABLE personnels (
   `personnel_id` int NOT NULL AUTO_INCREMENT,
   `first_name` varchar(20) NOT NULL,
   `last_name` varchar(20) NOT NULL,
@@ -36,10 +36,10 @@ CREATE TABLE `personnel` (
 -- Dumping data for table `personnel`
 --
 
-LOCK TABLES `personnel` WRITE;
-/*!40000 ALTER TABLE `personnel` DISABLE KEYS */;
-INSERT INTO `personnel` VALUES (1,'Alice','Johnson','manager',0),(2,'Bob','Smith','secretary',0),(3,'Charlie','Brown','checker',0),(4,'David','Williams','driver',0),(5,'Eva','Jones','admin',0),(6,'Frank','Miller','manager',0),(7,'Grace','Davis','secretary',0),(8,'Hannah','García','checker',0),(9,'Isaac','Rodriguez','driver',0),(10,'Jack','Martínez','admin',0),(11,'Karen','Hernandez','manager',0),(12,'Leo','Lopez','secretary',0),(13,'Maya','Gonzalez','checker',0),(14,'Nathan','Perez','driver',0),(15,'Olivia','Wilson','admin',0),(16,'Paul','Moore','manager',0),(17,'Quinn','Taylor','secretary',0),(18,'Rachel','Anderson','checker',0),(19,'Samuel','Thomas','driver',0),(20,'Tina','Jackson','admin',0),(21,'Ursula','White','manager',0),(22,'Victor','Harris','secretary',0),(23,'Walter','Clark','checker',0),(24,'Xander','Lewis','driver',0),(25,'Yvonne','Young','admin',0);
-/*!40000 ALTER TABLE `personnel` ENABLE KEYS */;
+LOCK TABLES personnels WRITE;
+/*!40000 ALTER TABLE personnels DISABLE KEYS */;
+INSERT INTO personnels VALUES (1,'Alice','Johnson','manager',0),(2,'Bob','Smith','secretary',0),(3,'Charlie','Brown','checker',0),(4,'David','Williams','driver',0),(5,'Eva','Jones','admin',0),(6,'Frank','Miller','manager',0),(7,'Grace','Davis','secretary',0),(8,'Hannah','García','checker',0),(9,'Isaac','Rodriguez','driver',0),(10,'Jack','Martínez','admin',0),(11,'Karen','Hernandez','manager',0),(12,'Leo','Lopez','secretary',0),(13,'Maya','Gonzalez','checker',0),(14,'Nathan','Perez','driver',0),(15,'Olivia','Wilson','admin',0),(16,'Paul','Moore','manager',0),(17,'Quinn','Taylor','secretary',0),(18,'Rachel','Anderson','checker',0),(19,'Samuel','Thomas','driver',0),(20,'Tina','Jackson','admin',0),(21,'Ursula','White','manager',0),(22,'Victor','Harris','secretary',0),(23,'Walter','Clark','checker',0),(24,'Xander','Lewis','driver',0),(25,'Yvonne','Young','admin',0);
+/*!40000 ALTER TABLE personnels ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
