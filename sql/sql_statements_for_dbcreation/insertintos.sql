@@ -144,7 +144,7 @@ INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, qua
 -- Decrease quantity from the source warehouse
 UPDATE inventories wi
 JOIN requests r ON wi.item_code = r.item_code
-JOIN transfer t ON r.request_id = t.request_id
+JOIN transfers t ON r.request_id = t.request_id
 SET wi.quantity = wi.quantity - t.quantity;
 
 -- Increase quantity in the destination warehouse
