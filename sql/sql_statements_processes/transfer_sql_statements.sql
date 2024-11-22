@@ -13,7 +13,7 @@
 	JOIN requests r ON wi.item_code = r.item_code
 	JOIN transfers t ON r.request_id = t.request_id
 	SET wi.quantity = wi.quantity - @v1
-	WHERE wi.warehouse_id = t.warehouse_from_id AND t.request_id = 1 AND wi.quantity >= @v1;
+	WHERE wi.warehouse_id = r.warehouse_from_id AND t.request_id = 1 AND wi.quantity >= @v1;
 
 	-- SELECT * FROM transfer WHERE request_id = 1;
 	-- SELECT * FROM request WHERE request_id = 1;

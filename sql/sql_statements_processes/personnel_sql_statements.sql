@@ -24,5 +24,5 @@
 
 -- MODIFY, Unarichive Personnel
 	UPDATE personnel
-	SET archive = 0 /* 0 */
+	SET archived = 0 /* 0 */
 	WHERE personnel_id = 5;
