@@ -46,7 +46,7 @@ export default function Inventory() {
     }, []);
 
     useEffect(() => {
-        fetch("/api/item-masterlist/all")
+        fetch("/api/items/all")
             .then(response => response.json())
             .then(d => setData(d));
     }, [])

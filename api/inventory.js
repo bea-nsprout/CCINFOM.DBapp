@@ -1,5 +1,6 @@
 import express from "express";
-import { body, matchedData, query, validationResult } from "express-validator";
+import { body, matchedData, query } from "express-validator";
+import { validationRoutine, extractMatchedRoutine } from "./helper.js";
 
 const itemDoesNotExistRoutine = (connection) => {
     const routine = async (req, res, next) => {
@@ -19,6 +20,7 @@ const itemDoesNotExistRoutine = (connection) => {
     return routine;
 };
 
+
 const itemExistsRoutine = (connection) => {
     const routine = async (req, res, next) => {
         const [[{ item_exists }]] = await connection.execute(
@@ -37,34 +39,8 @@ const itemExistsRoutine = (connection) => {
     return routine;
 };
 
-const extractMatchedRoutine = (req, res, next) => {
-    res.locals.data = matchedData(req)
-    next()
-}
-
-
-const validationRoutine = (status, description) => {
-    const routine = (req, res, next) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            res
-                .status(status)
-                .json({
-                    errors: errors.array(),
-                    description: description
-                });
-            return;
-        }
-        next()
-    }
-
-    return routine
-
-}
-
-
-const inventory = (cors, connection) => {
-    const routeRoot = "/api/item-masterlist/";
+const inventoryRouter = (cors, connection) => {
+    const routeRoot = "/api/items/";
     const router = express.Router();
 
     router.get(
@@ -189,4 +165,4 @@ const inventory = (cors, connection) => {
     return router;
 };
 
-export default inventory;
+export default inventoryRouter;

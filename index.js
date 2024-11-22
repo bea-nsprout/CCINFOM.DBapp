@@ -4,12 +4,13 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import inventoryRouter from "./api/inventory.js";
+import warehouseRouter from "./api/warehouse.js";
 
 dotenv.config();
 
 const app = express();
 const port = 3000;
-const connection = mysql.createConnection({
+const connection = await mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: process.env.MYSQL_DB_PASSWORD,
@@ -20,6 +21,7 @@ const connection = mysql.createConnection({
 app.use(express.json());
 
 app.use(inventoryRouter(cors, connection));
+app.use(warehouseRouter(cors, connection));
 
 app.use((err, req, res, next) => {
   console.log(err);

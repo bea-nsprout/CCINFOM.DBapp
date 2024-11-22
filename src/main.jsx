@@ -11,6 +11,7 @@ import Home from "./routes/home";
 import Requests from "./routes/requests";
 import Transfers from "./routes/transfers";
 import Production from "./routes/production";
+import Items from "./routes/items";
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: "production",
         element: <Production />,
+      },
+      {
+        path: "items",
+        element: <Items />,
       },
     ],
   },
