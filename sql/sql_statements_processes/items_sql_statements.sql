@@ -63,21 +63,23 @@
 		DELETE FROM items 
 		WHERE item_code = '0001010000TEMP036Y';
     
--- VIEW: ALL ITEMS
-	-- view all items WITHOUT filter
+-- VIEW
+	-- VIEW #1: NO FILTER
 		SELECT *
         FROM items;
-    
-    -- view all items but with filter
+        
+	-- VIEW #2: selected item, given itemcode
 		SELECT *
-        FROM items
-        WHERE archived = false;
+		FROM items
+		WHERE item_code LIKE '%0001010000TEMP036Y%' /*user_input*/;
         
-        SELECT *
+	-- VIEW #3: ITEM DESCRIPTION
+		SELECT * 
         FROM items
-        WHERE archived = true;
+        WHERE item_desc LIKE '%DE%' /*user_input*/;
         
--- VIEW: selected item, given itemcode
-	SELECT *
-    FROM items
-    WHERE item_code = '0001010000TEMP036Y';
+	-- VIEW #4: STATUS
+		SELECT * 
+        FROM items
+        WHERE archived = true /*true or false*/;
+        

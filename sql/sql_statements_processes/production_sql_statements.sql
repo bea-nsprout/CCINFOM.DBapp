@@ -48,25 +48,32 @@
         WHERE inv.item_code = '0001370000SILV036Y' /*@itemcode*/ AND inv.warehouse_id = 1 /*@warehouseid*/;
     
 -- 4. VIEW all production records
-	-- no filter:
-		SELECT p.production_id, p.date_produced, p.item_code, i.item_desc, p.qty_produced, p.warehouse_id
+	-- VIEW #1: NO FILTER
+		SELECT p.production_id, p.item_code, p.qty_produced, p.date_produced, warehouse_name
         FROM productions p
-        LEFT JOIN item_masterlist i ON p.item_code = i.item_code;
+        JOIN warehouses w ON w.warehouse_id = p.warehouse_id
+        ORDER BY production_id DESC;
         
-	-- filter: given date
-		SELECT *
-        FROM productions
-        WHERE date_produced = '2024-11-18' /*@date*/;
+	-- VIEW #2: FILTER -- DATE RANGE
+		SELECT p.production_id, p.item_code, p.qty_produced, p.date_produced, warehouse_name
+        FROM productions p
+        JOIN warehouses w ON w.warehouse_id = p.warehouse_id
+        WHERE date_produced BETWEEN '2024-01-18' /*@date*/ AND '2024-11-19' /*@enddate*/
+        ORDER BY date_produced DESC;
         
-	-- filter: date range
-		SELECT *
-        FROM productions
-		WHERE date_produced BETWEEN '2024-11-02' /*@date1*/ AND '2024-11-18' /*date2*/;
+	-- VIEW #3: FILTER -- ITEM CODE
+		SELECT p.production_id, p.item_code, p.qty_produced, p.date_produced, warehouse_name
+        FROM productions p
+        JOIN warehouses w ON w.warehouse_id = p.warehouse_id
+        WHERE item_code LIKE '%137%' /*userinput*/
+        ORDER BY production_id DESC;
         
-	-- filter: itemcode
-		SELECT *
-        FROM productions
-        WHERE item_code = '0001370000SILV036Y' /*@itemcode*/;
+	-- VIEW #4: FILTER -- WAREHOUSE
+		SELECT p.production_id, p.item_code, p.qty_produced, p.date_produced, warehouse_name
+        FROM productions p
+        JOIN warehouses w ON w.warehouse_id = p.warehouse_id
+        WHERE warehouse_name LIKE '% a%'
+        ORDER BY date_produced DESC;
 
         
         
