@@ -40,7 +40,6 @@
 	-- SELECT * FROM request r
 	-- JOIN transfer t ON r.request_id = t.request_id
 	-- WHERE t.transfer_id = @transfer_id;
-    
   
 -- delete existing record [ FIXED ]
 	SET @v1 = 14; /* transfer_id to be deleted */
@@ -78,7 +77,9 @@
 	WHERE im.item_code = '0001010000YGGO036Y';
 
 	-- status 
-	
+	SELECT *, IF(quantity > 0, 'PENDING', 'COMPLETED') AS status
+	FROM transfers;
+
 	-- warehouse from 
 	SELECT t.*, r.warehouse_from_id
 	FROM transfers t 
