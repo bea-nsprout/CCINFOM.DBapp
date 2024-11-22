@@ -38,7 +38,7 @@
 -- VIEW #1: all active warehouses (filter)
 	-- also for DROPDOWN
     -- i deliberately left out the warehouse id, because i dont think it's needed?
-	SELECT warehouse_name, warehouse_location
+	SELECT warehouse_name, location
     FROM warehouses
     WHERE archived = false;
     
@@ -47,18 +47,23 @@
     FROM warehouses
     WHERE warehouse_name = 'Warehouse A' /*replace*/ AND location = 'Manila, Metro Manila' /*replace*/;
     
--- VIEW #2: given warehouse name, list all warehouses and their location that have the name
+-- VIEW #2: NAME FILTER, list all warehouses and their location that have the name
 	SELECT warehouse_name, location
     FROM warehouses
     WHERE warehouse_name LIKE '%house%' /*replace*/;
 
--- VIEW #3: given warehouse location, list all warehouses and their name that satisfies the input
+-- VIEW #3: LOCATION FILTER, list all warehouses and their name that satisfies the input
 	SELECT warehouse_name, location
     FROM warehouses
     WHERE location LIKE '%Manila%' /*replace*/;
 
+-- VIEW #4: STATUS FILTER
+    SELECT warehouse_name, location
+    FROM warehouses
+    WHERE archived = true /*or false*/;
+
 -- DELETE
-    -- 1. before warehouse can be deleted, check first if in inventory, request, or production contains data, to avoid orphans
+    -- 1. PRE-DELETE PROCESS: before warehouse can be deleted, check first if in inventory, request, or production contains data, to avoid orphans
     
     SET @warehouse_id = 12 /*warehouseid to check for deletion*/;
     
@@ -83,7 +88,7 @@
 			-- return true if no instance of items in given warehouse, PROCEED TO NEXT SQL STATEMENT
 			-- return false if has instance of item/s in given warehouse, ASK USER TO 'ARCHIVE' INSTEAD
 	
-    -- 2. DELETE 
+    -- 2. ACTUAL DELETE PROCESS
 		-- 2.1. DELETE INSTANCES FROM WAREHOUSE INVENTORY: 
 		-- if above statement true, delete all the instances in warehouse inventory; if false, dont! ask user to archive it instead
 		DELETE FROM inventories
