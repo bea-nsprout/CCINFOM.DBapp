@@ -20,3 +20,23 @@
 -- DELETE A TRUCK 
 	DELETE FROM trucks
 	WHERE truck_id = 'ABC123';
+
+-- VIEW
+	-- No Filter
+	SELECT *
+	FROM trucks;
+
+	-- Truck Plate Number
+	SELECT *
+	FROM trucks
+	WHERE truck_id = 'TRK001';
+
+	-- Warehouse
+	SELECT *
+	FROM trucks
+	WHERE warehouse_id = 1;
+
+	-- Active Status
+	SELECT *
+	FROM trucks
+	WHERE archived = 0;
