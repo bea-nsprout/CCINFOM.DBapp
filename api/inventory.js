@@ -4,7 +4,7 @@ import { body, matchedData, query, validationResult } from "express-validator";
 const itemDoesNotExistRoutine = (connection) => {
     const routine = async (req, res, next) => {
         const [[{ item_exists }]] = await connection.execute(
-            `SELECT EXISTS (SELECT 1 FROM item_masterlist items WHERE items.item_code = ?) AS item_exists;`,
+            `SELECT EXISTS (SELECT 1 FROM items items WHERE items.item_code = ?) AS item_exists;`,
             [res.locals.data.item_code],
         );
         if (item_exists) {
@@ -22,7 +22,7 @@ const itemDoesNotExistRoutine = (connection) => {
 const itemExistsRoutine = (connection) => {
     const routine = async (req, res, next) => {
         const [[{ item_exists }]] = await connection.execute(
-            `SELECT EXISTS (SELECT 1 FROM item_masterlist items WHERE items.item_code = ?) AS item_exists;`,
+            `SELECT EXISTS (SELECT 1 FROM items items WHERE items.item_code = ?) AS item_exists;`,
             [res.locals.data.item_code],
         );
         if (!item_exists) {
@@ -75,7 +75,7 @@ const inventory = (cors, connection) => {
             validationRoutine(400, "Invalid value for archived, must be 'true' or 'false'."),
             async (req, res) => {
                 const { archived } = matchedData(req);
-                let sqlQuery = "SELECT * FROM item_masterlist";
+                let sqlQuery = "SELECT * FROM items";
 
                 if (archived !== undefined) {
                     sqlQuery += " WHERE archived = ?";
@@ -108,12 +108,12 @@ const inventory = (cors, connection) => {
                 const { item_code, item_desc, unit } = res.locals.data;
 
                 await connection.execute(
-                    "INSERT INTO item_masterlist (item_code, item_desc, unit) VALUES (?, ?, ?);",
+                    "INSERT INTO items (item_code, item_desc, unit) VALUES (?, ?, ?);",
                     [item_code, item_desc, unit],
                 );
 
                 await connection.execute(
-                    `INSERT INTO warehouse_inventory (item_code, warehouse_id) SELECT ?, warehouse_id FROM warehouse;`,
+                    `INSERT INTO inventories (item_code, warehouse_id) SELECT ?, warehouse_id FROM warehouses;`,
                     [item_code],
                 );
 
@@ -134,7 +134,7 @@ const inventory = (cors, connection) => {
                 const { item_code } = res.locals.data;
 
                 const [[{ no_existing_item }]] = await connection.execute(
-                    `SELECT NOT EXISTS ( SELECT 1 FROM warehouse_inventory WHERE item_code = ? AND quantity > 0) AS no_existing_item;`,
+                    `SELECT NOT EXISTS ( SELECT 1 FROM inventories WHERE item_code = ? AND quantity > 0) AS no_existing_item;`,
                     [item_code],
                 );
 
@@ -149,11 +149,11 @@ const inventory = (cors, connection) => {
                 }
 
                 await connection.execute(
-                    `DELETE FROM warehouse_inventory WHERE item_code = ?`,
+                    `DELETE FROM inventories WHERE item_code = ?`,
                     [item_code],
                 );
                 await connection.execute(
-                    `DELETE FROM item_masterlist WHERE item_code = ?`,
+                    `DELETE FROM items WHERE item_code = ?`,
                     [item_code],
                 );
 
@@ -177,7 +177,7 @@ const inventory = (cors, connection) => {
             async (req, res) => {
 
                 const { item_code, item_desc, unit } = res.locals.data;
-                await connection.execute(`UPDATE item_masterlist SET item_desc = ?, unit = ? WHERE item_code = ?`, [item_desc, unit, item_code])
+                await connection.execute(`UPDATE items SET item_desc = ?, unit = ? WHERE item_code = ?`, [item_desc, unit, item_code])
 
 
 
