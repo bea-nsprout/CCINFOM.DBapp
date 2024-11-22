@@ -60,35 +60,38 @@
 
 -- VIEW
 	-- No Filter
-	SELECT * FROM transfers;
+	SELECT * FROM transfers
+   	ORDER BY transfer_id DESC;
 
 	-- Given Date 
-	SELECT transfers.*, im.item_desc
+	SELECT *
 	FROM transfers
-	JOIN requests r ON transfers.request_id = r.request_id
-	JOIN items im ON r.item_code = im.item_code
-	WHERE date_transferred BETWEEN '2023-04-06' AND '2023-05-01';
+	WHERE date_transferred BETWEEN '2023-04-06' AND '2023-05-01'
+	ORDER BY transfer_id DESC;
 
 	-- Given an item_code
-	SELECT transfers.*, im.item_code, im.item_desc
+	SELECT transfers.*, im.item_code
    	FROM transfers
     	JOIN requests r ON transfers.request_id = r.request_id
     	JOIN items im ON r.item_code = im.item_code
-	WHERE im.item_code = '0001010000YGGO036Y';
+	WHERE im.item_code = '0001010000YGGO036Y'
+    	ORDER BY transfer_id DESC;
 
 	-- status 
 	SELECT *, IF(quantity > 0, 'PENDING', 'COMPLETED') AS status
-	FROM transfers;
+	FROM transfers
+    	ORDER BY transfer_id DESC;
 
 	-- warehouse from 
 	SELECT t.*, r.warehouse_from_id
 	FROM transfers t 
 	JOIN requests r ON t.request_id = r.request_id
-	WHERE r.warehouse_from_id = 1; 
+	WHERE r.warehouse_from_id = 1
+    	ORDER BY transfer_id DESC; 
 
 	-- warehouse to 
 	SELECT t.*, r.warehouse_to_id
 	FROM transfers t 
 	JOIN requests r ON t.request_id = r.request_id
-	WHERE r.warehouse_to_id = 1; 
-    
+	WHERE r.warehouse_to_id = 1
+    	ORDER BY transfer_id DESC; 
