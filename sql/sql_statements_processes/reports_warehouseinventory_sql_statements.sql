@@ -3,7 +3,7 @@
     -- BODY: comparing 2 warehouses
 		SELECT items.item_description, inv1.quantity, 
         FROM item_masterlist items
-        JOIN warehouse_inventory inv1 ON inv1.item_code = items.item_code	
-        JOIN warehouse_inventory inv2 ON inv2.item_code = items.item_code AND 
+        JOIN inventories inv1 ON inv1.item_code = items.item_code
+        JOIN inventories inv2 ON inv2.item_code = items.item_code AND
         
     
