@@ -33,5 +33,5 @@ async function caller() {
 }
 
 // caller()
-// test("012323sdf1sf44")
-deleter("012323sdf1sf44");
+test("newitem")
+// deleter("012323sdf1sf44");
