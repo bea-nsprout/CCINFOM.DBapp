@@ -3,26 +3,44 @@
 	-- check if personnel_id already exists
 		SELECT EXISTS (
 			SELECT 1
-			FROM personnel p
+			FROM personnels p
 			WHERE p.personnel_id = 5 -- Replace 5 with the actual personnel_id	
 		) AS personnel_id_exists;
 
 		-- if it returns 0, you can add a personnel
 		-- Add a new personnel if it does not exist
-        INSERT INTO personnel (first_name, last_name, position, archived) VALUES
+        INSERT INTO personnels (first_name, last_name, position, archived) VALUES
 		('Mickey', 'Mouse', 'Admin', 0);
             
 -- MODIFY the Personnel Position 
-	UPDATE personnel
-    SET position = 'Manager'
-    WHERE personnel_id = 5;
+	UPDATE personnels
+    	SET position = 'Manager'
+    	WHERE personnel_id = 5;
     
 -- MODIFY, Archive PersonneL
-	UPDATE personnel
-    SET archived = 1 /* 1 */
-    WHERE personnel_id = 5;
+	UPDATE personnels
+    	SET archived = 1 /* 1 */
+    	WHERE personnel_id = 5;
 
 -- MODIFY, Unarichive Personnel
-	UPDATE personnel
+	UPDATE personnels
 	SET archived = 0 /* 0 */
 	WHERE personnel_id = 5;
+
+-- VIEW 
+	-- No Filter
+	SELECT * FROM personnels;
+
+	-- Name
+ 	SELECT * FROM personnels
+	WHERE first_name = 'Charlie' OR last_name = 'Martinez'; /* Insert first and last name */
+
+	-- Position
+	SELECT * FROM personnels
+	WHERE position = 'Manager'; /* Insert position */
+
+	-- Active Status 
+	SELECT * FROM personnels
+	WHERE archived = 0;
+
+	
