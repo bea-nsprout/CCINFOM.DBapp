@@ -26,36 +26,34 @@
     
 -- view all request -- [ DONE ]
 	-- no filter
-	SELECT r.*,  im.item_desc
-    	FROM requests r
-	JOIN item_masterlist im ON r.item_code = im.item_code;
+	SELECT * FROM requests
+	ORDER BY request_id DESC;
 
 	-- given date requested -- [ DONE ]
-	SELECT r.*, im.item_desc
-    	FROM requests r
-	JOIN item_masterlist im ON r.item_code = im.item_code 
-	WHERE r.date_requested = '2023-01-03';
+	SELECT * FROM requests 
+	WHERE date_requested = '2023-01-03'
+   	ORDER BY request_id DESC;
 
     	-- given an item code -- [ DONE ]
-    	SELECT r.*, im.item_desc
+    	SELECT *
     	FROM requests r
-	JOIN item_masterlist im ON r.item_code = im.item_code 
-    	WHERE im.item_code = '003200BIG0RBLU036Y';
+	JOIN items im ON r.item_code = im.item_code 
+    	WHERE im.item_code = '003200BIG0RBLU036Y'
+        ORDER BY r.request_id DESC;
 
 	-- given a status of qty_balance
 	SELECT *, IF(qty_balance > 0, 'PENDING', 'COMPLETED') AS status
-	FROM requests r;
+	FROM requests r
+    	ORDER BY r.request_id DESC;
 
 	-- given a warehouse from ID
-    	SELECT r.*, im.item_desc
+    	SELECT *
     	FROM requests r
-	JOIN item_masterlist im ON r.item_code = im.item_code 
-    	WHERE r.warehouse_from_id = 1;
+    	WHERE r.warehouse_from_id = 1
+        ORDER BY r.request_id DESC;
 
 	-- given a warehouse to ID
-	SELECT r.*, im.item_desc
+	SELECT *
     	FROM requests r
-	JOIN item_masterlist im ON r.item_code = im.item_code 
-    	WHERE r.warehouse_to_id = 1;
-
-
+    	WHERE r.warehouse_to_id = 1
+        ORDER BY r.request_id DESC;
