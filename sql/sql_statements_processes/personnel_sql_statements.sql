@@ -29,18 +29,20 @@
 
 -- VIEW 
 	-- No Filter
-	SELECT * FROM personnels;
+	SELECT * FROM personnels
+	ORDER BY personnel_id;
 
 	-- Name
  	SELECT * FROM personnels
-	WHERE first_name = 'Charlie' OR last_name = 'Martinez'; /* Insert first and last name */
+	WHERE first_name = 'Charlie' OR last_name = 'Martinez' /* Insert first and last name */
+	ORDER BY personnel_id;
 
 	-- Position
 	SELECT * FROM personnels
-	WHERE position = 'Manager'; /* Insert position */
+	WHERE position = 'Manager' /* Insert position */
+	ORDER BY personnel_id;
 
 	-- Active Status 
 	SELECT * FROM personnels
-	WHERE archived = 0;
-
-	
+	WHERE archived = 0
+	ORDER BY personnel_id;
