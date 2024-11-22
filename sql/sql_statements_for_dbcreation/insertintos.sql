@@ -1,4 +1,4 @@
-INSERT INTO item_masterlist (item_code, item_desc, unit) VALUES
+INSERT INTO items (item_code, item_desc, unit) VALUES
 ('0001010000YGGO036Y', 'MET. LACE 101-14 YGD W GOLD 36 YDS', 'ROLL'),	
 ('0001370000GOLD036Y', 'MET. LACE 137-50 GOLD 36 YDS', 'ROLL'),	
 ('0001370000SILV036Y', 'MET. LACE 137-50 SILVER 36 YDS', 'ROLL'),	
@@ -20,7 +20,7 @@ INSERT INTO item_masterlist (item_code, item_desc, unit) VALUES
 ('003200BIG0WHTE036Y', 'WED. CORD 3200 BIG WHITE 36 YDS', 'ROLL'),	
 ('003200MEDMYGLD072Y', 'WED. CORD 3200 MED. Y. GOLD 72 YDS', 'ROLL');
 
-INSERT INTO personnel (first_name, last_name, position) VALUES
+INSERT INTO personnels (first_name, last_name, position) VALUES
 ('Alice', 'Johnson', 'manager'),
 ('Bob', 'Smith', 'secretary'),
 ('Charlie', 'Brown', 'checker'),
@@ -47,7 +47,7 @@ INSERT INTO personnel (first_name, last_name, position) VALUES
 ('Xander', 'Lewis', 'driver'),
 ('Yvonne', 'Young', 'admin');
 
-INSERT INTO warehouse (warehouse_name, location) VALUES
+INSERT INTO warehouses (warehouse_name, location) VALUES
 ('Warehouse A', 'Manila, Metro Manila'),
 ('Warehouse B', 'Cebu City, Cebu'),
 ('Warehouse C', 'Davao City, Davao del Sur'),
@@ -59,7 +59,7 @@ INSERT INTO warehouse (warehouse_name, location) VALUES
 ('Warehouse I', 'Zamboanga City, Zamboanga del Sur'),
 ('Warehouse J', 'Batangas City, Batangas');
 
-INSERT INTO truck (truck_id, warehouse_id) VALUES
+INSERT INTO trucks (truck_id, warehouse_id) VALUES
 ('TRK001', 1),
 ('TRK002', 2),
 ('TRK003', 3),
@@ -72,9 +72,9 @@ INSERT INTO truck (truck_id, warehouse_id) VALUES
 ('TRK010', 10);
 
 -- Initialies warehouse inventory based on the warehouses data given
-INSERT INTO warehouse_inventory (item_code, warehouse_id) SELECT im.item_code, w.warehouse_id FROM item_masterlist im JOIN warehouse w;
+INSERT INTO inventories (item_code, warehouse_id) SELECT im.item_code, w.warehouse_id FROM items im JOIN warehouses w;
 
-INSERT INTO production (item_code, date_produced, qty_produced, warehouse_id) VALUES
+INSERT INTO productions (item_code, date_produced, qty_produced, warehouse_id) VALUES
 ('0001370000SILV036Y', '2022-11-01', 50, 1),
 ('0001370000GOLD036Y', '2022-12-02', 100, 2),
 ('003200MEDMYGLD072Y', '2023-01-03', 75, 3),
@@ -96,7 +96,7 @@ INSERT INTO production (item_code, date_produced, qty_produced, warehouse_id) VA
 ('003001SMALYGLD036Y', '2024-05-19', 100, 9),
 ('003200MEDMYGLD072Y', '2024-06-20', 60, 10);
 
-INSERT INTO request (personnel_id, date_requested, item_code, qty_balance, qty_total, warehouse_from_id, warehouse_to_id) VALUES
+INSERT INTO requests (personnel_id, date_requested, item_code, qty_balance, qty_total, warehouse_from_id, warehouse_to_id) VALUES
 (1, '2022-11-01', '0001370000SILV036Y', 100, 100, 1, 2),
 (2, '2022-12-02', '0001370000GOLD036Y', 200, 200, 2, 3),
 (3, '2023-01-03', '003200MEDMYGLD072Y', 150, 150, 3, 4),
@@ -119,7 +119,7 @@ INSERT INTO request (personnel_id, date_requested, item_code, qty_balance, qty_t
 (10, '2024-06-20', '003200MEDMYGLD072Y', 120, 120, 10, 1);
 
 
-INSERT INTO transfer (request_id, personnel_id, date_transferred, truck_id, quantity) VALUES
+INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, quantity) VALUES
 (1, 1, '2022-11-01', 'TRK001', 70),
 (2, 2, '2022-12-02', 'TRK002', 100),
 (3, 3, '2023-01-03', 'TRK003', 75),
@@ -142,22 +142,22 @@ INSERT INTO transfer (request_id, personnel_id, date_transferred, truck_id, quan
 (1, 10, '2024-06-20', 'TRK010', 20);
 
 -- Decrease quantity from the source warehouse
-UPDATE warehouse_inventory wi
+UPDATE inventories wi
 JOIN request r ON wi.item_code = r.item_code
 JOIN transfer t ON r.request_id = t.request_id
 SET wi.quantity = wi.quantity - t.quantity;
 
 -- Increase quantity in the destination warehouse
-UPDATE warehouse_inventory wi
-JOIN request r ON wi.item_code = r.item_code
-JOIN transfer t ON r.request_id = t.request_id
+UPDATE inventories wi
+JOIN requests r ON wi.item_code = r.item_code
+JOIN transfers t ON r.request_id = t.request_id
 SET wi.quantity = wi.quantity + t.quantity;
 
 -- Update qty_balance in request:
-UPDATE request r
+UPDATE requests r
 JOIN (
     SELECT request_id, SUM(quantity) AS total_transferred
-    FROM transfer
+    FROM transfers
     GROUP BY request_id
 ) t ON r.request_id = t.request_id
 SET r.qty_balance = r.qty_balance - t.total_transferred
