@@ -22,25 +22,40 @@
 
 -- delete existing record -- [ DONE ]
 	DELETE FROM requests
-    WHERE request_id = 1 /* Some request_id */ AND qty_balance = 0; /* ask bea */
+    WHERE request_id = 1 /* Some request_id */ AND qty_balance = 0;
     
 -- view all request -- [ DONE ]
-	-- add a join to show the item description, in item_masterlist
-	-- given a requestID
+	-- no filter
 	SELECT r.*,  im.item_desc
-    FROM requests r
-	JOIN item_masterlist im ON r.item_code = im.item_code  
-    WHERE r.request_id = 1;
-    
-    -- given date requested -- [ DONE ]
+    	FROM requests r
+	JOIN item_masterlist im ON r.item_code = im.item_code;
+
+	-- given date requested -- [ DONE ]
 	SELECT r.*, im.item_desc
-    FROM requests r
-	    JOIN item_masterlist im ON r.item_code = im.item_code 
+    	FROM requests r
+	JOIN item_masterlist im ON r.item_code = im.item_code 
 	WHERE r.date_requested = '2023-01-03';
-    
-    -- given an item code -- [ DONE ]
-    SELECT r.*, im.item_desc
-    FROM requests r
-	    JOIN item_masterlist im ON r.item_code = im.item_code 
-    WHERE im.item_code = '003200BIG0RBLU036Y';
+
+    	-- given an item code -- [ DONE ]
+    	SELECT r.*, im.item_desc
+    	FROM requests r
+	JOIN item_masterlist im ON r.item_code = im.item_code 
+    	WHERE im.item_code = '003200BIG0RBLU036Y';
+
+	-- given a status of qty_balance
+	SELECT *, IF(qty_balance > 0, 'PENDING', 'COMPLETED') AS status
+	FROM requests r;
+
+	-- given a warehouse from ID
+    	SELECT r.*, im.item_desc
+    	FROM requests r
+	JOIN item_masterlist im ON r.item_code = im.item_code 
+    	WHERE r.warehouse_from_id = 1;
+
+	-- given a warehouse to ID
+	SELECT r.*, im.item_desc
+    	FROM requests r
+	JOIN item_masterlist im ON r.item_code = im.item_code 
+    	WHERE r.warehouse_to_id = 1;
+
 
