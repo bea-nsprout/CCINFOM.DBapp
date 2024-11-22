@@ -43,6 +43,7 @@ const inventoryRouter = (cors, connection) => {
     const routeRoot = "/api/items/";
     const router = express.Router();
 
+    // Get all items, query for archived.
     router.get(
         routeRoot + "all",
         query("archived").optional().isBoolean(),

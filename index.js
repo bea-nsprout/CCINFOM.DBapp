@@ -3,7 +3,7 @@ import mysql from "mysql2/promise";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import inventoryRouter from "./api/inventory.js";
+import inventoryRouter from "./api/items.js";
 import warehouseRouter from "./api/warehouse.js";
 
 dotenv.config();
