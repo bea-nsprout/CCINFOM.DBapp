@@ -24,7 +24,7 @@ CREATE TABLE trucks (
     FOREIGN KEY (warehouse_id) REFERENCES warehouses(warehouse_id) ON DELETE RESTRICT
 );
 
-CREATE TABLE personnels (
+CREATE TABLE personnel (
 	personnel_id int PRIMARY KEY AUTO_INCREMENT ,
     first_name varchar(20) NOT NULL,
     last_name varchar(20) NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE requests (
     warehouse_from_id int NOT NULL,    	-- id of W.house that requests were from
     warehouse_to_id int NOT NULL,		-- id of w.house that requests were sent to
     
-    FOREIGN KEY (personnel_id) REFERENCES personnels(personnel_id) ON DELETE RESTRICT, 
+    FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id) ON DELETE RESTRICT,
     FOREIGN KEY (item_code) REFERENCES items(item_code) ON DELETE RESTRICT,
     FOREIGN KEY (warehouse_from_id) REFERENCES warehouses(warehouse_id) ON DELETE RESTRICT,
     FOREIGN KEY (warehouse_to_id) REFERENCES warehouses(warehouse_id) ON DELETE RESTRICT
@@ -69,7 +69,7 @@ CREATE TABLE transfers (
     quantity int NOT NULL,
     
 	FOREIGN KEY (request_id) REFERENCES requests(request_id) ON DELETE RESTRICT, 
-    FOREIGN KEY (personnel_id) REFERENCES personnels(personnel_id) ON DELETE RESTRICT,
+    FOREIGN KEY (personnel_id) REFERENCES personnel(personnel_id) ON DELETE RESTRICT,
     FOREIGN KEY (truck_id) REFERENCES trucks(truck_id) ON DELETE RESTRICT
 );
 

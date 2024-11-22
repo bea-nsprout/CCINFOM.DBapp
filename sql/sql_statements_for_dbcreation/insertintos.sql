@@ -20,7 +20,7 @@ INSERT INTO items (item_code, item_desc, unit) VALUES
 ('003200BIG0WHTE036Y', 'WED. CORD 3200 BIG WHITE 36 YDS', 'ROLL'),	
 ('003200MEDMYGLD072Y', 'WED. CORD 3200 MED. Y. GOLD 72 YDS', 'ROLL');
 
-INSERT INTO personnels (first_name, last_name, position) VALUES
+INSERT INTO personnel (first_name, last_name, position) VALUES
 ('Alice', 'Johnson', 'manager'),
 ('Bob', 'Smith', 'secretary'),
 ('Charlie', 'Brown', 'checker'),
