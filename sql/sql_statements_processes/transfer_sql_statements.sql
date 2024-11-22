@@ -59,20 +59,35 @@
 	DELETE FROM transfers
 	WHERE transfer_id = @v1;
 
--- view all request [ FIXED ]
-    -- given date transferred
-    -- join with request then join with masterlist, display the item description
+-- VIEW
+	-- No Filter
+	SELECT * FROM transfers;
+
+	-- Given Date 
 	SELECT transfers.*, im.item_desc
-    FROM transfers
-    JOIN requests r ON transfers.request_id = r.request_id
-    JOIN item_masterlist im ON r.item_code = im.item_code
-	WHERE date_transferred = '2023-04-06';
-    
--- given an item code [ FIXED ]
-	-- join with request then join with masterlist, display the item description
+	FROM transfers
+	JOIN requests r ON transfers.request_id = r.request_id
+	JOIN items im ON r.item_code = im.item_code
+	WHERE date_transferred BETWEEN '2023-04-06' AND '2023-05-01';
+
+	-- Given an item_code
 	SELECT transfers.*, im.item_code, im.item_desc
-    FROM transfers
-    JOIN requests r ON transfers.request_id = r.request_id
-    JOIN item_masterlist im ON r.item_code = im.item_code
+   	FROM transfers
+    	JOIN requests r ON transfers.request_id = r.request_id
+    	JOIN items im ON r.item_code = im.item_code
 	WHERE im.item_code = '0001010000YGGO036Y';
+
+	-- status 
+	
+	-- warehouse from 
+	SELECT t.*, r.warehouse_from_id
+	FROM transfers t 
+	JOIN requests r ON t.request_id = r.request_id
+	WHERE r.warehouse_from_id = 1; 
+
+	-- warehouse to 
+	SELECT t.*, r.warehouse_to_id
+	FROM transfers t 
+	JOIN requests r ON t.request_id = r.request_id
+	WHERE r.warehouse_to_id = 1; 
     
