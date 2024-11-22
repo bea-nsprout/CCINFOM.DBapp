@@ -2,12 +2,12 @@
 -- 1. create a new production record    
 	-- 1a. pick a production method (choose either one)
 		-- custom date
-			INSERT INTO production (item_code, date_produced, qty_produced, unit, warehouse_id) VALUES
-			('0001370000SILV036Y' /*@itemcode*/, '2024-11-18', 70 /*@produced*/, 'ROLL', 1 /*@warehouseid*/);
+			INSERT INTO production (item_code, date_produced, qty_produced, warehouse_id) VALUES
+			('0001370000SILV036Y' /*@itemcode*/, '2024-11-18', 70 /*@produced*/, 1 /*@warehouseid*/);
         
 		-- current date (automatic)
-			INSERT INTO production (item_code, date_produced, qty_produced, unit, warehouse_id) VALUES
-			('0001370000SILV036Y' /*@itemcode*/, CURDATE(), 70 /*@produced*/, 'ROLL', 1 /*@warehouseid*/);
+			INSERT INTO production (item_code, date_produced, qty_produced, warehouse_id) VALUES
+			('0001370000SILV036Y' /*@itemcode*/, CURDATE(), 70 /*@produced*/, 1 /*@warehouseid*/);
 
 	-- 1b. update the warehouse_inventory
 		UPDATE warehouse_inventory inv
@@ -49,8 +49,9 @@
     
 -- 4. VIEW all production records
 	-- no filter:
-		SELECT *
-        FROM production;
+		SELECT p.production_id, p.date_produced, p.item_code, i.item_desc, p.qty_produced, p.warehouse_id
+        FROM production p
+        LEFT JOIN item_masterlist i ON p.item_code = i.item_code;
         
 	-- filter: given date
 		SELECT *
