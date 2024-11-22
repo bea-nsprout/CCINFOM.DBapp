@@ -27,7 +27,7 @@
 -- view all request -- [ DONE ]
 	-- add a join to show the item description, in item_masterlist
 	-- given a requestID
-	SELECT * 
+	SELECT request.*,  
     FROM request 
     WHERE request_id = 1;
     
