@@ -61,12 +61,19 @@ export default function Inventory() {
             <section className="hero inventory-hero">
                 <div className="hero-content">
                     <h1>Inventory Management</h1>
-                    <label htmlFor="search-bar">Search: </label>
-                    <input
-                        type="text"
-                        id="search-bar"
-                        placeholder="Enter item name or code..."
-                    />
+                    <div className="search-container">
+                        <select className="search-dropdown">
+                            <option value="item_code">Item Code</option>
+                            <option value="item_name">Item Name</option>
+                            <option value="warehouse">Warehouse</option>
+                        </select>
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="search-bar"
+                        />
+                        <button className="search-button">Search</button>
+                    </div>
                 </div>
             </section>
 

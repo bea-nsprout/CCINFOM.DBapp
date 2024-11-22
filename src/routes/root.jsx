@@ -7,6 +7,7 @@ export default function Root() {
         <h1>Warehouse Logistics Database System</h1>
         <nav>
           <Link to="/">Home</Link>
+          <Link to="/records">Records</Link>
           <Link to="/inventory">Inventory</Link>
           <Link to="/requests">Requests</Link>
           <Link to="/transfers">Transfers</Link>
