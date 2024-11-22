@@ -20,13 +20,25 @@
 		FROM inventories
 		WHERE quantity > 0 AND archived = false;
         
--- VIEW all items in the warehouse
+-- VIEW 
+	
+	-- No Filter
 	SELECT *
-    FROM inventories;
+   	FROM inventories;
     
-    -- with filter (what if make a true/ false variable?)
-		SELECT *
-		FROM inventories
+    	-- itemcode
+	SELECT *
+	FROM inventories
+	WHERE item_code = '003200MEDMYGLD072Y';
+
+	-- warehouse
+	SELECT *
+	FROM inventories
+	WHERE warehouse_id = 1;
+
+	-- status
+	SELECT *
+	FROM inventories
         WHERE archived = true;
         
         SELECT *
