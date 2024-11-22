@@ -8,6 +8,7 @@ import Root from "./routes/root";
 import ErrorPage from "./error-page";
 
 import Home from "./routes/home";
+import Records from "./routes/records";
 import Requests from "./routes/requests";
 import Transfers from "./routes/transfers";
 import Production from "./routes/production";
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "records",
+        element: <Records />,
       },
       {
         path: "inventory",

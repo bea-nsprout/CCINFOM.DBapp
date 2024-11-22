@@ -36,6 +36,14 @@ button:hover {
   margin: 20px;
 }
 
+#search-input {
+  width: 200px;
+}
+
+#search-button {
+  width: 110px;
+}
+
 .search-filter input,
 .search-filter select,
 .search-filter button {

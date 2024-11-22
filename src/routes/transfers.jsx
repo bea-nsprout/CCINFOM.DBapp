@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 export default function Transfers() {
 
   function showNewTransfer() {
@@ -13,20 +15,52 @@ export default function Transfers() {
     closeNewRequest();
   }
 
+  const [searchType, setSearchType] = useState("itemCode"); // Default search type is "itemCode"
+
+  const handleSearchTypeChange = (e) => {
+    setSearchType(e.target.value); // Update the search type based on the dropdown selection
+  };
 
 
   return (
     <>
       <link rel="stylesheet" href="styles/transfers.css"></link>
+
       <div className="search-filter">
-        <label htmlFor="search">Search:</label>
-        <input type="text" id="search" placeholder="Enter transfer ID or item code..." />
+        <select id="search-type" onChange={handleSearchTypeChange}>
+          <option value="itemCode">Item Code</option>
+          <option value="srcWarehouse">Source Warehouse</option>
+          <option value="desWarehouse">Destination Warehouse</option>
+          <option value="date">Date</option>
+        </select>
+
+        {(searchType === "itemCode" || searchType == "srcWarehouse" || searchType == "desWarehouse") && (
+        <div id="search-box" style={{ display: "block" }}>
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Search..."
+          />
+        </div>  )
+        }
+
+        {searchType === "date" && (
+        <div id="search-date" style={{ display: "show" }}>
+          <div className="date-range">
+            <input type="date" id="start-date" />
+            <span>to</span>
+            <input type="date" id="end-date" />
+          </div>
+        </div> )
+        }
+
         <select id="status-filter">
           <option value="">Filter by Status</option>
           <option value="pending">Pending</option>
           <option value="completed">Completed</option>
         </select>
-        <button>Apply Filters</button>
+
+        <button id="search-button">Search</button>
       </div>
 
       <table className="transfers-table">

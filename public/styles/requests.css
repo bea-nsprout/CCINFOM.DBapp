@@ -90,7 +90,15 @@ nav a.active {
 
 .search-filter input,
 .search-filter select {
-  width: 200px;
+  width: 110px;
+}
+
+#search-input {
+  width: 250px;
+}
+
+#status-filter {
+  width: 140px;
 }
 
 .search-filter button {
@@ -99,6 +107,7 @@ nav a.active {
   cursor: pointer;
   border: none;
   font-weight: bold;
+  width: 100px;
 }
 
 /* Table Styling */
@@ -229,4 +238,51 @@ nav a.active {
 
 .close:hover {
   color: #333;
+}
+
+
+
+.masterlist-section {
+  margin: 20px 0;
+}
+
+.masterlist-tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.masterlist-tabs button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.masterlist-tabs button.active {
+  background-color: #36453b;
+  color: #fff;
+}
+
+.masterlist-content {
+  margin-top: 10px;
+}
+
+.masterlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  margin-top: 10px;
+}
+
+.masterlist-table th, .masterlist-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.masterlist-table th {
+  background-color: #36453b;
+  color: #fff;
 }
