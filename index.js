@@ -9,18 +9,12 @@ dotenv.config();
 
 const app = express();
 const port = 3000;
-const connection = await mysql.createConnection({
-  host: "localhost",
-  user: "root",
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
   password: process.env.MYSQL_DB_PASSWORD,
-  database: "warehousedb",
-});
-
-// nerd shit
-app.use(function (req, res, next) {
-  res.set("X-Clacks-Overhead", "GNU Terry Pratchet");
-  next();
-});
+  database: 'warehousedb'
+})
 
 
 app.use(express.json());
