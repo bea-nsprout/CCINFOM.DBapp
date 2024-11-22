@@ -11,7 +11,7 @@
 	JOIN warehouses w2 ON i2.warehouse_id = w2.warehouse_id 
 	WHERE i1.warehouse_id = @v1 AND i2.warehouse_id = @v2
 	GROUP BY i1.warehouse_id, i2.warehouse_id, i1.item_code  
-	ORDER BY First_Total, Second_Total, i1.item_code;
+	ORDER BY First_Total_Sum, Second_Total_Sum, i1.item_code;
 		
 	/* If you guys want to sort it by warehouse ID: 
 	ORDER BY i1.warehouse_id, i2.warehouse_id, i1.item_code; */
