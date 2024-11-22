@@ -1,10 +1,10 @@
--- REPORT WAREHOUSE INVENTORY
+-- REPORT WAREHOUSE INVENTORY, COMPARING 2 WAREHOUSES
 	-- DATE: there's a requirement that we should add the date for each report, so please do that.. like date the report was generated
     -- BODY: comparing 2 warehouses
 	SET @v1 = 4;
 	SET @v2 = 5;
 
-	SELECT i1.item_code, SUM(i1.quantity) AS First_Total, SUM(i2.quantity) AS Second_Total
+	SELECT i1.item_code, SUM(i1.quantity) AS First_Total_Sum, SUM(i2.quantity) AS Second_Total_Sum
 	FROM inventories i1
 	JOIN inventories i2 ON i1.item_code = i2.item_code AND i1.warehouse_id != i2.warehouse_id  
 	JOIN warehouses w1 ON i1.warehouse_id = w1.warehouse_id
@@ -15,6 +15,29 @@
 		
 	/* If you guys want to sort it by warehouse ID: 
 	ORDER BY i1.warehouse_id, i2.warehouse_id, i1.item_code; */
+
+	-- Count the request of Warehouse FROM id
+	SET @v1 = 4;
+	SET @v2 = 5;
+
+	SELECT COUNT(CASE WHEN i1.warehouse_from_id = @v1 THEN 1 END) AS First_Request_Count,
+	COUNT(CASE WHEN i2.warehouse_from_id = @v2 THEN 1 END) AS Second_Request_Count
+	FROM requests i1
+	JOIN requests i2 ON i1.request_id = i2.request_id
+	WHERE i1.warehouse_from_id = @v1 OR i2.warehouse_from_id = @v2;
+
+	-- Count the request of Warehouse TO id
+	SET @v1 = 4;
+	SET @v2 = 5;
+
+	SELECT COUNT(CASE WHEN i1.warehouse_to_id = @v1 THEN 1 END) AS First_Request_Count,
+	COUNT(CASE WHEN i2.warehouse_to_id = @v2 THEN 1 END) AS Second_Request_Count
+	FROM requests i1
+	JOIN requests i2 ON i1.request_id = i2.request_id
+	WHERE i1.warehouse_to_id = @v1 OR i2.warehouse_to_id = @v2;
+
+	-- Count the transfer of warehouse ID
+	/* ADLER DO THIS TMRR!! */
         
 -- Report the total # of items produced in all warehouses
 	-- past 30 days 
