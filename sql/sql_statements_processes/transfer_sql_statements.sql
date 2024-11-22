@@ -66,8 +66,8 @@
 	-- Given Date 
 	SELECT *
 	FROM transfers
-	WHERE date_transferred BETWEEN '2023-04-06' AND '2023-05-01'
-	ORDER BY transfer_id DESC;
+	WHERE date_transferred BETWEEN '2023-04-06' AND '2024-05-01'
+	ORDER BY date_transferred DESC;
 
 	-- Given an item_code
 	SELECT transfers.*, im.item_code
