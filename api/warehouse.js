@@ -103,7 +103,7 @@ const warehouseRouter = (connection) => {
         async (req, res) => {
             const { name } = matchedData(req);
             const [results] = await connection.execute(
-                "SELECT warehouse_name, location FROM warehouses WHERE warehouse_name LIKE ? ",
+                "SELECT warehouse_id, warehouse_name, location FROM warehouses WHERE warehouse_name LIKE ? ",
                 [`%${name}%`]
             )
             res.status(200).json(results)
@@ -132,7 +132,7 @@ const warehouseRouter = (connection) => {
         async (req, res) => {
             const { status } = matchedData(req);
             const [results] = await connection.execute(
-                "SELECT warehouse_name, location FROM warehouses WHERE archived = ?",
+                "SELECT warehouse_id, warehouse_name, location FROM warehouses WHERE archived = ?",
                 [status == 'true']
             )
             res.status(200).json(results)
@@ -143,7 +143,7 @@ const warehouseRouter = (connection) => {
         "/view",
         async (req, res) => {
             const [results] = await connection.execute(
-                `SELECT warehouse_name, location FROM warehouses WHERE archived = false;`
+                `SELECT warehouse_id, warehouse_name, location FROM warehouses WHERE archived = false;`
             )
             res.status(200).json(results);
         }
