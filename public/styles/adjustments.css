@@ -60,21 +60,21 @@
   }
   
   /* Table Styles */
-  .production-table {
+  .adjustments-table {
     width: 80%;
     margin: 0 auto;
     border-collapse: collapse;
     background-color: #fff;
   }
   
-  .production-table th,
-  .production-table td {
+  .adjustments-table th,
+  .adjustments-table td {
     padding: 10px;
     border: 1px solid #ddd;
     text-align: center;
   }
   
-  .production-table th {
+  .adjustments-table th {
     background-color: #36453b;
     color: #f5f9e9;
   }

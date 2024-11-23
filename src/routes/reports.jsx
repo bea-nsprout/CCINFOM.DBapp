@@ -14,7 +14,10 @@ function confirmEdit() {
 }
 
 export default function Reports() {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState([]); // Data for transfers
+    const [selectedWarehouse, setSelectedWarehouse] = useState(null); // Selected warehouse for editing
+    const [transfersOut, setTransfersOut] = useState(0); // Transfers out for editing
+    const [transfersIn, setTransfersIn] = useState(0); // Transfers in for editing
 
     useEffect(() => {
         const exitModal = (event) => {
@@ -30,12 +33,39 @@ export default function Reports() {
         };
     }, []);
 
+    // Fetch data for transfers
+    const fetchData = async () => {
+        try {
+            const response = await fetch("/api/reports/transfers-report?ndays=30"); // Adjust ndays as needed
+            const data = await response.json();
+            setData(data);
+        } catch (error) {
+            console.error("Error fetching reports:", error);
+        }
+    };
+
     useEffect(() => {
-        // Fetch API data for warehouses
-        fetch("api/warehouses/view")
-            .then((response) => response.json())
-            .then((d) => setData(d));
+        fetchData();
     }, []);
+
+    const handleEdit = (warehouse) => {
+        setSelectedWarehouse(warehouse);
+        setTransfersOut(warehouse.transfers_out || 0);
+        setTransfersIn(warehouse.transfers_in || 0);
+        showEditModal();
+    };
+
+    const handleSaveChanges = async (e) => {
+        e.preventDefault();
+
+        // Call your API to update the data (adjustment functionality is currently a placeholder)
+        alert(
+            `Saving changes for ${selectedWarehouse.warehouse_name}: Transfers Out - ${transfersOut}, Transfers In - ${transfersIn}`
+        );
+
+        closeEditModal();
+        fetchData(); // Refresh the table data after saving
+    };
 
     return (
         <>
@@ -47,7 +77,7 @@ export default function Reports() {
             <section className="hero report-hero">
                 <div className="hero-content">
                     <h1>Warehouse Transfers</h1>
-                    <p>Monitor transfers and quantities per warehouse.</p>
+                    <p>Monitor transfers and quantities per warehouse for the past 30 days.</p>
                 </div>
             </section>
 
@@ -63,9 +93,9 @@ export default function Reports() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data == null ? (
+                        {data.length === 0 ? (
                             <tr>
-                                <td colSpan="5">Loading...</td>
+                                <td colSpan="5">No data available</td>
                             </tr>
                         ) : (
                             data.map((warehouse, index) => (
@@ -76,8 +106,8 @@ export default function Reports() {
                                     <td>{warehouse.transfers_in}</td>
                                     <td>
                                         <button
-                                            className="edit"
-                                            onClick={showEditModal}
+                                            className="edit-button"
+                                            onClick={() => handleEdit(warehouse)}
                                         >
                                             Edit
                                         </button>
@@ -95,19 +125,27 @@ export default function Reports() {
                     <span className="close" onClick={closeEditModal}>
                         &times;
                     </span>
-                    <h3>Edit Transfers</h3>
-                    <form>
+                    <h3>Edit Transfers for {selectedWarehouse?.warehouse_name}</h3>
+                    <form onSubmit={handleSaveChanges}>
                         <label htmlFor="transfers-out">Transfers Out:</label>
-                        <input type="number" id="transfers-out" required />
+                        <input
+                            type="number"
+                            id="transfers-out"
+                            value={transfersOut}
+                            onChange={(e) => setTransfersOut(e.target.value)}
+                            required
+                        />
 
                         <label htmlFor="transfers-in">Transfers In:</label>
-                        <input type="number" id="transfers-in" required />
+                        <input
+                            type="number"
+                            id="transfers-in"
+                            value={transfersIn}
+                            onChange={(e) => setTransfersIn(e.target.value)}
+                            required
+                        />
 
-                        <button
-                            type="submit"
-                            className="submit-button"
-                            onClick={confirmEdit}
-                        >
+                        <button type="submit" className="submit-button">
                             Save Changes
                         </button>
                     </form>
