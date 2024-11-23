@@ -75,7 +75,7 @@ INSERT INTO trucks (truck_id, warehouse_id) VALUES
 INSERT INTO inventories (item_code, warehouse_id) SELECT im.item_code, w.warehouse_id FROM items im JOIN warehouses w;
 
 INSERT INTO productions (item_code, date_produced, qty_produced, warehouse_id) VALUES
-('0001370000SILV036Y', '2022-11-01', 50, 1),
+('0001370000SILV036Y', '2022-11-01', 120, 1),
 ('0001370000GOLD036Y', '2022-12-02', 100, 2),
 ('003200MEDMYGLD072Y', '2023-01-03', 75, 3),
 ('0001010000YGGO036Y', '2023-02-04', 60, 4),
@@ -129,7 +129,7 @@ INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, qua
 (7, 7, '2023-05-07', 'TRK007', 65),
 (8, 8, '2023-06-08', 'TRK008', 80),
 (9, 9, '2023-07-09', 'TRK009', 70),
-(10, 10, '2023-08-10', 'TRK010', 85),
+(10, 10, '2023-08-10', 'TRK010', 60),
 (11, 1, '2023-09-11', 'TRK001', 50),
 (12, 2, '2023-10-12', 'TRK002', 45),
 (13, 3, '2023-11-13', 'TRK003', 80),
@@ -141,17 +141,39 @@ INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, qua
 (19, 9, '2024-05-19', 'TRK009', 100),
 (1, 10, '2024-06-20', 'TRK010', 20);
 
+-- Increase quantity from production
+UPDATE inventories wi
+JOIN productions p on wi.item_code = p.item_code AND wi.warehouse_id = p.warehouse_id
+SET wi.quantity = wi.quantity + p.qty_produced
+WHERE wi.warehouse_id = p.warehouse_id;
+
+-- (displays updated)
+    SELECT *
+    FROM inventories
+    WHERE quantity > 0;
+
 -- Decrease quantity from the source warehouse
 UPDATE inventories wi
-JOIN requests r ON wi.item_code = r.item_code
-JOIN transfers t ON r.request_id = t.request_id
-SET wi.quantity = wi.quantity - t.quantity;
+JOIN (
+    SELECT r.item_code, r.warehouse_from_id, SUM(t.quantity) AS total_transferred
+    FROM requests r
+    JOIN transfers t ON r.request_id = t.request_id
+    GROUP BY r.request_id
+) sum ON wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_from_id
+SET wi.quantity = wi.quantity - sum.total_transferred
+WHERE wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_from_id;
 
 -- Increase quantity in the destination warehouse
 UPDATE inventories wi
-JOIN requests r ON wi.item_code = r.item_code
-JOIN transfers t ON r.request_id = t.request_id
-SET wi.quantity = wi.quantity + t.quantity;
+JOIN (
+    SELECT r.item_code, r.warehouse_to_id, SUM(t.quantity) AS total_transferred
+    FROM requests r
+    JOIN transfers t ON r.request_id = t.request_id
+    GROUP BY r.request_id
+) sum ON wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_to_id
+SET wi.quantity = wi.quantity + sum.total_transferred
+WHERE wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_to_id;
+
 
 -- Update qty_balance in request:
 UPDATE requests r
@@ -162,3 +184,10 @@ JOIN (
 ) t ON r.request_id = t.request_id
 SET r.qty_balance = r.qty_balance - t.total_transferred
 WHERE r.request_id = t.request_id;
+
+-- (Displays updated)
+    SELECT r.request_id, wi.*, r.qty_total, r.qty_balance, t.quantity
+    FROM requests r
+    JOIN inventories wi ON wi.item_code = r.item_code  AND wi.warehouse_id = r.warehouse_from_id
+    JOIN transfers t ON r.request_id = t.request_id
+    WHERE r.request_id = t.request_id;
