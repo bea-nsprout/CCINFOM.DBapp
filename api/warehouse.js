@@ -1,6 +1,6 @@
 import express from "express";
 import { body, matchedData, query } from "express-validator";
-import { validationStrictRoutine, extractMatchedRoutine } from "./helper.js";
+import { validationStrictRoutine, extractMatchedRoutine, assertDefined } from "./helper.js";
 
 const assertWarehouseExistsRoutine = (connection) => {
     const routine = async (req, res, next) => {
@@ -49,8 +49,7 @@ const assertWarehouseDoesNotExistsRoutine = (connection) => {
 const warehouseRouter = (connection) => {
     const router = express.Router();
 
-    router.post(
-        "/new",
+    router.post("/new",
         [
             body("name").notEmpty().isString().trim(),
             body("location").notEmpty().isString().trim(),
@@ -76,8 +75,7 @@ const warehouseRouter = (connection) => {
         ]
     )
 
-    router.put(
-        "/modify",
+    router.put("/modify",
         [
             body("name").notEmpty().isString().trim(),
             body("location").notEmpty().isString().trim(),
@@ -98,17 +96,12 @@ const warehouseRouter = (connection) => {
         }
     )
 
-    router.get(
-        "/view",
+    router.get("/view",
         [query("name").notEmpty().isString().trim().optional()],
+        assertDefined("name"),
         validationStrictRoutine(400, "name must be a string."),
-        async (req, res, next) => {
+        async (req, res) => {
             const { name } = matchedData(req);
-            if (name == undefined) {
-                next('route');
-                return;
-            }
-
             const [results] = await connection.execute(
                 "SELECT warehouse_name, location FROM warehouses WHERE warehouse_name LIKE ? ",
                 [`%${name}%`]
@@ -117,19 +110,14 @@ const warehouseRouter = (connection) => {
         }
     )
 
-    router.get(
-        "/view",
+    router.get("/view",
         [query("location").notEmpty().isString().trim().optional()],
+        assertDefined("location"),
         validationStrictRoutine(400, "location must be a string."),
-        async (req, res, next) => {
+        async (req, res) => {
             const { location } = matchedData(req);
-            if (location == undefined) {
-                next('route');
-                return;
-            }
-            console.log("QUERIYING LOCATION", `%${location}%`);
             const [results] = await connection.execute(
-                "SELECT warehouse_name, location warehouses FROM warehouses WHERE location LIKE ?;",
+                "SELECT warehouse_name, location FROM warehouses WHERE location LIKE ?;",
                 [`%${location}%`]
             )
             res.status(200).json(results)
@@ -139,14 +127,10 @@ const warehouseRouter = (connection) => {
     router.get(
         "/view",
         [query("status").isBoolean().optional()],
+        assertDefined("status"),
         validationStrictRoutine(400, "status must be a boolean ('true' or 'false')"),
-        async (req, res, next) => {
-            console.log("status");
+        async (req, res) => {
             const { status } = matchedData(req);
-            if (status == undefined) {
-                next();
-                return;
-            }
             const [results] = await connection.execute(
                 "SELECT warehouse_name, location FROM warehouses WHERE archived = ?",
                 [status == 'true']
@@ -158,11 +142,37 @@ const warehouseRouter = (connection) => {
     router.get(
         "/view",
         async (req, res) => {
-            console.log("all");
             const [results] = await connection.execute(
                 `SELECT warehouse_name, location FROM warehouses WHERE archived = false;`
             )
             res.status(200).json(results);
+        }
+    )
+
+    router.delete(
+        "/delete",
+        [body("id").isNumeric()],
+        validationStrictRoutine(400, "id must be provided."),
+        async (req, res) => {
+            const { id } = matchedData(req);
+            await connection.execute(`SET @warehouse_id = ?;`, [id]);
+            const [no_existing_item] = await connection.execute(`SELECT NOT EXISTS (  SELECT 1
+                FROM inventories  WHERE warehouse_id = @warehouse_id AND quantity > 0  )
+                AND NOT EXISTS (  SELECT 1  FROM requests  WHERE warehouse_from_id = @warehouse_id OR warehouse_to_id = @warehouse_id  ) 
+                AND NOT EXISTS (  SELECT 1  FROM productions  WHERE warehouse_id = @warehouse_id  )
+                AND NOT EXISTS (  SELECT 1 FROM trucks  WHERE warehouse_id = @warehouse_id  ) AS no_existing_item;`);
+
+            if (!no_existing_item) {
+                res.status(400).json({ error: "warehouse has items in it." });
+                return;
+            }
+
+            await Promise.all(
+                connection.execute(`DELETE FROM inventories WHERE warehouse_id = @warehouse_id;`),
+                connection.execute(`DELETE FROM warehouses WHERE warehouse_id = @warehouse_id;`)
+            )
+
+            res.status(200).json({ error: "warehouse is successfully deleted." });
         }
     )
 

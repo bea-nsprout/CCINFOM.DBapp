@@ -23,7 +23,7 @@
         SET @production_id = 2;
         SET @new_qty = 70;
 
-		SELECT @old_qty := qty_produced
+		SELECT @old_qty := qty_produced, @itemcode := item_code, @warehouseid := warehouse_id
         FROM productions
         WHERE production_id = @production_id;
         
@@ -35,14 +35,14 @@
 	-- 2c. update warehouse_inventory record
 		UPDATE inventories inv
         SET inv.quantity = inv.quantity - @old_qty + @new_qty
-        WHERE inv.item_code = '0001370000SILV036Y' /*@itemcode*/ AND inv.warehouse_id = 1 /*@warehouseid*/;
+        WHERE inv.item_code = @itemcode AND inv.warehouse_id = @warehouseid;
 
 
 -- 3. DELETE    (** COPY PASTE WHOLE INTO ONE EXECUTE **)
 	-- 3a. preparations (store the value of return!) code is the same as 2a
         SET @production_id = 2; -- user input
 
-		SELECT @old_qty := qty_produced
+		SELECT @old_qty := qty_produced, @itemcode := item_code, @warehouseid := warehouse_id
         FROM productions
         WHERE production_id = @production_id;
         
@@ -53,8 +53,8 @@
     -- 3c. update warehouse_inventory record
 		UPDATE inventories inv
         SET inv.quantity = inv.quantity - @old_qty
-        WHERE inv.item_code = '0001370000SILV036Y' /*@itemcode*/ AND inv.warehouse_id = 1 /*@warehouseid*/;
-    
+        WHERE inv.item_code = @itemcode AND inv.warehouse_id = @warehouseid;
+
 -- 4. VIEW all production records
 	-- VIEW #1: NO FILTER
 		SELECT p.production_id, p.item_code, p.qty_produced, p.date_produced, warehouse_name

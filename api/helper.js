@@ -25,6 +25,18 @@ export const validationStrictRoutine = (status, description) => {
 
 }
 
+
+export const assertDefined = (field) => {
+    const routine = (req, res, next) => {
+        if (matchedData(req)[field] == undefined) {
+            next('route');
+            return;
+        }
+        next();
+    }
+
+    return routine;
+}
 // export const validationPassRoutine = (queries) => {
 //     const routine = (req, res, next) => {
 //         const errors = validationResult(req);
