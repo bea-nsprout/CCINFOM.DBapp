@@ -1,5 +1,5 @@
 async function test(stuff) {
-  const res = await fetch("http://localhost:3000/api/item-masterlist/insert/", {
+  const res = await fetch("http://localhost:3000/api/items/insert/", {
     method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
@@ -14,8 +14,8 @@ async function test(stuff) {
 }
 
 async function deleter(stuff) {
-  const res = await fetch("http://localhost:3000/api/item-masterlist/delete/", {
-    method: "DELETE",
+  const res = await fetch("http://localhost:3000/api/items/delete/", {
+    method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -29,8 +29,8 @@ async function deleter(stuff) {
 }
 
 async function put(stuff) {
-  const res = await fetch("http://localhost:3000/api/item-masterlist/modify/", {
-    method: "PUT",
+  const res = await fetch("http://localhost:3000/api/items/modify/", {
+    method: "POST",
     mode: "cors",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

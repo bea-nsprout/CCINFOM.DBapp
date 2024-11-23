@@ -1,6 +1,6 @@
 import express from "express";
 import { matchedData, query, body } from "express-validator";
-import { assertDefined, validationStrictRoutine } from "./helper.js";
+import { validationStrictRoutine } from "./helper.js";
 
 const productionRouter = (connection) => {
     const router = express.Router();
