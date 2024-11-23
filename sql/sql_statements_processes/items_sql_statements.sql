@@ -65,21 +65,21 @@
     
 -- VIEW
 	-- VIEW #1: NO FILTER
-		SELECT *
+		SELECT item_code, item_desc, unit
         FROM items;
         
 	-- VIEW #2: selected item, given itemcode
-		SELECT *
+		SELECT item_code, item_desc, unit
 		FROM items
-		WHERE item_code LIKE '%0001010000TEMP036Y%' /*user_input*/;
+		WHERE item_code LIKE '%137%' /*user_input*/;
         
 	-- VIEW #3: ITEM DESCRIPTION
-		SELECT * 
+		SELECT item_code, item_desc, unit
         FROM items
         WHERE item_desc LIKE '%DE%' /*user_input*/;
         
 	-- VIEW #4: STATUS
-		SELECT * 
+		SELECT item_code, item_desc, unit
         FROM items
         WHERE archived = true /*true or false*/;
         
