@@ -1,9 +1,9 @@
 -- TRANSFER 
-	-- Create Transfer [ FIXED ]
-	SET @v1 = 90; -- Amount to transfer
+	-- Create Transfer
+	SET @v1 = 50; -- Amount to transfer
 
 	INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, quantity)
-	VALUES (1, 1, CURDATE(), 'TRK0001', @v1);
+	VALUES (2, 2, CURDATE(), 'TRK001', @v1); /* Place valid Truck ID */
 
 	UPDATE requests r
 	SET r.qty_balance = r.qty_balance - @v1
