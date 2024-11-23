@@ -50,7 +50,7 @@
 	SELECT r.request_id, r.item_code, r.qty_balance, r.date_requested, 
     	r.warehouse_from_id, r.warehouse_to_id, IF(r.qty_balance > 0, 'PENDING', 'COMPLETED') AS status
 	FROM requests r
-	WHERE r.qty_balance > 0
+	WHERE IF(r.qty_balance > 0, 'PENDING', 'COMPLETED') = 'PENDING' /* PENDING or COMPLETED */
 	ORDER BY r.request_id DESC;
 
 	-- given a warehouse from ID
