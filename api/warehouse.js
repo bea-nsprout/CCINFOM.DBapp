@@ -1,6 +1,6 @@
 import express from "express";
 import { body, matchedData, query } from "express-validator";
-import { validationStrictRoutine, extractMatchedRoutine } from "./helper.js";
+import { validationStrictRoutine, extractMatchedRoutine, assertDefined } from "./helper.js";
 
 const assertWarehouseExistsRoutine = (connection) => {
     const routine = async (req, res, next) => {
@@ -49,8 +49,7 @@ const assertWarehouseDoesNotExistsRoutine = (connection) => {
 const warehouseRouter = (connection) => {
     const router = express.Router();
 
-    router.post(
-        "/new",
+    router.post("/new",
         [
             body("name").notEmpty().isString().trim(),
             body("location").notEmpty().isString().trim(),
@@ -76,8 +75,7 @@ const warehouseRouter = (connection) => {
         ]
     )
 
-    router.put(
-        "/modify",
+    router.put("/modify",
         [
             body("name").notEmpty().isString().trim(),
             body("location").notEmpty().isString().trim(),
@@ -98,17 +96,12 @@ const warehouseRouter = (connection) => {
         }
     )
 
-    router.get(
-        "/view",
+    router.get("/view",
         [query("name").notEmpty().isString().trim().optional()],
+        assertDefined("name"),
         validationStrictRoutine(400, "name must be a string."),
-        async (req, res, next) => {
+        async (req, res) => {
             const { name } = matchedData(req);
-            if (name == undefined) {
-                next('route');
-                return;
-            }
-
             const [results] = await connection.execute(
                 "SELECT warehouse_name, location FROM warehouses WHERE warehouse_name LIKE ? ",
                 [`%${name}%`]
@@ -117,19 +110,14 @@ const warehouseRouter = (connection) => {
         }
     )
 
-    router.get(
-        "/view",
+    router.get("/view",
         [query("location").notEmpty().isString().trim().optional()],
+        assertDefined("location"),
         validationStrictRoutine(400, "location must be a string."),
-        async (req, res, next) => {
+        async (req, res) => {
             const { location } = matchedData(req);
-            if (location == undefined) {
-                next('route');
-                return;
-            }
-            console.log("QUERIYING LOCATION", `%${location}%`);
             const [results] = await connection.execute(
-                "SELECT warehouse_name, location warehouses FROM warehouses WHERE location LIKE ?;",
+                "SELECT warehouse_name, location FROM warehouses WHERE location LIKE ?;",
                 [`%${location}%`]
             )
             res.status(200).json(results)
@@ -139,13 +127,10 @@ const warehouseRouter = (connection) => {
     router.get(
         "/view",
         [query("status").isBoolean().optional()],
+        assertDefined("status"),
         validationStrictRoutine(400, "status must be a boolean ('true' or 'false')"),
-        async (req, res, next) => {
+        async (req, res) => {
             const { status } = matchedData(req);
-            if (status == undefined) {
-                next();
-                return;
-            }
             const [results] = await connection.execute(
                 "SELECT warehouse_name, location FROM warehouses WHERE archived = ?",
                 [status == 'true']

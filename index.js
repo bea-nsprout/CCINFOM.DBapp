@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 import itemsRouter from "./api/items.js";
 import warehouseRouter from "./api/warehouse.js";
 import inventoryRouter from "./api/inventories.js";
+import trucksHandler from "./api/trucks.js";
 
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(cors());
 app.use('/api/items', itemsRouter(connection));
 app.use('/api/warehouses', warehouseRouter(connection));
 app.use('/api/inventories', inventoryRouter(connection));
+app.use('/api/trucks', trucksHandler(connection));
 
 app.use((err, req, res, next) => {
   console.log(err);
