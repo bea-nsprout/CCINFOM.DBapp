@@ -121,8 +121,7 @@ export default function Records() {
               <thead>
                 <tr>
                   <th>Item Code</th>
-                  <th>Item Name</th>
-                  <th>Quantity</th>
+                  <th>Item Description</th>
                   <th>Unit</th>
                   <th>Actions</th>
                 </tr>
