@@ -148,6 +148,75 @@ export default function Records() {
     )
   }
 
+  function handleNewWarehouseRequest(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const object = {};
+    data.forEach((value, key) => object[key] = value);
+
+    console.log(object);
+
+    fetch("http://localhost:3000/api/warehouses/new", {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(object)
+    }).then(x => x.json()).then(
+      (x) => {
+        if (x.success) alert(x.message);
+        else alert(x.error);
+
+      }
+
+    )
+  }
+
+  function handleNewTruckRequest(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const object = {};
+    data.forEach((value, key) => object[key] = value);
+
+    console.log(object);
+
+    fetch("http://localhost:3000/api/trucks/new", {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(object)
+    }).then(x => x.json()).then(
+      (x) => {
+        if (x.success) alert(x.message);
+        else alert(x.error);
+
+      }
+
+    )
+  }
+
+  function handleNewPersonnelRequest(event) {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const object = {};
+    data.forEach((value, key) => object[key] = value);
+
+    console.log(object);
+
+    fetch("http://localhost:3000/api/personnels/new", {
+      method: "POST",
+      mode: "cors",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(object)
+    }).then(x => x.json()).then(
+      (x) => {
+        if (x.success) alert(x.message);
+        else alert(x.error);
+
+      }
+
+    )
+  }
+
   function confirmNewRequest() {
     alert("Request Submitted");
     closeNewRequest();
@@ -349,11 +418,11 @@ export default function Records() {
                           <td>{item.warehouse_name}</td>
                           <td>{item.location}</td>
                           <td>
-                            <button className="edit" onClick={showEditModal}>
+                            <button className="edit" onClick={() => showEditModal(item)}>
                               Edit
                             </button>
                             <span className="vertical-line">|</span>
-                            <button className="delete" onClick={showDeleteModal}>
+                            <button className="delete" onClick={() => showDeleteModal(item.item_code)}>
                               Delete
                             </button>
                           </td>
@@ -368,12 +437,15 @@ export default function Records() {
                       &times;
                     </span>
                     <h3>Edit Warehouse</h3>
-                    <form>
-                      <label for="warehouse_id">Warehouse ID:</label>
-                      <input type="text" id="warehouse_id" required />
+                    <form onSubmit={handleEditSubmit}>
+                      <label for="warehouse_id">Warehouse ID</label>
+                      <input type="text" name="warehouse_id" readOnly />
+
+                      <label for="warehouse_name">Warehouse Name:</label>
+                      <input type="text" name="warehouse_name" required />
 
                       <label for="location">Location:</label>
-                      <input type="text" id="location" required />
+                      <input type="text" name="location" required />
 
                       <button type="submit" onClick={confirmEdit}>Edit</button>
                     </form>
@@ -428,11 +500,11 @@ export default function Records() {
                           <td>{item.truck_id}</td>
                           <td>{item.warehouse_name}</td>
                           <td>
-                            <button className="edit" onClick={showEditModal}>
+                            <button className="edit" onClick={() => showEditModal(item)}>
                               Edit
                             </button>
                             <span className="vertical-line">|</span>
-                            <button className="delete" onClick={showDeleteModal}>
+                            <button className="delete" onClick={() => showDeleteModal(item.item_code)}>
                               Delete
                             </button>
                           </td>
@@ -449,10 +521,16 @@ export default function Records() {
                     <h3>Edit Truck</h3>
                     <form>
                       <label for="truck_id">Truck ID:</label>
-                      <input type="text" id="truck_id" required />
+                      <input type="text" name="truck_id" readOnly />
 
-                      <label for="location">Location:</label>
-                      <input type="text" id="location" required />
+                      <label htmlFor="warehouse">Warehouse</label>
+            <select id="warehouse">
+              {dataWarehouse.map((warehouse) => (
+                <option key={dataWarehouse.warehouse_id} value={dataWarehouse.warehouse_id}>
+                  {warehouse.location}
+                </option>
+              ))}
+            </select>
 
                       <button type="submit" onClick={confirmEdit}>Edit</button>
                     </form>
@@ -509,11 +587,11 @@ export default function Records() {
                           <td>{item.last_name}</td>
                           <td>{item.position}</td>
                           <td>
-                            <button className="edit" onClick={showEditModal}>
+                            <button className="edit" onClick={() => showEditModal(item)}>
                               Edit
                             </button>
                             <span className="vertical-line">|</span>
-                            <button className="delete" onClick={showDeleteModal}>
+                            <button className="delete" onClick={() => showDeleteModal(item.item_code)}>
                               Delete
                             </button>
                           </td>
@@ -529,14 +607,14 @@ export default function Records() {
                     </span>
                     <h3>Edit Personnel</h3>
                     <form>
-                      <label for="first_name_id">First Name:</label>
-                      <input type="text" id="first_name_id" required />
+                      <label for="first_name">First Name:</label>
+                      <input type="text" name="first_name" required />
 
-                      <label for="last_name_id">Last Name:</label>
-                      <input type="text" id="last_name_id" required />
+                      <label for="last_name">Last Name:</label>
+                      <input type="text" name="last_name" required />
 
                       <label for="position">Position:</label>
-                      <input type="text" id="Position" required />
+                      <input type="text" name="position" required />
 
                       <button type="submit" onClick={confirmEdit}>Edit</button>
                     </form>
@@ -586,15 +664,12 @@ export default function Records() {
         <div className="modal-content">
           <span className="close" onClick={closeNewWarehouse}>&times;</span>
           <h3>Create New Warehouse</h3>
-          <form>
-            <label for="warehouse-id">Warehouse ID:</label>
-            <input type="text" id="warehouse-id" required />
+          <form onSubmit={handleNewWarehouseRequest}>
+            <label for="name">Warehouse Name:</label>
+            <input type="text" name="name" required />
 
             <label for="location">Location:</label>
-            <input type="text" id="location" required />
-
-            <label for="capacity">Capacity:</label>
-            <input type="number" id="capacity" required />
+            <input type="text" name="location" required />
 
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
           </form>
@@ -605,15 +680,12 @@ export default function Records() {
         <div className="modal-content">
           <span className="close" onClick={closeNewTrucks}>&times;</span>
           <h3>Create New Trucks</h3>
-          <form>
-            <label for="truck-id">Truck ID:</label>
-            <input type="text" id="truck-id" required />
+          <form onSubmit={handleNewTruckRequest}>
+            <label for="truckid">Truck ID:</label>
+            <input type="text" name="truckid" required />
 
-            <label for="model">Model:</label>
-            <input type="text" id="model" required />
-
-            <label for="capacity">Capacity:</label>
-            <input type="number" id="capacity" required />
+            <label for="warehouseid">Truck ID:</label>
+            <input type="text" name="warehouseid" required />
 
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
           </form>
@@ -624,18 +696,15 @@ export default function Records() {
         <div className="modal-content">
           <span className="close" onClick={closeNewPersonnel}>&times;</span>
           <h3>Create New Personnel</h3>
-          <form>
-            <label for="personnel-id">Personnel ID:</label>
-            <input type="text" id="personnel-id" required />
+          <form onSubmit={handleNewPersonnelRequest}>
+            <label for="firstname">First Name:</label>
+            <input type="text" name="firstname" required />
 
-            <label for="name">Name:</label>
-            <input type="text" id="name" required />
+            <label for="lastname">Last Name:</label>
+            <input type="text" name="lastname" required />
 
-            <label for="role">Role:</label>
-            <input type="text" id="role" required />
-
-            <label for="contact">Contact:</label>
-            <input type="text" id="contact" required />
+            <label for="position">Position:</label>
+            <input type="text" name="position" required />
 
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
           </form>
