@@ -14,37 +14,45 @@
         SET inv.quantity = inv.quantity + 70 /*@produced*/
         WHERE inv.item_code = '0001370000SILV036Y' /*@itemcode*/ AND inv.warehouse_id = 1 /*@warehouseid*/;
         
--- 2. MODIFY existing production record (quantity)
+-- 2. MODIFY     (** COPY PASTE WHOLE INTO ONE EXECUTE **)  existing production record (quantity)
+
 	-- if you wanna show the list of production records, check below #4 
 	-- 2a. preparations (store the value of return!)
-		SELECT qty_produced AS old_qty
+
+        -- user inputs
+        SET @production_id = 2;
+        SET @new_qty = 70;
+
+		SELECT @old_qty := qty_produced
         FROM productions
-        WHERE production_id = 2 /*@productionid*/;
+        WHERE production_id = @production_id;
         
 	-- 2b. update production record
 		UPDATE productions
-		SET qty_produced = 30 /*@newqty*/
-		WHERE production_id = 2 /*@productionid*/;
+		SET qty_produced = @new_qty
+		WHERE production_id = @production_id;
         
 	-- 2c. update warehouse_inventory record
 		UPDATE inventories inv
-        SET inv.quantity = inv.quantity - 70 /*@oldqty*/ + 30 /*@newqty*/
+        SET inv.quantity = inv.quantity - @old_qty + @new_qty
         WHERE inv.item_code = '0001370000SILV036Y' /*@itemcode*/ AND inv.warehouse_id = 1 /*@warehouseid*/;
-    
-    
--- 3. DELETE
+
+
+-- 3. DELETE    (** COPY PASTE WHOLE INTO ONE EXECUTE **)
 	-- 3a. preparations (store the value of return!) code is the same as 2a
-		SELECT qty_produced AS old_qty
+        SET @production_id = 2; -- user input
+
+		SELECT @old_qty := qty_produced
         FROM productions
-        WHERE production_id = 2 /*@productionid*/;
+        WHERE production_id = @production_id;
         
 	-- 3b. delete production record
 		DELETE FROM productions
-		WHERE production_id = 2 /*@productionid*/;
+		WHERE production_id = @production_id;
 	
     -- 3c. update warehouse_inventory record
 		UPDATE inventories inv
-        SET inv.quantity = inv.quantity - 70 /*@oldqty*/ 
+        SET inv.quantity = inv.quantity - @old_qty
         WHERE inv.item_code = '0001370000SILV036Y' /*@itemcode*/ AND inv.warehouse_id = 1 /*@warehouseid*/;
     
 -- 4. VIEW all production records

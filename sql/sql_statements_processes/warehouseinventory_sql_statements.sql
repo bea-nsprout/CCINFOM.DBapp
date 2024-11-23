@@ -13,14 +13,24 @@
         WHERE warehouse_name LIKE '%str%';
 
     -- 1. UPDATE INVENTORY
-	UPDATE inventories
-    SET quantity = 20 			-- repace with new quantity
-    WHERE item_code = 'insertSTRINGitemcode' AND warehouse_id = 'insertINTwarehouseid';
+        SET @item_code = '0001010000YGGO036Y';
+        SET @warehouse = 2;
+        SET @qty_new = 20;
 
-    -- 2. CREATE ADJUSTMENT NEW RECORD
-        INSERT INTO inventories (item_code, warehouse_id, quantity) VALUES
+    -- 2. GET CURRENT QUANTITY
+        SELECT @qty_current := quantity FROM inventories WHERE item_code = @item_code AND warehouse_id = @warehouse;
+        SET @qty_diff = @qty_new-@qty_current;
 
-    
+    -- 3. GET INVENTORIES
+        UPDATE inventories
+        SET quantity = @qty_new
+        WHERE item_code = @item_code AND warehouse_id = @warehouse ;
+
+    -- 4. CREATE ADJUSTMENT NEW RECORD
+        INSERT INTO adjustments (time_log, item_code, warehouse_id, qty_adjusted) VALUES
+        (NOW(), @item_code, @warehouse, @qty_diff);
+
+
 -- VIEW all nonzero items in warehouse
 	SELECT * 
     FROM inventories
