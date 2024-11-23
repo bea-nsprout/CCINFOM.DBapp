@@ -26,34 +26,43 @@
     
 -- view all request -- [ DONE ]
 	-- no filter
-	SELECT * FROM requests
+	SELECT 	request_id, item_code, qty_balance, date_requested, 
+	warehouse_from_id, warehouse_to_id, IF(qty_balance > 0, 'PENDING', 'COMPLETED') AS status
+	FROM requests
 	ORDER BY request_id DESC;
-
+    
 	-- given date requested -- [ DONE ]
-	SELECT * FROM requests 
+	SELECT 	request_id, item_code, qty_balance, date_requested, 
+	warehouse_from_id, warehouse_to_id, IF(qty_balance > 0, 'PENDING', 'COMPLETED') AS status
+    	FROM requests 
 	WHERE date_requested = '2023-01-03'
    	ORDER BY request_id DESC;
 
     	-- given an item code -- [ DONE ]
-    	SELECT *
+    	SELECT 	r.request_id, r.item_code, r.qty_balance, r.date_requested, 
+	r.warehouse_from_id, r.warehouse_to_id, IF(r.qty_balance > 0, 'PENDING', 'COMPLETED') AS status
     	FROM requests r
 	JOIN items im ON r.item_code = im.item_code 
     	WHERE im.item_code = '003200BIG0RBLU036Y'
         ORDER BY r.request_id DESC;
 
 	-- given a status of qty_balance
-	SELECT *, IF(qty_balance > 0, 'PENDING', 'COMPLETED') AS status
+	SELECT r.request_id, r.item_code, r.qty_balance, r.date_requested, 
+    	r.warehouse_from_id, r.warehouse_to_id, IF(r.qty_balance > 0, 'PENDING', 'COMPLETED') AS status
 	FROM requests r
-    	ORDER BY r.request_id DESC;
+	WHERE r.qty_balance > 0
+	ORDER BY r.request_id DESC;
 
 	-- given a warehouse from ID
-    	SELECT *
+    	SELECT 	r.request_id, r.item_code, r.qty_balance, r.date_requested, 
+	r.warehouse_from_id, r.warehouse_to_id, IF(r.qty_balance > 0, 'PENDING', 'COMPLETED') AS status
     	FROM requests r
     	WHERE r.warehouse_from_id = 1
         ORDER BY r.request_id DESC;
 
 	-- given a warehouse to ID
-	SELECT *
+    	SELECT 	r.request_id, r.item_code, r.qty_balance, r.date_requested, 
+	r.warehouse_from_id, r.warehouse_to_id, IF(r.qty_balance > 0, 'PENDING', 'COMPLETED') AS status
     	FROM requests r
     	WHERE r.warehouse_to_id = 1
         ORDER BY r.request_id DESC;
