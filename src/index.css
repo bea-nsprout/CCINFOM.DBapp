@@ -1,17 +1,20 @@
+/* Global Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Base Styles */
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-color: #1a1a1a;
+  background-color: #f5f9e9;
 }
 
+/* Header */
 header {
-  background-color: #f0f4ed;
+  background-color: #36453b;
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -21,7 +24,7 @@ header {
 
 header h1 {
   font-size: 24px;
-  color: #333;
+  color: #f5f9e9;
   font-weight: bold;
 }
 
@@ -31,16 +34,21 @@ nav {
 }
 
 nav a {
-  color: #333;
+  color: #f5f9e9;
   text-decoration: none;
   font-weight: bold;
   font-size: 16px;
   position: relative;
 }
 
+nav a:hover {
+  color: #555c4e;
+  text-decoration: underline;
+}
+
+/* Hero Section */
 .hero {
-  /* placeholder for img hehe */
-  background-image: url("warehouse.jpg");
+  background-image: url("/warehouse.jpg"); /* Placeholder image */
   background-size: cover;
   background-position: center;
   padding: 100px 20px;
@@ -56,7 +64,7 @@ nav a {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5); /* Dark overlay for readability */
 }
 
 .hero-content {
@@ -64,25 +72,36 @@ nav a {
   z-index: 1;
 }
 
-.hero h2 {
-  font-size: 24px;
-  margin-bottom: 10px;
+.hero h1 {
+  font-size: 42px;
+  font-weight: bold;
+  margin-bottom: 20px;
 }
 
-.hero h1 {
-  font-size: 36px;
+.hero h2 {
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
 .hero button {
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #f2eeca;
   color: #333;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
+.hero button:hover {
+  background-color: #e5e0b7;
+  color: #555c4e;
+}
+
+/* Get In Touch Header */
 .get-in-touch-header {
   background-color: #f0f4ed;
   padding: 40px 0;
@@ -96,6 +115,7 @@ nav a {
   margin: 0;
 }
 
+/* Contact Section */
 .contact-section {
   background-color: #555c4e;
   color: #fff;
@@ -122,14 +142,16 @@ nav a {
   font-size: 18px;
   font-weight: bold;
   color: #fff;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .contact-info p {
   margin-bottom: 20px;
   line-height: 1.6;
+  color: #ddd;
 }
 
+/* Footer Links */
 .footer-links {
   display: flex;
   gap: 60px;
@@ -139,22 +161,29 @@ nav a {
 .footer-links div h4 {
   font-size: 16px;
   font-weight: bold;
+  color: #fff;
   margin-bottom: 10px;
 }
 
 .footer-links a {
   display: block;
-  color: #fff;
+  color: #ddd;
   text-decoration: none;
   margin-bottom: 5px;
   font-weight: normal;
+  transition: color 0.3s ease;
 }
 
+.footer-links a:hover {
+  color: #f2eeca;
+}
+
+/* Footer */
 footer {
-  margin-top: 1px;
   font-size: 12px;
-  color: #fff;
+  color: #f5f9e9;
   text-align: center;
-  padding: 10px 0;
+  padding: 15px 0;
+  background-color: #36453b;
   border-top: 1px solid #444;
 }

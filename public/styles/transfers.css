@@ -1,225 +1,15 @@
+/* Reset */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+/* Body Styling */
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-color: #f7f7f7;
-}
-
-header {
-  background-color: #f0f4ed;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header h1 {
-  font-size: 24px;
-  color: #333;
-  font-weight: bold;
-}
-
-nav {
-  display: flex;
-  gap: 20px;
-}
-
-nav a {
-  color: #333;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-nav a.active {
-  text-decoration: underline;
-}
-
-/* Page Header */
-.page-header {
-  text-align: center;
-  padding: 40px 0;
-  background-color: #f0f4ed;
-}
-
-.page-header h2 {
-  font-size: 32px;
-  color: #333;
-  font-weight: bold;
-}
-
-.page-header p {
-  font-size: 16px;
-  color: #666;
-}
-
-/* Search and Filter */
-.search-filter {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 20px;
-}
-
-.search-filter input,
-.search-filter select,
-.search-filter button {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.search-filter button {
-  background-color: #555c4e;
-  color: #fff;
-  cursor: pointer;
-  border: none;
-}
-
-/* Transfers Table */
-.transfers-table {
-  width: 90%;
-  margin: 0 auto;
-  border-collapse: collapse;
-  background-color: #fff;
-}
-
-.transfers-table th,
-.transfers-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.transfers-table th {
-  background-color: #333;
-  color: #fff;
-}
-
-.status {
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-}
-
-.status.pending {
-  background-color: #f9c74f;
-  color: #333;
-}
-
-.status.completed {
-  background-color: #90be6d;
-  color: #fff;
-}
-
-/* Modal Styling */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed;
-  z-index: 1;
-  padding-top: 60px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-  max-width: 500px;
-  border-radius: 8px;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-#new-transfer-btn {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  margin: 20px auto;
-  display: block;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 5px;
-}
-
-/* Footer */
-footer {
-  margin-top: 40px;
-  font-size: 12px;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  background-color: #555c4e;
-}
-
-.modal {
-  display: none;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-  width: 300px;
-  margin: auto;
-}
-
-.modal-content p {
-  margin-bottom: 20px;
-  font-size: 16px;
-  color: #333;
-}
-
-.modal-content button {
-  padding: 10px 20px;
-  margin: 0 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.modal-content .close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 24px;
-  cursor: pointer;
+  background-color: #f5f9e9;
 }
 
 button {
@@ -238,9 +28,172 @@ button:hover {
   opacity: 0.9;
 }
 
+/* Search Filter Section */
+.search-filter {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px;
+}
+
+#search-input {
+  width: 200px;
+}
+
+#search-button {
+  width: 110px;
+}
+
+.search-filter input,
+.search-filter select,
+.search-filter button {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.search-filter button {
+  background-color: #36453b;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+}
+
+/* Table Styling */
+.transfers-table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #fff;
+}
+
+.transfers-table th,
+.transfers-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.transfers-table th {
+  background-color: #36453b;
+  color: #f5f9e9;
+}
+
+.transfers-table td {
+  color: #333;
+}
+
+/* Status Badge Styling */
+.status {
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.status.pending {
+  background-color: #f9c74f;
+  color: #333;
+}
+
+.status.completed {
+  background-color: #90be6d;
+  color: #fff;
+}
+
+/* New Transfer Button */
+#new-transfer-btn {
+  background-color: #36453b;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 20px auto;
+  display: block;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Modal Styling */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+
+.modal-content h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+}
+
+.modal-content input, .modal-content select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.modal-content button[type="submit"] {
+  background-color: #36453B;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close:hover {
+  color: #333;
+}
+
+/* Edit and Delete Button Styling */
 button.edit {
   background-color: #4e6f4e;
   color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
 }
 
 button.edit:hover {
@@ -250,6 +203,10 @@ button.edit:hover {
 button.delete {
   background-color: #f44336;
   color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
 }
 
 button.delete:hover {
