@@ -71,16 +71,32 @@ const personnelRouter = (connection) => {
         }
     )
 
-    // router.delete('/delete',
-    //     [body("id").isString().notEmpty().optional()], 
-    //     validationStrictRoutine(400, ""),
-    //     async (req, res) => {
-    //         await connection.execute(`DELETE FROM trucks WHERE truck_id = 'ABC123';`)
-    //         res.status(200).json({ success: true });
-    //     }
-    // )
+    router.delete('/delete',
+        [body("id").isString().notEmpty().optional()],
+        validationStrictRoutine(400, ""),
+        async (req, res) => {
+            const { id } = matchedData(req);
+            const [[{ personnel_in_requests }]] = await connection.execute(`SELECT EXISTS (
+    		SELECT 1 
+    		FROM requests r 
+    		WHERE r.personnel_id = ?
+	) AS personnel_in_requests;`, [id])
 
-    router.put('/modify/position',
+            if (personnel_in_requests) {
+                res.status(400).json({ success: false, error: "warehouse has items in it." });
+                return;
+            }
+
+            await connection.execute(`DELETE p
+	FROM personnels p
+	LEFT JOIN requests r ON p.personnel_id = r.personnel_id
+    	LEFT JOIN transfers t ON p.personnel_id = t.personnel_id
+	WHERE p.personnel_id = ? AND r.personnel_id IS NULL AND t.personnel_id IS NULL;`, [id]);
+            res.status(200).json({ success: true });
+        }
+    )
+
+    router.post('/modify/position',
         [body("id").isNumeric().notEmpty(),
         body("position").isString().notEmpty(),
         ],
@@ -95,7 +111,7 @@ const personnelRouter = (connection) => {
         }
     )
 
-    router.put('/modify/status',
+    router.post('/modify/status',
         [body("id").isNumeric().notEmpty(),
         body("status").isBoolean(),
         ],

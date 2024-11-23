@@ -13,7 +13,7 @@ const assertWarehouseExistsRoutine = (connection) => {
             [res.locals.data.name, res.locals.data.location],
         );
         if (!warehouse_exists) {
-            res.status(406).json({ error: "warehouse does not exist." });
+            res.status(406).json({ success: false, error: "warehouse does not exist." });
             return;
         }
 
@@ -35,7 +35,7 @@ const assertWarehouseDoesNotExistsRoutine = (connection) => {
             [res.locals.data.name, res.locals.data.location],
         );
         if (warehouse_exists) {
-            res.status(406).json({ error: "warehouse already exists." });
+            res.status(406).json({ success: false, error: "warehouse already exists." });
             return;
         }
 
@@ -70,12 +70,12 @@ const warehouseRouter = (connection) => {
 		                                    SELECT item_code, @last_whID
                                     		FROM items;`);
 
-                res.status(200).json({ message: "successfully added new warehouse." });
+                res.status(200).json({ success: true, message: "successfully added new warehouse." });
             }
         ]
     )
 
-    router.put("/modify",
+    router.post("/modify",
         [
             body("name").notEmpty().isString().trim(),
             body("location").notEmpty().isString().trim(),
@@ -149,7 +149,7 @@ const warehouseRouter = (connection) => {
         }
     )
 
-    router.delete(
+    router.post(
         "/delete",
         [body("id").isNumeric()],
         validationStrictRoutine(400, "id must be provided."),
@@ -162,15 +162,13 @@ const warehouseRouter = (connection) => {
                 AND NOT EXISTS (  SELECT 1  FROM productions  WHERE warehouse_id = @warehouse_id  )
                 AND NOT EXISTS (  SELECT 1 FROM trucks  WHERE warehouse_id = @warehouse_id  ) AS no_existing_item;`);
 
-            if (!no_existing_item) {
+            if (no_existing_item) {
                 res.status(400).json({ error: "warehouse has items in it." });
                 return;
             }
 
-            await Promise.all(
-                connection.execute(`DELETE FROM inventories WHERE warehouse_id = @warehouse_id;`),
-                connection.execute(`DELETE FROM warehouses WHERE warehouse_id = @warehouse_id;`)
-            )
+            await connection.execute(`DELETE FROM inventories WHERE warehouse_id = @warehouse_id;`);
+            await connection.execute(`DELETE FROM warehouses WHERE warehouse_id = @warehouse_id;`);
 
             res.status(200).json({ error: "warehouse is successfully deleted." });
         }

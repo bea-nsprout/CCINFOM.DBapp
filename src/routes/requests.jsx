@@ -52,7 +52,7 @@ export default function Requests() {
         queryParams.append("status", statusFilter.toUpperCase());
       }
 
-      const response = await fetch(`/api/requests/view?${queryParams.toString()}`);
+      const response = await fetch(`http://localhost:3000/api/requests/view?${queryParams.toString()}`);
       const data = await response.json();
       setRequests(data);
     } catch (error) {

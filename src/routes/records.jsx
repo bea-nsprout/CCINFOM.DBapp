@@ -49,13 +49,35 @@ export default function Records() {
 
   function confirmDelete() {
     console.log(deleteIdSelection);
-    fetch("http://localhost:3000/api/items/delete/", {
+
+    let sqlQuery = "";
+    let body = {};
+
+    switch (masterlistTab) {
+      case "items":
+        sqlQuery = "http://localhost:3000/api/items/delete/";
+        body = { item_code: deleteIdSelection }
+        break;
+      case "warehouses":
+        sqlQuery = "http://localhost:3000/api/warehouses/delete/";
+        body = { id: deleteIdSelection }
+        break;
+      case "trucks":
+        sqlQuery = "http://localhost:3000/api/trucks/delete/";
+        body = { id: deleteIdSelection }
+        break;
+      case "personnel":
+        sqlQuery = "http://localhost:3000/api/personnel/delete/";
+        body = { id: deleteIdSelection }
+        break;
+    }
+
+
+    fetch(sqlQuery, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        item_code: deleteIdSelection,
-      })
+      body: JSON.stringify(body)
     }).then(x => x.json()).then(
       x => {
         if (x.success) alert(x.message)
@@ -173,10 +195,10 @@ export default function Records() {
 
   useEffect(() => {
     Promise.all([
-      fetch("api/items/view/all").then((response) => response.json()),
-      fetch("api/warehouses/view").then((response) => response.json()),
-      fetch("api/trucks/view").then((response) => response.json()),
-      fetch("api/personnel/view").then((response) => response.json()),
+      fetch("/api/items/view/all").then((response) => response.json()),
+      fetch("/api/warehouses/view").then((response) => response.json()),
+      fetch("/api/trucks/view").then((response) => response.json()),
+      fetch("/api/personnel/view").then((response) => response.json()),
     ])
       .then(([itemsData, warehousesData, trucksData, personnelData]) => {
         setItems(itemsData);
@@ -353,7 +375,7 @@ export default function Records() {
                               Edit
                             </button>
                             <span className="vertical-line">|</span>
-                            <button className="delete" onClick={showDeleteModal}>
+                            <button className="delete" onClick={() => showDeleteModal(item.warehouse_id)}>
                               Delete
                             </button>
                           </td>
@@ -432,7 +454,7 @@ export default function Records() {
                               Edit
                             </button>
                             <span className="vertical-line">|</span>
-                            <button className="delete" onClick={showDeleteModal}>
+                            <button className="delete" onClick={() => showDeleteModal(item.truck_id)}>
                               Delete
                             </button>
                           </td>
@@ -513,7 +535,7 @@ export default function Records() {
                               Edit
                             </button>
                             <span className="vertical-line">|</span>
-                            <button className="delete" onClick={showDeleteModal}>
+                            <button className="delete" onClick={() => showDeleteModal(item.personnel_id)}>
                               Delete
                             </button>
                           </td>

@@ -63,11 +63,12 @@ const trucksHandler = (connection) => {
         }
     )
 
-    router.delete('/delete',
+    router.post('/delete',
         [body("id").isString().notEmpty().optional()],
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            await connection.execute(`DELETE FROM trucks WHERE truck_id = 'ABC123';`)
+            const { id } = matchedData(req);
+            await connection.execute(`DELETE FROM trucks WHERE truck_id = ?`, [id]);
             res.status(200).json({ success: true });
         }
     )
