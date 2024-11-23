@@ -60,7 +60,7 @@
         WHERE w.warehouse_name LIKE '% A%'
         ORDER BY inv.item_code;
 
-	-- VIEW #3: QUANTITY > 0
+	-- VIEW #4: QUANTITY > 0
         SELECT inv.item_code, item_desc, quantity, unit, w.warehouse_name
         FROM inventories inv
         JOIN items i ON inv.item_code = i.item_code
