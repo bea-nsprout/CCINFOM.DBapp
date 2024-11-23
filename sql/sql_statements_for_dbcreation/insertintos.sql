@@ -1,95 +1,53 @@
-INSERT INTO item_masterlist (item_code, item_desc, unit) VALUES
+INSERT INTO items (item_code, item_desc, unit) VALUES
 ('0001010000YGGO036Y', 'MET. LACE 101-14 YGD W GOLD 36 YDS', 'ROLL'),	
 ('0001370000GOLD036Y', 'MET. LACE 137-50 GOLD 36 YDS', 'ROLL'),	
 ('0001370000SILV036Y', 'MET. LACE 137-50 SILVER 36 YDS', 'ROLL'),	
-('0001380000GOLD036Y', 'MET. LACE 138-25 GOLD 36 YDS', 'ROLL'),	
-('0001390004GOLD036Y', 'MET. LACE RIC RAC 139 #17 4MM GOLD 36 YDS', 'ROLL'),	
-('0001390007GOLD036Y', 'MET. LACE RIC RAC 139 #25 1/4" (7MM) GOLD 36 YDS', 'ROLL'),	
-('000701004IEGRN036Y', 'FRINGES 701 4" E. GREEN 36 YDS', 'ROLL'),	
-('000701004IRED0036Y', 'FRINGES 701 4" RED 36 YDS', 'ROLL'),	
-('000701004IWHTE036Y', 'FRINGES 701 4" WHITE 36 YDS', 'ROLL'),	
-('000701004IYGLD036Y', 'FRINGES 701 4" Y. GOLD 36 YDS', 'ROLL'),	
-('0007010050RBLU036Y', 'FRINGES 701 2" (50MM) ROYAL BLUE 36 YDS', 'ROLL'),	
-('0007010050RED0036Y', 'FRINGES 701 2" (50MM) RED 36 YDS', 'ROLL'),	
 ('0007010050YGLD036Y', 'FRINGES 701 2" (50MM) Y. GOLD 36 YDS', 'ROLL'),	
 ('0008100007AGRN050Y', 'DE SATIN RIBBON 810 1/4" (7MM) A. GREEN 50 YDS', 'ROLL'),	
 ('0008100007EGRN050Y', 'DE SATIN RIBBON 810 1/4" (7MM) E. GREEN 50 YDS', 'ROLL'),	
 ('0008100007LBLU050Y', 'DE SATIN RIBBON 810 1/4" (7MM) LT. BLUE 50 YDS', 'ROLL'),	
-('0008100007PINK050Y', 'DE SATIN RIBBON 810 1/4" (7MM) PINK 50 YDS', 'ROLL'),	
-('0008100007PURP050Y', 'DE SATIN RIBBON 810 1/4" (7MM) PURPLE 50 YDS', 'ROLL'),	
-('0008100007RBLU050Y', 'DE SATIN RIBBON 810 1/4" (7MM) ROYAL BLUE 50 YDS', 'ROLL'),	
-('0008100007YGLD050Y', 'DE SATIN RIBBON 810 1/4" (7MM) Y. GOLD 50 YDS', 'ROLL'),	
 ('0008110007EGGO050Y', 'DE SATIN RIBBON W/MET. 811 1/4" (7MM) EGN W GOLD 50 YDS', 'ROLL'),	
-('0008110007PIGO050Y', 'DE SATIN RIBBON W/MET. 811 1/4" (7MM) PNK W GOLD 50 YDS', 'ROLL'),	
-('0008110007WHGO050Y', 'DE SATIN RIBBON W/MET. 811 1/4" (7MM) WHT W GOLD 50 YDS', 'ROLL'),	
-('0008110007YGGO050Y', 'DE SATIN RIBBON W/MET. 811 1/4" (7MM) YGD W GOLD 50 YDS', 'ROLL'),	
-('0008120022EGGO050Y', 'ORGANZA SATIN W/ MET. 812 7/8" (22MM) EGN W GOLD 50 YDS', 'ROLL'),	
+('0008110007PIGO050Y', 'DE SATIN RIBBON W/MET. 811 1/4" (7MM) PNK W GOLD 50 YDS', 'ROLL'),		
 ('0008120022PEGO050Y', 'ORGANZA SATIN W/ MET. 812 7/8" (22MM) PCH W GOLD 50 YDS', 'ROLL'),	
 ('0008120022RBGO050Y', 'ORGANZA SATIN W/ MET. 812 7/8" (22MM) RBL W GOLD 50 YDS', 'ROLL'),	
-('0008120022REGO050Y', 'ORGANZA SATIN W/ MET. 812 7/8" (22MM) RED W GOLD 50 YDS', 'ROLL'),	
-('0008120022WHGO050Y', 'ORGANZA SATIN W/ MET. 812 7/8" (22MM) WHT W GOLD 50 YDS', 'ROLL'),	
-('0008120022YGGO050Y', 'ORGANZA SATIN W/ MET. 812 7/8" (22MM) YGD W GOLD 50 YDS', 'ROLL'),	
-('0008130036AGRN050Y', 'CUT EDGE RIBBON 813 #9 36MM A. GREEN 50 YDS', 'ROLL'),	
-('0008130036LBLU050Y', 'CUT EDGE RIBBON 813 #9 36MM LT. BLUE 50 YDS', 'ROLL'),	
 ('0008130036MGLD050Y', 'CUT EDGE RIBBON 813 #9 36MM MATTE GOLD 50 YDS', 'ROLL'),	
 ('0008130036TANG050Y', 'CUT EDGE RIBBON 813 #9 36MM TANGERINE 50 YDS', 'ROLL'),	
 ('0008130070AGRN050Y', 'CUT EDGE RIBBON 813 #40 70MM A. GREEN 50 YDS', 'ROLL'),	
-('0008130070CYLW050Y', 'CUT EDGE RIBBON 813 #40 70MM C. YELLOW 50 YDS', 'ROLL'),	
 ('0008130070LBLU050Y', 'CUT EDGE RIBBON 813 #40 70MM LT. BLUE 50 YDS', 'ROLL'),	
-('0008130070PECH050Y', 'CUT EDGE RIBBON 813 #40 70MM PEACH 50 YDS', 'ROLL'),	
-('0008130070PINK050Y', 'CUT EDGE RIBBON 813 #40 70MM PINK 50 YDS', 'ROLL'),	
-('0008130070RBLU050Y', 'CUT EDGE RIBBON 813 #40 70MM ROYAL BLUE 50 YDS', 'ROLL'),	
-('0008130070TANG050Y', 'CUT EDGE RIBBON 813 #40 70MM TANGERINE 50 YDS', 'ROLL'),	
 ('003001SMALAGRN036Y', 'JAP. CORD 3001 SMALL A. GREEN 36 YDS', 'ROLL'),	
-('003001SMALBGRN036Y', 'JAP. CORD 3001 SMALL BAT. GREEN 36 YDS', 'ROLL'),	
-('003001SMALBLCK036Y', 'JAP. CORD 3001 SMALL BLACK 36 YDS', 'ROLL'),	
-('003001SMALBRWN036Y', 'JAP. CORD 3001 SMALL BROWN 36 YDS', 'ROLL'),	
-('003001SMALCYLW036Y', 'JAP. CORD 3001 SMALL C. YELLOW 36 YDS', 'ROLL'),	
-('003001SMALLBLU036Y', 'JAP. CORD 3001 SMALL LT. BLUE 36 YDS', 'ROLL'),	
-('003001SMALPINK036Y', 'JAP. CORD 3001 SMALL PINK 36 YDS', 'ROLL'),	
-('003001SMALPURP036Y', 'JAP. CORD 3001 SMALL PURPLE 36 YDS', 'ROLL'),	
-('003001SMALRBLU036Y', 'JAP. CORD 3001 SMALL ROYAL BLUE 36 YDS', 'ROLL'),	
-('003001SMALRED0036Y', 'JAP. CORD 3001 SMALL RED 36 YDS', 'ROLL'),	
-('003001SMALTANG036Y', 'JAP. CORD 3001 SMALL TANGERINE 36 YDS', 'ROLL'),	
-('003001SMALWHTE036Y', 'JAP. CORD 3001 SMALL WHITE 36 YDS', 'ROLL'),	
 ('003001SMALYGLD036Y', 'JAP. CORD 3001 SMALL Y. GOLD 36 YDS', 'ROLL'),	
-('003200BIG0LBLU036Y', 'item_masterlistWED. CORD 3200 BIG LT. BLUE 36 YDS', 'ROLL'),	
 ('003200BIG0RBLU036Y', 'WED. CORD 3200 BIG ROYAL BLUE 36 YDS', 'ROLL'),	
 ('003200BIG0WHTE036Y', 'WED. CORD 3200 BIG WHITE 36 YDS', 'ROLL'),	
-('003200MEDMLBLU072Y', 'WED. CORD 3200 MED. LT. BLUE 72 YDS', 'ROLL'),	
-('003200MEDMRBLU072Y', 'WED. CORD 3200 MED. ROYAL BLUE 72 YDS', 'ROLL'),	
-('003200MEDMWHTE072Y', 'WED. CORD 3200 MED. WHITE 72 YDS', 'ROLL'),	
 ('003200MEDMYGLD072Y', 'WED. CORD 3200 MED. Y. GOLD 72 YDS', 'ROLL');
 
+INSERT INTO personnel (first_name, last_name, position) VALUES
+('Alice', 'Johnson', 'manager'),
+('Bob', 'Smith', 'secretary'),
+('Charlie', 'Brown', 'checker'),
+('David', 'Williams', 'driver'),
+('Eva', 'Jones', 'admin'),
+('Frank', 'Miller', 'manager'),
+('Grace', 'Davis', 'secretary'),
+('Hannah', 'García', 'checker'),
+('Isaac', 'Rodriguez', 'driver'),
+('Jack', 'Martínez', 'admin'),
+('Karen', 'Hernandez', 'manager'),
+('Leo', 'Lopez', 'secretary'),
+('Maya', 'Gonzalez', 'checker'),
+('Nathan', 'Perez', 'driver'),
+('Olivia', 'Wilson', 'admin'),
+('Paul', 'Moore', 'manager'),
+('Quinn', 'Taylor', 'secretary'),
+('Rachel', 'Anderson', 'checker'),
+('Samuel', 'Thomas', 'driver'),
+('Tina', 'Jackson', 'admin'),
+('Ursula', 'White', 'manager'),
+('Victor', 'Harris', 'secretary'),
+('Walter', 'Clark', 'checker'),
+('Xander', 'Lewis', 'driver'),
+('Yvonne', 'Young', 'admin');
 
-INSERT INTO personnel (personnel_id, first_name, last_name, position) VALUES
-(1, 'Alice', 'Johnson', 'manager'),
-(2, 'Bob', 'Smith', 'secretary'),
-(3, 'Charlie', 'Brown', 'checker'),
-(4, 'David', 'Williams', 'driver'),
-(5, 'Eva', 'Jones', 'admin'),
-(6, 'Frank', 'Miller', 'manager'),
-(7, 'Grace', 'Davis', 'secretary'),
-(8, 'Hannah', 'García', 'checker'),
-(9, 'Isaac', 'Rodriguez', 'driver'),
-(10, 'Jack', 'Martínez', 'admin'),
-(11, 'Karen', 'Hernandez', 'manager'),
-(12, 'Leo', 'Lopez', 'secretary'),
-(13, 'Maya', 'Gonzalez', 'checker'),
-(14, 'Nathan', 'Perez', 'driver'),
-(15, 'Olivia', 'Wilson', 'admin'),
-(16, 'Paul', 'Moore', 'manager'),
-(17, 'Quinn', 'Taylor', 'secretary'),
-(18, 'Rachel', 'Anderson', 'checker'),
-(19, 'Samuel', 'Thomas', 'driver'),
-(20, 'Tina', 'Jackson', 'admin'),
-(21, 'Ursula', 'White', 'manager'),
-(22, 'Victor', 'Harris', 'secretary'),
-(23, 'Walter', 'Clark', 'checker'),
-(24, 'Xander', 'Lewis', 'driver'),
-(25, 'Yvonne', 'Young', 'admin');
-
-INSERT INTO warehouse (warehouse_name, location) VALUES
+INSERT INTO warehouses (warehouse_name, location) VALUES
 ('Warehouse A', 'Manila, Metro Manila'),
 ('Warehouse B', 'Cebu City, Cebu'),
 ('Warehouse C', 'Davao City, Davao del Sur'),
@@ -101,7 +59,7 @@ INSERT INTO warehouse (warehouse_name, location) VALUES
 ('Warehouse I', 'Zamboanga City, Zamboanga del Sur'),
 ('Warehouse J', 'Batangas City, Batangas');
 
-INSERT INTO truck (truck_id, warehouse_id) VALUES
+INSERT INTO trucks (truck_id, warehouse_id) VALUES
 ('TRK001', 1),
 ('TRK002', 2),
 ('TRK003', 3),
@@ -113,69 +71,146 @@ INSERT INTO truck (truck_id, warehouse_id) VALUES
 ('TRK009', 9),
 ('TRK010', 10);
 
+-- Initialies warehouse inventory based on the warehouses data given
+INSERT INTO inventories (item_code, warehouse_id) SELECT im.item_code, w.warehouse_id FROM items im JOIN warehouses w;
 
-INSERT INTO warehouse_inventory (item_code, warehouse_id, quantity) VALUES
-('0001370000SILV036Y', 1, 100),
-('0001390007GOLD036Y', 2, 200),
-('003200MEDMRBLU072Y', 3, 150),
-('0001010000YGGO036Y', 4, 120),
-('003200MEDMLBLU072Y', 5, 180),
-('003200MEDMYGLD072Y', 6, 210),
-('003200MEDMWHTE072Y', 7, 130),
-('003200BIG0LBLU036Y', 8, 160),
-('003200BIG0RBLU036Y', 9, 140),
-('003200BIG0WHTE036Y', 10, 170),
-('000701004IYGLD036Y', 1, 110),
-('000701004IRED0036Y', 2, 90),
-('000701004IEGRN036Y', 3, 160),
-('000701004IWHTE036Y', 4, 140),
-('0007010050RBLU036Y', 5, 100),
-('0007010050RED0036Y', 6, 150),
-('0007010050YGLD036Y', 7, 180),
-('003001SMALAGRN036Y', 8, 140),
-('003001SMALBGRN036Y', 9, 200),
-('003001SMALBLCK036Y', 10, 120);
+INSERT INTO productions (item_code, date_produced, qty_produced, warehouse_id) VALUES
+('0001370000SILV036Y', '2022-11-01', 120, 1),
+('0001370000GOLD036Y', '2022-12-02', 100, 2),
+('003200MEDMYGLD072Y', '2023-01-03', 75, 3),
+('0001010000YGGO036Y', '2023-02-04', 60, 4),
+('003200BIG0WHTE036Y', '2023-03-05', 90, 5),
+('003200MEDMYGLD072Y', '2023-04-06', 105, 6),
+('003200BIG0RBLU036Y', '2023-05-07', 65, 7),
+('003200BIG0WHTE036Y', '2023-06-08', 80, 8),
+('003200BIG0RBLU036Y', '2023-07-09', 70, 9),
+('003200BIG0WHTE036Y', '2023-08-10', 85, 10),
+('0001010000YGGO036Y', '2023-09-11', 50, 1),
+('0007010050YGLD036Y', '2023-10-12', 45, 2),
+('0007010050YGLD036Y', '2023-11-13', 80, 3),
+('0007010050YGLD036Y', '2023-12-14', 70, 4),
+('0007010050YGLD036Y', '2024-01-15', 50, 5),
+('0007010050YGLD036Y', '2024-02-16', 75, 6),
+('0008110007PIGO050Y', '2024-03-17', 90, 7),
+('003001SMALAGRN036Y', '2024-04-18', 70, 8),
+('003001SMALYGLD036Y', '2024-05-19', 100, 9),
+('003200MEDMYGLD072Y', '2024-06-20', 60, 10);
 
-INSERT INTO request (request_id, personnel_id, date_requested, item_code, qty_balance, qty_total, unit, warehouse_from_id, warehouse_to_id) VALUES
-(1, 1, '2024-11-01', '0001370000SILV036Y', 100, 100, 'ROLL', 1, 2),
-(2, 2, '2024-11-02', '0001390007GOLD036Y', 200, 200, 'ROLL', 2, 3),
-(3, 3, '2024-11-03', '003200MEDMRBLU072Y', 150, 150, 'ROLL', 3, 4),
-(4, 4, '2024-11-04', '0001010000YGGO036Y', 120, 120, 'ROLL', 4, 5),
-(5, 5, '2024-11-05', '003200MEDMLBLU072Y', 180, 180, 'ROLL', 5, 6),
-(6, 6, '2024-11-06', '003200MEDMYGLD072Y', 210, 210, 'ROLL', 6, 7),
-(7, 7, '2024-11-07', '003200MEDMWHTE072Y', 130, 130, 'ROLL', 7, 8),
-(8, 8, '2024-11-08', '003200BIG0LBLU036Y', 160, 160, 'ROLL', 8, 9),
-(9, 9, '2024-11-09', '003200BIG0RBLU036Y', 140, 140, 'ROLL', 9, 10),
-(10, 10, '2024-11-10', '003200BIG0WHTE036Y', 170, 170, 'ROLL', 10, 1),
-(11, 1, '2024-11-11', '000701004IYGLD036Y', 110, 110, 'ROLL', 1, 2),
-(12, 2, '2024-11-12', '000701004IRED0036Y', 90, 90, 'ROLL', 2, 3),
-(13, 3, '2024-11-13', '000701004IEGRN036Y', 160, 160, 'ROLL', 3, 4),
-(14, 4, '2024-11-14', '000701004IWHTE036Y', 140, 140, 'ROLL', 4, 5),
-(15, 5, '2024-11-15', '0007010050RBLU036Y', 100, 100, 'ROLL', 5, 6),
-(16, 6, '2024-11-16', '0007010050RED0036Y', 150, 150, 'ROLL', 6, 7),
-(17, 7, '2024-11-17', '0007010050YGLD036Y', 180, 180, 'ROLL', 7, 8),
-(18, 8, '2024-11-18', '003001SMALAGRN036Y', 140, 140, 'ROLL', 8, 9),
-(19, 9, '2024-11-19', '003001SMALBGRN036Y', 200, 200, 'ROLL', 9, 10),
-(20, 10, '2024-11-20', '003001SMALBLCK036Y', 120, 120, 'ROLL', 10, 1);
+INSERT INTO requests (personnel_id, date_requested, item_code, qty_balance, qty_total, warehouse_from_id, warehouse_to_id) VALUES
+(1, '2022-11-01', '0001370000SILV036Y', 100, 100, 1, 2),
+(2, '2022-12-02', '0001370000GOLD036Y', 200, 200, 2, 3),
+(3, '2023-01-03', '003200MEDMYGLD072Y', 150, 150, 3, 4),
+(4, '2023-02-04', '0001010000YGGO036Y', 120, 120, 4, 5),
+(5, '2023-03-05', '003200BIG0WHTE036Y', 180, 180, 5, 6),
+(6, '2023-04-06', '003200MEDMYGLD072Y', 210, 210, 6, 7),
+(7, '2023-05-07', '003200BIG0RBLU036Y', 130, 130, 7, 8),
+(8, '2023-06-08', '003200BIG0WHTE036Y', 160, 160, 8, 9),
+(9, '2023-07-09', '003200BIG0RBLU036Y', 140, 140, 9, 10),
+(10, '2023-08-10', '003200BIG0WHTE036Y', 170, 170, 10, 1),
+(1, '2023-09-11', '0001010000YGGO036Y', 110, 110, 1, 2),
+(2, '2023-10-12', '0007010050YGLD036Y', 90, 90, 2, 3),
+(3, '2023-11-13', '0007010050YGLD036Y', 160, 160, 3, 4),
+(4, '2023-12-14', '0007010050YGLD036Y', 140, 140, 4, 5),
+(5, '2024-01-15', '0007010050YGLD036Y', 100, 100, 5, 6),
+(6, '2024-02-16', '0007010050YGLD036Y', 150, 150, 6, 7),
+(7, '2024-03-17', '0008110007PIGO050Y', 180, 180, 7, 8),
+(8, '2024-04-18', '003001SMALAGRN036Y', 140, 140, 8, 9),
+(9, '2024-05-19', '003001SMALYGLD036Y', 200, 200, 9, 10),
+(10, '2024-06-20', '003200MEDMYGLD072Y', 120, 120, 10, 1);
 
-INSERT INTO transfer (transfer_id, request_id, personnel_id, item_code, date_transferred, truck_id, quantity, unit, warehouse_from_id, warehouse_to_id) VALUES
-(1, 1, 1, '0001370000SILV036Y', '2024-11-01', 'TRK001', 50, 'ROLL', 1, 2),
-(2, 2, 2, '0001390007GOLD036Y', '2024-11-02', 'TRK002', 100, 'ROLL', 2, 3),
-(3, 3, 3, '003200MEDMRBLU072Y', '2024-11-03', 'TRK003', 75, 'ROLL', 3, 4),
-(4, 4, 4, '0001010000YGGO036Y', '2024-11-04', 'TRK004', 60, 'ROLL', 4, 5),
-(5, 5, 5, '003200MEDMLBLU072Y', '2024-11-05', 'TRK005', 90, 'ROLL', 5, 6),
-(6, 6, 6, '003200MEDMYGLD072Y', '2024-11-06', 'TRK006', 105, 'ROLL', 6, 7),
-(7, 7, 7, '003200MEDMWHTE072Y', '2024-11-07', 'TRK007', 65, 'ROLL', 7, 8),
-(8, 8, 8, '003200BIG0LBLU036Y', '2024-11-08', 'TRK008', 80, 'ROLL', 8, 9),
-(9, 9, 9, '003200BIG0RBLU036Y', '2024-11-09', 'TRK009', 70, 'ROLL', 9, 10),
-(10, 10, 10, '003200BIG0WHTE036Y', '2024-11-10', 'TRK010', 85, 'ROLL', 10, 1),
-(11, 11, 1, '000701004IYGLD036Y', '2024-11-11', 'TRK001', 50, 'ROLL', 1, 2),
-(12, 12, 2, '000701004IRED0036Y', '2024-11-12', 'TRK002', 45, 'ROLL', 2, 3),
-(13, 13, 3, '000701004IEGRN036Y', '2024-11-13', 'TRK003', 80, 'ROLL', 3, 4),
-(14, 14, 4, '000701004IWHTE036Y', '2024-11-14', 'TRK004', 70, 'ROLL', 4, 5),
-(15, 15, 5, '0007010050RBLU036Y', '2024-11-15', 'TRK005', 50, 'ROLL', 5, 6),
-(16, 16, 6, '0007010050RED0036Y', '2024-11-16', 'TRK006', 75, 'ROLL', 6, 7),
-(17, 17, 7, '0007010050YGLD036Y', '2024-11-17', 'TRK007', 90, 'ROLL', 7, 8),
-(18, 18, 8, '003001SMALAGRN036Y', '2024-11-18', 'TRK008', 70, 'ROLL', 8, 9),
-(19, 19, 9, '003001SMALBGRN036Y', '2024-11-19', 'TRK009', 100, 'ROLL', 9, 10),
-(20, 20, 10, '003001SMALBLCK036Y', '2024-11-20', 'TRK010', 60, 'ROLL', 10, 1);
+
+INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, quantity) VALUES
+(1, 1, '2022-11-01', 'TRK001', 70),
+(2, 2, '2022-12-02', 'TRK002', 100),
+(3, 3, '2023-01-03', 'TRK003', 75),
+(4, 4, '2023-02-04', 'TRK004', 60),
+(5, 5, '2023-03-05', 'TRK005', 90),
+(6, 6, '2023-04-06', 'TRK006', 105),
+(7, 7, '2023-05-07', 'TRK007', 65),
+(8, 8, '2023-06-08', 'TRK008', 80),
+(9, 9, '2023-07-09', 'TRK009', 70),
+(10, 10, '2023-08-10', 'TRK010', 60),
+(11, 1, '2023-09-11', 'TRK001', 50),
+(12, 2, '2023-10-12', 'TRK002', 45),
+(13, 3, '2023-11-13', 'TRK003', 80),
+(14, 4, '2023-12-14', 'TRK004', 70),
+(15, 5, '2024-01-15', 'TRK005', 50),
+(16, 6, '2024-02-16', 'TRK006', 75),
+(17, 7, '2024-03-17', 'TRK007', 90),
+(18, 8, '2024-04-18', 'TRK008', 70),
+(19, 9, '2024-05-19', 'TRK009', 100),
+(1, 10, '2024-06-20', 'TRK010', 20);
+
+INSERT INTO adjustments (time_log, item_code, qty_adjusted, warehouse_id) VALUES
+('2022-01-01 10:00:00', '0001370000SILV036Y', -10, 1),
+('2022-02-01 11:00:00', '0001370000GOLD036Y', 20, 2),
+('2022-03-01 12:00:00', '003200MEDMYGLD072Y', -15, 3),
+('2022-04-01 13:00:00', '0001010000YGGO036Y', 30, 4),
+('2022-05-01 14:00:00', '003200BIG0WHTE036Y', -25, 5),
+('2022-06-01 15:00:00', '003200MEDMYGLD072Y', 40, 6),
+('2022-07-01 16:00:00', '003200BIG0RBLU036Y', -35, 7),
+('2022-08-01 17:00:00', '003200BIG0WHTE036Y', 50, 8),
+('2022-09-01 18:00:00', '003200BIG0RBLU036Y', -45, 9),
+('2022-10-01 19:00:00', '003200BIG0WHTE036Y', 60, 10),
+('2023-01-01 10:00:00', '0001370000SILV036Y', -10, 1),
+('2023-02-01 11:00:00', '0001370000GOLD036Y', 20, 2),
+('2023-03-01 12:00:00', '003200MEDMYGLD072Y', -15, 3),
+('2023-04-01 13:00:00', '0001010000YGGO036Y', 30, 4),
+('2023-05-01 14:00:00', '003200BIG0WHTE036Y', -25, 5),
+('2024-06-01 15:00:00', '003200MEDMYGLD072Y', 40, 6),
+('2024-07-01 16:00:00', '003200BIG0RBLU036Y', -35, 7),
+('2024-08-01 17:00:00', '003200BIG0WHTE036Y', 50, 8),
+('2024-09-01 18:00:00', '003200BIG0RBLU036Y', -45, 9),
+('2024-10-01 19:00:00', '003200BIG0WHTE036Y', 60, 10);
+
+
+-- Increase quantity from production
+UPDATE inventories wi
+JOIN productions p on wi.item_code = p.item_code AND wi.warehouse_id = p.warehouse_id
+SET wi.quantity = wi.quantity + p.qty_produced
+WHERE wi.warehouse_id = p.warehouse_id;
+
+-- (displays updated)
+    SELECT *
+    FROM inventories
+    WHERE quantity > 0;
+
+-- Decrease quantity from the source warehouse
+UPDATE inventories wi
+JOIN (
+    SELECT r.item_code, r.warehouse_from_id, SUM(t.quantity) AS total_transferred
+    FROM requests r
+    JOIN transfers t ON r.request_id = t.request_id
+    GROUP BY r.request_id
+) sum ON wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_from_id
+SET wi.quantity = wi.quantity - sum.total_transferred
+WHERE wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_from_id;
+
+-- Increase quantity in the destination warehouse
+UPDATE inventories wi
+JOIN (
+    SELECT r.item_code, r.warehouse_to_id, SUM(t.quantity) AS total_transferred
+    FROM requests r
+    JOIN transfers t ON r.request_id = t.request_id
+    GROUP BY r.request_id
+) sum ON wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_to_id
+SET wi.quantity = wi.quantity + sum.total_transferred
+WHERE wi.item_code = sum.item_code AND wi.warehouse_id = sum.warehouse_to_id;
+
+
+-- Update qty_balance in request:
+UPDATE requests r
+JOIN (
+    SELECT request_id, SUM(quantity) AS total_transferred
+    FROM transfers
+    GROUP BY request_id
+) t ON r.request_id = t.request_id
+SET r.qty_balance = r.qty_balance - t.total_transferred
+WHERE r.request_id = t.request_id;
+
+-- (Displays updated)
+    SELECT r.request_id, wi.*, r.qty_total, r.qty_balance, t.quantity
+    FROM requests r
+    JOIN inventories wi ON wi.item_code = r.item_code  AND wi.warehouse_id = r.warehouse_from_id
+    JOIN transfers t ON r.request_id = t.request_id
+    WHERE r.request_id = t.request_id;

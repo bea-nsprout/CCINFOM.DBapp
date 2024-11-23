@@ -1,17 +1,37 @@
+import express from "express";
+import mysql from "mysql2/promise";
+import cors from "cors";
+import dotenv from "dotenv";
 
-const express = require("express");
+import itemsRouter from "./api/items.js";
+import warehouseRouter from "./api/warehouse.js";
+import inventoryRouter from "./api/inventories.js";
+
+dotenv.config();
+
 const app = express();
 const port = 3000;
+const connection = await mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: process.env.MYSQL_DB_PASSWORD,
+  database: 'warehousedb'
+})
 
 
-app.use(express.static('public'));
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send('Hello World!d');
+app.use(itemsRouter(cors, connection));
+app.use(warehouseRouter(cors, connection));
+app.use(inventoryRouter(cors, connection));
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  res.code(500).json({ error: "internal server error." });
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
-})
+  console.log(`Example app listening on port ${port}`);
+});
 
-module.exports = app;
+// module.exports = app;
