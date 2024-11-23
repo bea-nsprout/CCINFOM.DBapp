@@ -141,7 +141,6 @@ const warehouseRouter = (connection) => {
         [query("status").isBoolean().optional()],
         validationStrictRoutine(400, "status must be a boolean ('true' or 'false')"),
         async (req, res, next) => {
-            console.log("status");
             const { status } = matchedData(req);
             if (status == undefined) {
                 next();
@@ -158,11 +157,37 @@ const warehouseRouter = (connection) => {
     router.get(
         "/view",
         async (req, res) => {
-            console.log("all");
             const [results] = await connection.execute(
                 `SELECT warehouse_name, location FROM warehouses WHERE archived = false;`
             )
             res.status(200).json(results);
+        }
+    )
+
+    router.delete(
+        "/delete",
+        [body("id").isNumeric()],
+        validationStrictRoutine(400, "id must be provided."),
+        async (req, res) => {
+            const { id } = matchedData(req);
+            await connection.execute(`SET @warehouse_id = ?;`, [id]);
+            const [no_existing_item] = await connection.execute(`SELECT NOT EXISTS (  SELECT 1
+                FROM inventories  WHERE warehouse_id = @warehouse_id AND quantity > 0  )
+                AND NOT EXISTS (  SELECT 1  FROM requests  WHERE warehouse_from_id = @warehouse_id OR warehouse_to_id = @warehouse_id  ) 
+                AND NOT EXISTS (  SELECT 1  FROM productions  WHERE warehouse_id = @warehouse_id  )
+                AND NOT EXISTS (  SELECT 1 FROM trucks  WHERE warehouse_id = @warehouse_id  ) AS no_existing_item;`);
+
+            if (!no_existing_item) {
+                res.status(400).json({ error: "warehouse has items in it." });
+                return;
+            }
+
+            await Promise.all(
+                connection.execute(`DELETE FROM inventories WHERE warehouse_id = @warehouse_id;`),
+                connection.execute(`DELETE FROM warehouses WHERE warehouse_id = @warehouse_id;`)
+            )
+
+            res.status(200).json({ error: "warehouse is successfully deleted." });
         }
     )
 
