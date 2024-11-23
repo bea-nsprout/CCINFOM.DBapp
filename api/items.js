@@ -9,7 +9,7 @@ const itemDoesNotExistRoutine = (connection) => {
             [res.locals.data.item_code],
         );
         if (item_exists) {
-            res.status(406).json({ error: "item already exists." });
+            res.status(406).json({ success: false, error: "item already exists." });
             return;
         }
 
@@ -28,7 +28,7 @@ const itemExistsRoutine = (connection) => {
             [res.locals.data.item_code],
         );
         if (!item_exists) {
-            res.status(406).json({ error: "item does not exist." });
+            res.status(406).json({ success: false, error: "item does not exist." });
             return;
         }
 
@@ -94,7 +94,7 @@ const itemsRouter = (connection) => {
     );
 
     router.post(
-        "/insert",
+        "/new",
         [
             body("item_code").notEmpty().isString().trim(),
             body("item_desc").notEmpty().isString().trim(),
@@ -118,12 +118,12 @@ const itemsRouter = (connection) => {
                     [item_code],
                 );
 
-                res.status(200).send({ message: "successfully added " + item_code });
+                res.status(200).send({ success: true, message: "successfully added " + item_code });
             }
         ],
     );
 
-    router.delete(
+    router.post(
         "/delete",
         [body("item_code").notEmpty().isString().trim()],
         [
@@ -142,6 +142,7 @@ const itemsRouter = (connection) => {
                     res
                         .status(409)
                         .json({
+                            success: false,
                             error:
                                 "currently a warehouse holds a quantity of that item. Please empty the warehouse and try again.",
                         });
@@ -157,12 +158,12 @@ const itemsRouter = (connection) => {
                     [item_code],
                 );
 
-                res.status(200).json({ response: "successfully deleted " + item_code });
+                res.status(200).json({ success: true, message: "successfully deleted " + item_code });
             },
         ],
     );
 
-    router.put(
+    router.post(
         "/modify",
         [
             body("item_code").notEmpty().isString().trim(),
@@ -180,7 +181,7 @@ const itemsRouter = (connection) => {
 
 
 
-                res.status(200).json({ response: "successfully modified" });
+                res.status(200).json({ success: true, message: "successfully modified" });
             }
         ]
     )
