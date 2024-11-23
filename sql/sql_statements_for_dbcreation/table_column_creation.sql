@@ -1,6 +1,6 @@
--- DROP DATABASE warehousedb;
-
--- CREATE DATABASE warehouseDB;
+DROP DATABASE warehousedb;
+CREATE DATABASE warehouseDB;
+USE warehouseDB;
 
 -- 4 core tables as follows:
 CREATE TABLE items ( 

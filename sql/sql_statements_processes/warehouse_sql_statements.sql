@@ -38,6 +38,7 @@
 -- VIEW DROPDOWN
 	-- also for DROPDOWN
     -- i deliberately left out the warehouse id, because i dont think it's needed?
+-- VIEW #1: NO FILTER
 	SELECT warehouse_name, location
     FROM warehouses
     WHERE archived = false;
@@ -47,23 +48,18 @@
     FROM warehouses
     WHERE warehouse_name = 'Warehouse A' /*replace*/ AND location = 'Manila, Metro Manila' /*replace*/;
 
--- VIEW #1: all active warehouses (filter)
-    SELECT warehouse_name, location, archived
-    FROM warehouses
-    WHERE archived = false;
-
 -- VIEW #2: NAME FILTER, list all warehouses and their location that have the name
-	SELECT warehouse_name, location, archived
+	SELECT warehouse_name, location
     FROM warehouses
     WHERE warehouse_name LIKE '%house%' /*replace*/;
 
 -- VIEW #3: LOCATION FILTER, list all warehouses and their name that satisfies the input
-	SELECT warehouse_name, location, archived
+	SELECT warehouse_name, location
     FROM warehouses
     WHERE location LIKE '%Manila%' /*replace*/;
 
 -- VIEW #4: STATUS FILTER
-    SELECT warehouse_name, location, archived
+    SELECT warehouse_name, location
     FROM warehouses
     WHERE archived = true /*or false*/;
 
