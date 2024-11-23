@@ -1,7 +1,6 @@
 import React, {useEffect, useState } from "react";
 
 export default function Records() {
-  // const [data, setData] = useState(null);
   
 
 
@@ -9,7 +8,6 @@ export default function Records() {
   const [dataWarehouse, setWarehouses] = useState(null); // For warehouses
   const [dataTrucks, setTrucks] = useState(null); // For trucks
   const [dataPersonnel, setPersonnel] = useState(null); // For personnel
-
 
   const [masterlistTab, setMasterlistTab] = useState("items");
   
@@ -125,9 +123,6 @@ export default function Records() {
         console.error("Error fetching data:", error);
       });
   }, []);
-  
-
-
 
   return (
     <>
@@ -173,7 +168,7 @@ export default function Records() {
               <div className="search-container">
                 <select className="search-dropdown">
                   <option value="item_code">Item Code</option>
-                  <option value="item_name">Item Description</option>
+                  <option value="item_desc">Item Description</option>
                 </select>
                 <input
                   type="text"
@@ -256,8 +251,8 @@ export default function Records() {
             <div className="hero-content">
             <div className="search-container">
             <select className="search-dropdown">
-              <option value="item_code">Warehouse</option>
-              <option value="item_name">Location</option>
+              <option value="warehouse">Warehouse</option>
+              <option value="location">Location</option>
             </select>
             <input
               type="text"
@@ -332,8 +327,8 @@ export default function Records() {
             <div className="hero-content">
             <div className="search-container">
             <select className="search-dropdown">
-              <option value="item_code">Truck</option>
-              <option value="item_name">Warehouse</option>
+              <option value="truck">Truck</option>
+              <option value="warehouse">Warehouse</option>
             </select>
             <input
               type="text"
@@ -400,7 +395,29 @@ export default function Records() {
           )}
 
           {/* Personnel Tab */}
-          {masterlistTab === "personnel" && (
+          {masterlistTab === "personnel" && ( <>
+
+            {/* Search Section */}
+            <section className="hero inventory-hero">
+            <div className="hero-content">
+            <div className="search-container">
+            <select className="search-dropdown">
+              <option value="first_name">First Name</option>
+              <option value="last_name">Last Name</option>
+              <option value="position">Position</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="search-bar"
+            />
+            <button className="search-button">Search</button>
+            </div>
+            </div>
+            </section>
+
+
+
             <table className="masterlist-table">
               <thead>
                 <tr>
@@ -415,8 +432,9 @@ export default function Records() {
                 dataPersonnel == null ? "LOADING" :
                     dataPersonnel.map((item, index) => (
                         <tr key={index}>
-                            <td>{item.truck_id}</td>
-                            <td>{item.warehouse_name}</td>
+                            <td>{item.first_name}</td>
+                            <td>{item.last_name}</td>
+                            <td>{item.position}</td>
                             <td>
                               <button className="edit" onClick={showEditModal}>
                                 Edit
@@ -454,6 +472,7 @@ export default function Records() {
 
               <button id="new-personnel-btn" onClick={showNewPersonnel}>New Personnel</button>
             </table>
+            </>
           )}
         </div>
       </section>
