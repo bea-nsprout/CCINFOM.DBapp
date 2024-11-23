@@ -130,23 +130,7 @@ export default function Records() {
                 <tr>
                   <td>001</td>
                   <td>Item A</td>
-                  <td>100</td>
-                  <td>pcs</td>
-                  <td>
-                      <button className="edit" onClick={showEditModal}>
-                          Edit
-                      </button>
-                      <span className="vertical-line">|</span>
-                      <button className="delete" onClick={showDeleteModal}>
-                          Delete
-                      </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>002</td>
-                  <td>Item B</td>
-                  <td>200</td>
-                  <td>kgs</td>
+                  <td>ROLL</td>
                   <td>
                       <button className="edit" onClick={showEditModal}>
                           Edit
