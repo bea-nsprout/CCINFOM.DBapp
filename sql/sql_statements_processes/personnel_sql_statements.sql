@@ -28,16 +28,25 @@
 	WHERE personnel_id = 5;
 
 -- DELETE PERSONNEL
+	-- delete can only happen if personnel is not in transfer and request
 	SELECT EXISTS (
     		SELECT 1 
     		FROM requests r 
-    		WHERE r.personnel_id = 1
+    		WHERE r.personnel_id = 2
 	) AS personnel_in_requests;
+    
+	SELECT EXISTS (
+    		SELECT 1 
+    		FROM transfers t
+    		WHERE t.personnel_id = 2
+	) AS personnel_in_transfers;
 
 	DELETE p
 	FROM personnels p
 	LEFT JOIN requests r ON p.personnel_id = r.personnel_id
-	WHERE p.personnel_id = 1 AND r.personnel_id IS NULL;
+    	LEFT JOIN transfers t ON p.personnel_id = t.personnel_id
+	WHERE p.personnel_id = 2 AND r.personnel_id IS NULL AND t.personnel_id IS NULL ;
+    
 
 -- VIEW 
 	-- No Filter
