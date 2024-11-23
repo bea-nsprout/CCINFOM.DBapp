@@ -9,8 +9,7 @@
                      qty_total, 
                      warehouse_from_id, 
                      warehouse_to_id) 
-	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 99, 100, 1, 2)
-	WHERE 99 <= 100;
+	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 99, 100, 1, 2);
  
 -- Modify an existing record [ DONE ]
 	SET @new_qty_balance = 50; /* provide the qty_balance */
