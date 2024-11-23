@@ -136,13 +136,17 @@ export default function Records() {
     const object = {};
     data.forEach((value, key) => object[key] = value);
 
-    fetch("http://localhost:3000/api/items/modify/", {
+    console.log(object)
+
+    let sql = `http://localhost:3000/api/${masterlistTab}/modify/`
+
+    fetch(sql, {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(object)
     }).then(x => x.json()).then(
-      window.location.reload(true)
+      // window.location.reload(true)
     );
 
   }

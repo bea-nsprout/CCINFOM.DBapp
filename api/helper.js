@@ -2,8 +2,9 @@ import { validationResult, matchedData } from "express-validator";
 
 
 export const extractMatchedRoutine = (req, res, next) => {
-    res.locals.data = matchedData(req)
-    next()
+    res.locals.data = matchedData(req);
+    console.log(res.locals.data);
+    next();
 }
 
 export const validationStrictRoutine = (status, description) => {

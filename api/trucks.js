@@ -94,7 +94,7 @@ const trucksHandler = (connection) => {
         validationStrictRoutine(400, ""),
         async (req, res) => {
             const { truckid, warehouseid } = matchedData(req);
-            const [[{ truck_id_exists }]] = connection.execute(`SELECT EXISTS (
+            const [[{ truck_id_exists }]] = await connection.execute(`SELECT EXISTS (
                                                                 SELECT 1
                                                                 FROM trucks t
                                                                 WHERE t.truck_id = ?
