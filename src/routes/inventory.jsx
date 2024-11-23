@@ -1,53 +1,75 @@
 import React, { useEffect, useState } from "react";
 
-function showEditModal() {
-    document.getElementById("editModal").style.display = "flex";
-}
-
-function closeEditModal() {
-    document.getElementById("editModal").style.display = "none";
-}
-
-function confirmEdit() {
-    alert("Item edited successfully!");
-    closeEditModal();
-}
-
-// function showDeleteModal() {
-//     document.getElementById("deleteModal").style.display = "flex";
-// }
-
-// function closeDeleteModal() {
-//     document.getElementById("deleteModal").style.display = "none";
-// }
-
-// function confirmDelete() {
-//     alert("Item deleted successfully!");
-//     closeDeleteModal();
-// }
-
 export default function Inventory() {
     const [data, setData] = useState(null);
+    const [searchQuery, setSearchQuery] = useState("");
+    const [selectedItem, setSelectedItem] = useState(null); // Holds the item to be edited
+    const [editQuantity, setEditQuantity] = useState(""); // Holds the new quantity value
 
+    // Fetch inventory data on load
     useEffect(() => {
-        const exitModal = (event) => {
-            if (event.target === document.getElementById("editModal")) {
-                closeEditModal();
-            }
-        };
-
-        window.addEventListener("click", exitModal);
-
-        return () => {
-            window.removeEventListener("click", exitModal);
-        };
+        fetchInventoryData();
     }, []);
 
-    useEffect(() => {
-        fetch("api/inventories/view/all")
-            .then(response => response.json())
-            .then(d => setData(d));
-    }, [])
+    const fetchInventoryData = async () => {
+        try {
+            const response = await fetch("/api/inventories/view");
+            const data = await response.json();
+            setData(data);
+        } catch (error) {
+            console.error("Error fetching inventory data:", error);
+        }
+    };
+
+    // Show the edit modal and set the selected item
+    const showEditModal = (item) => {
+        setSelectedItem(item);
+        setEditQuantity(item.quantity); // Pre-fill the input with the current quantity
+        document.getElementById("editModal").style.display = "flex";
+    };
+
+    const closeEditModal = () => {
+        document.getElementById("editModal").style.display = "none";
+    };
+
+    // Handle the edit quantity submission
+    const confirmEdit = async (e) => {
+        e.preventDefault();
+
+        if (!selectedItem || editQuantity === "") {
+            alert("Please provide a valid quantity.");
+            return;
+        }
+
+        try {
+            const response = await fetch("/api/inventories/modify", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    item_code: selectedItem.item_code,
+                    warehouse_id: selectedItem.warehouse_id,
+                    qty_new: parseInt(editQuantity),
+                }),
+            });
+
+            if (response.ok) {
+                alert("Quantity updated successfully!");
+                closeEditModal();
+                fetchInventoryData(); // Refresh the data
+            } else {
+                alert("Failed to update quantity.");
+            }
+        } catch (error) {
+            console.error("Error updating quantity:", error);
+        }
+    };
+
+    // Filter data based on the search query
+    const filteredData = data?.filter((item) =>
+        item.item_code.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.item_desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.warehouse_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
     return (
         <>
@@ -69,6 +91,8 @@ export default function Inventory() {
                             type="text"
                             placeholder="Search..."
                             className="search-bar"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
                         />
                         <button className="search-button">Search</button>
                     </div>
@@ -89,20 +113,30 @@ export default function Inventory() {
                     </thead>
 
                     <tbody>
-                        {
-                            data == null ? "LOADING" :
-                                data.map((item, index) => (
-                                    <tr key={index}>
-                                        <td>{item.item_code}</td>
-                                        <td>{item.item_desc}</td>
-                                        <td>{item.quantity}</td>
-                                        <td>{item.unit}</td>
-                                        <td>{item.warehouse_name}</td>
-                                        <td>
-                                            <button className="edit" onClick={showEditModal}>Edit</button>
-                                        </td>
-                                    </tr>
-                                ))}
+                        {data == null ? (
+                            <tr>
+                                <td colSpan="6">LOADING...</td>
+                            </tr>
+                        ) : filteredData.length > 0 ? (
+                            filteredData.map((item, index) => (
+                                <tr key={index}>
+                                    <td>{item.item_code}</td>
+                                    <td>{item.item_desc}</td>
+                                    <td>{item.quantity}</td>
+                                    <td>{item.unit}</td>
+                                    <td>{item.warehouse_name}</td>
+                                    <td>
+                                        <button className="edit" onClick={() => showEditModal(item)}>
+                                            Edit
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="6">No matching records found.</td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
             </section>
@@ -110,14 +144,32 @@ export default function Inventory() {
             {/* Edit Modal */}
             <div id="editModal" className="modal">
                 <div className="modal-content">
-                    <span className="close" onClick={closeEditModal}>&times;</span>
+                    <span className="close" onClick={closeEditModal}>
+                        &times;
+                    </span>
                     <h3>Edit Quantity</h3>
-                    <form>
-                        <label for="quantity">Quantity:</label>
-                        <input type="number" id="quantity" required />
+                    {selectedItem && (
+                        <form onSubmit={confirmEdit}>
+                            <label htmlFor="quantity">Item Code:</label>
+                            <p>{selectedItem.item_code}</p>
 
-                        <button type="submit" onClick={confirmEdit}>Edit</button>
-                    </form>
+                            <label htmlFor="item-name">Item Name:</label>
+                            <p>{selectedItem.item_desc}</p>
+
+                            <label htmlFor="quantity">Quantity:</label>
+                            <input
+                                type="number"
+                                id="quantity"
+                                value={editQuantity}
+                                onChange={(e) => setEditQuantity(e.target.value)}
+                                required
+                            />
+
+                            <button type="submit" className="submit-button">
+                                Save Changes
+                            </button>
+                        </form>
+                    )}
                 </div>
             </div>
         </>
