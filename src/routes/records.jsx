@@ -1,8 +1,19 @@
 import React, {useEffect, useState } from "react";
 
 export default function Records() {
-  const [data, setData] = useState(null);
+  // const [data, setData] = useState(null);
+  
+
+
+  const [dataItem, setItems] = useState(null); // For items
+  const [dataWarehouse, setWarehouses] = useState(null); // For warehouses
+  const [dataTrucks, setTrucks] = useState([]); // For trucks
+  const [dataPersonnel, setPersonnel] = useState([]); // For personnel
+
+
   const [masterlistTab, setMasterlistTab] = useState("items");
+  
+  
 
   const handleTabChange = (tab) => {
     setMasterlistTab(tab);
@@ -79,11 +90,44 @@ export default function Records() {
     closeNewRequest();
   }
 
-      useEffect(() => {
-        fetch("api/items/view/all")
-            .then(response => response.json())
-            .then(d => setData(d));
-    }, [])
+  // useEffect(() => {
+
+  //   Promise.all([
+
+  //   ])
+  //   fetch("api/items/view/all")
+  //       .then(response => response.json())
+  //       .then(d => setData(d));
+  //   }, [])
+
+
+
+  // useEffect(() => {
+  //   fetch("api/warehouses/view")
+  //     .then(response => response.json())
+  //     .then(d => setData(d));
+  //   }, [])
+
+  useEffect(() => {
+    Promise.all([
+      fetch("api/items/view/all").then((response) => response.json()),
+      fetch("api/warehouses/view").then((response) => response.json()),
+      // fetch("api/trucks/view").then((response) => response.json()),
+      // fetch("api/personnel/view").then((response) => response.json()),
+    ])
+      .then(([itemsData, warehousesData, trucksData, personnelData]) => {
+        setItems(itemsData);
+        setWarehouses(warehousesData);
+        setTrucks(trucksData);
+        setPersonnel(personnelData);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+  
+
+
 
   return (
     <>
@@ -133,8 +177,8 @@ export default function Records() {
               <tbody>
 
               {
-              data == null ? "LOADING" :
-                  data.map((item, index) => (
+              dataItem == null ? "LOADING" :
+                  dataItem.map((item, index) => (
                       <tr key={index}>
                           <td>{item.item_code}</td>
                           <td>{item.item_desc}</td>
@@ -194,12 +238,11 @@ export default function Records() {
               </thead>
               <tbody>
                 {
-                data == null ? "LOADING" :
-                    data.map((item, index) => (
+                dataWarehouse == null ? "LOADING" :
+                    dataWarehouse.map((item, index) => (
                         <tr key={index}>
-                            <td>{item.item_code}</td>
-                            <td>{item.item_desc}</td>
-                            <td>{item.unit}</td>
+                            <td>{item.warehouse_name}</td>
+                            <td>{item.location}</td>
                             <td>
                               <button className="edit" onClick={showEditModal}>
                                 Edit
@@ -249,28 +292,23 @@ export default function Records() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>T001</td>
-                  <td>Warehouse A</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
-                <tr>
-                  <td>T002</td>
-                  <td>Warehouse B</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
+              {
+                dataWarehouse == null ? "LOADING" :
+                    dataWarehouse.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.warehouse_name}</td>
+                            <td>{item.location}</td>
+                            <td>
+                              <button className="edit" onClick={showEditModal}>
+                                Edit
+                              </button>
+                              <span className="vertical-line">|</span>
+                              <button className="delete" onClick={showDeleteModal}>
+                                Delete
+                              </button>
+                            </td>
+                        </tr>
+                    ))}
               </tbody>
 
               {/* Edit Item Modal */}

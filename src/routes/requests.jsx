@@ -67,6 +67,8 @@ export default function Requests() {
             <th>Request ID</th>
             <th>Item Code</th>
             <th>Quantity</th>
+            <th>From Warehouse</th>
+            <th>To Warehouse</th>
             <th>Request Date</th>
             <th>Status</th>
             <th>Actions</th>
@@ -92,8 +94,14 @@ export default function Requests() {
             <label for="quantity">Quantity:</label>
             <input type="number" id="quantity" required />
 
-            <label for="warehouse">Warehouse:</label>
-            <select id="warehouse">
+            <label htmlFor="from-warehouse">From Warehouse:</label>
+            <select id="from-warehouse">
+              <option value="warehouse1">Warehouse 1</option>
+              <option value="warehouse2">Warehouse 2</option>
+            </select>
+
+            <label htmlFor="to-warehouse">To Warehouse:</label>
+            <select id="to-warehouse">
               <option value="warehouse1">Warehouse 1</option>
               <option value="warehouse2">Warehouse 2</option>
             </select>

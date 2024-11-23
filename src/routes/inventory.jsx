@@ -110,26 +110,16 @@ export default function Inventory() {
             {/* Edit Modal */}
             <div id="editModal" className="modal">
                 <div className="modal-content">
-                    <span className="close" onClick={closeEditModal}>
-                        &times;
-                    </span>
-                    <p>Are you sure you want to edit this item?</p>
-                    <button onClick={confirmEdit}>Yes</button>
-                    <button onClick={closeEditModal}>No</button>
+                    <span className="close" onClick={closeEditModal}>&times;</span>
+                    <h3>Edit Quantity</h3>
+                    <form>
+                        <label for="quantity">Quantity:</label>
+                        <input type="number" id="quantity" required />
+
+                        <button type="submit" onClick={confirmEdit}>Edit</button>
+                    </form>
                 </div>
             </div>
-
-            {/* Delete Modal
-            <div id="deleteModal" className="modal">
-                <div className="modal-content">
-                    <span className="close" onClick={closeDeleteModal}>
-                        &times;
-                    </span>
-                    <p>Are you sure you want to delete this item?</p>
-                    <button onClick={confirmDelete}>Yes</button>
-                    <button onClick={closeDeleteModal}>No</button>
-                </div>
-            </div> */}
         </>
     );
 }
