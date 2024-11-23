@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useEffect, useState } from "react";
 
 export default function Records() {
+  const [data, setData] = useState(null);
   const [masterlistTab, setMasterlistTab] = useState("items");
 
   const handleTabChange = (tab) => {
@@ -73,13 +74,16 @@ export default function Records() {
 
 
 
-
-
-
   function confirmNewRequest() {
     alert("Request Submitted");
     closeNewRequest();
   }
+
+      useEffect(() => {
+        fetch("api/items/view/all")
+            .then(response => response.json())
+            .then(d => setData(d));
+    }, [])
 
   return (
     <>
@@ -127,40 +131,53 @@ export default function Records() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>001</td>
-                  <td>Item A</td>
-                  <td>100</td>
-                  <td>pcs</td>
-                  <td>
-                    <button className="edit" onClick={showEditModal}>
-                      Edit
-                    </button>
-                    <span className="vertical-line">|</span>
-                    <button className="delete" onClick={showDeleteModal}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>002</td>
-                  <td>Item B</td>
-                  <td>200</td>
-                  <td>kgs</td>
-                  <td>
-                    <button className="edit" onClick={showEditModal}>
-                      Edit
-                    </button>
-                    <span className="vertical-line">|</span>
-                    <button className="delete" onClick={showDeleteModal}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+
+              {
+              data == null ? "LOADING" :
+                  data.map((item, index) => (
+                      <tr key={index}>
+                          <td>{item.item_code}</td>
+                          <td>{item.item_desc}</td>
+                          <td>{item.unit}</td>
+                          <td>
+                            <button className="edit" onClick={showEditModal}>
+                              Edit
+                            </button>
+                            <span className="vertical-line">|</span>
+                            <button className="delete" onClick={showDeleteModal}>
+                              Delete
+                            </button>
+                          </td>
+                      </tr>
+                  ))}
               </tbody>
+
+                   {/* Edit Item Modal */}
+              <div id="editModal" className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={closeEditModal}>
+                    &times;
+                  </span>
+                  <h3>Edit Item</h3>
+                  <form>
+                    <label for="item-code">Item Code:</label>
+                    <input type="text" id="item-code" required />
+
+                    <label for="item-name">Item Description:</label>
+                    <input type="text" id="item-name" required />
+
+                    <label for="quantity">Unit:</label>
+                    <input type="text" id="quantity" required />
+
+                    <button type="submit" onClick={confirmEdit}>Edit</button>
+                  </form>
+                </div>
+              </div>
 
               <button id="new-item-btn" onClick={showNewItem}>New Item</button>
             </table>
+
+            
           )}
 
 
@@ -172,36 +189,48 @@ export default function Records() {
                 <tr>
                   <th>Warehouse ID</th>
                   <th>Location</th>
-                  <th>Capacity</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>W001</td>
-                  <td>Manila</td>
-                  <td>5000 pcs</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
-                <tr>
-                  <td>W002</td>
-                  <td>Cebu</td>
-                  <td>3000 pcs</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
+                {
+                data == null ? "LOADING" :
+                    data.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.item_code}</td>
+                            <td>{item.item_desc}</td>
+                            <td>{item.unit}</td>
+                            <td>
+                              <button className="edit" onClick={showEditModal}>
+                                Edit
+                              </button>
+                              <span className="vertical-line">|</span>
+                              <button className="delete" onClick={showDeleteModal}>
+                                Delete
+                              </button>
+                            </td>
+                        </tr>
+                    ))}
               </tbody>
+
+              {/* Edit Item Modal */}
+              <div id="editModal" className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={closeEditModal}>
+                    &times;
+                  </span>
+                  <h3>Edit Warehouse</h3>
+                  <form>
+                    <label for="warehouse_id">Warehouse ID:</label>
+                    <input type="text" id="warehouse_id" required />
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" required />
+
+                    <button type="submit" onClick={confirmEdit}>Edit</button>
+                  </form>
+                </div>
+              </div>
 
               <button id="new-warehouse-btn" onClick={showNewWarehouse}>New Warehouse</button>
             </table>
@@ -215,16 +244,14 @@ export default function Records() {
               <thead>
                 <tr>
                   <th>Truck ID</th>
-                  <th>Model</th>
-                  <th>Capacity</th>
+                  <th>Warehouse</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>T001</td>
-                  <td>Ford F-150</td>
-                  <td>2000 kgs</td>
+                  <td>Warehouse A</td>
                   <button className="edit" onClick={showEditModal}>
                     Edit
                   </button>
@@ -235,8 +262,7 @@ export default function Records() {
                 </tr>
                 <tr>
                   <td>T002</td>
-                  <td>Isuzu NPR</td>
-                  <td>3000 kgs</td>
+                  <td>Warehouse B</td>
                   <button className="edit" onClick={showEditModal}>
                     Edit
                   </button>
@@ -246,6 +272,25 @@ export default function Records() {
                   </button>
                 </tr>
               </tbody>
+
+              {/* Edit Item Modal */}
+              <div id="editModal" className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={closeEditModal}>
+                    &times;
+                  </span>
+                  <h3>Edit Truck</h3>
+                  <form>
+                    <label for="truck_id">Truck ID:</label>
+                    <input type="text" id="truck_id" required />
+
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" required />
+
+                    <button type="submit" onClick={confirmEdit}>Edit</button>
+                  </form>
+                </div>
+              </div>
 
               <button id="new-truck-btn" onClick={showNewTrucks}>New Truck</button>
             </table>
@@ -256,19 +301,17 @@ export default function Records() {
             <table className="masterlist-table">
               <thead>
                 <tr>
-                  <th>Personnel ID</th>
-                  <th>Name</th>
-                  <th>Role</th>
-                  <th>Contact</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Position</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>P001</td>
-                  <td>John Doe</td>
+                  <td>John</td>
+                  <td>Doe</td>
                   <td>Manager</td>
-                  <td>+639123456789</td>
                   <button className="edit" onClick={showEditModal}>
                     Edit
                   </button>
@@ -278,10 +321,9 @@ export default function Records() {
                   </button>
                 </tr>
                 <tr>
-                  <td>P002</td>
-                  <td>Jane Smith</td>
+                  <td>Jane</td>
+                  <td>Smith</td>
                   <td>Driver</td>
-                  <td>+639987654321</td>
                   <button className="edit" onClick={showEditModal}>
                     Edit
                   </button>
@@ -292,23 +334,33 @@ export default function Records() {
                 </tr>
               </tbody>
 
+              {/* Edit Item Modal */}
+              <div id="editModal" className="modal">
+                <div className="modal-content">
+                  <span className="close" onClick={closeEditModal}>
+                    &times;
+                  </span>
+                  <h3>Edit Personnel</h3>
+                  <form>
+                    <label for="first_name_id">First Name:</label>
+                    <input type="text" id="first_name_id" required />
+
+                    <label for="last_name_id">Last Name:</label>
+                    <input type="text" id="last_name_id" required />
+
+                    <label for="position">Position:</label>
+                    <input type="text" id="Position" required />
+
+                    <button type="submit" onClick={confirmEdit}>Edit</button>
+                  </form>
+                </div>
+              </div>
+
               <button id="new-personnel-btn" onClick={showNewPersonnel}>New Personnel</button>
             </table>
           )}
         </div>
       </section>
-
-      {/* Edit Modal */}
-      <div id="editModal" className="modal">
-        <div className="modal-content">
-          <span className="close" onClick={closeEditModal}>
-            &times;
-          </span>
-          <p>Are you sure you want to edit this item?</p>
-          <button onClick={confirmEdit}>Yes</button>
-          <button onClick={closeEditModal}>No</button>
-        </div>
-      </div>
 
       {/* Delete Modal */}
       <div id="deleteModal" className="modal">
@@ -321,8 +373,6 @@ export default function Records() {
           <button onClick={closeDeleteModal}>No</button>
         </div>
       </div>
-
-
 
       <div id="new-item-modal" className="modal">
         <div className="modal-content">
