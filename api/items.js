@@ -1,6 +1,6 @@
 import express from "express";
 import { body, matchedData, query } from "express-validator";
-import { validationRoutine, extractMatchedRoutine } from "./helper.js";
+import { validationStrictRoutine, extractMatchedRoutine } from "./helper.js";
 
 const itemDoesNotExistRoutine = (connection) => {
     const routine = async (req, res, next) => {
@@ -39,28 +39,57 @@ const itemExistsRoutine = (connection) => {
     return routine;
 };
 
-const inventoryRouter = (cors, connection) => {
-    const routeRoot = "/api/items/";
+const itemsRouter = (cors, connection) => {
+    const routeRoot = "/api/items";
     const router = express.Router();
+
+    const routeView = routeRoot + "/view";
 
     // Get all items, query for archived.
     router.get(
-        routeRoot + "all",
-        query("archived").optional().isBoolean(),
+        routeView + '/archived',
+        query("archived").isBoolean(),
         cors(),
         [
-            validationRoutine(400, "Invalid value for archived, must be 'true' or 'false'."),
+            validationStrictRoutine(400, "Archived must be a boolean ('true' or 'false')."),
             async (req, res) => {
                 const { archived } = matchedData(req);
-                let sqlQuery = "SELECT * FROM items";
+                const [results] = await connection.execute(
+                    "SELECT * FROM items WHERE archived = ?",
+                    [archived == "true"]
+                );
+                res.status(200).json(results);
+            }
+        ]
+    );
 
-                if (archived !== undefined) {
-                    sqlQuery += " WHERE archived = ?";
-                }
+    // Get all items, item_code.
+    router.get(
+        routeView + '/item-code',
+        [query("item-code").isString().trim()],
+        cors(),
+        [
+            validationStrictRoutine(400, "item-code must be provided."),
+            async (req, res) => {
+                const { item_code } = matchedData(req);
+                const [results] = await connection.execute(
+                    "SELECT * FROM items WHERE item_code LIKE '%?%'",
+                    [item_code]
+                );
+                res.status(200).json(results);
+            }
+        ]
+    );
+
+    // Gets all items.
+    router.get(
+        routeView + "/all",
+        cors(),
+        [
+            async (req, res) => {
 
                 const [results] = await connection.execute(
-                    sqlQuery,
-                    archived !== undefined ? [archived == "true" ? true : false] : [],
+                    "SELECT * FROM items",
                 );
 
                 res.status(200).json(results);
@@ -77,7 +106,7 @@ const inventoryRouter = (cors, connection) => {
         ],
         cors(),
         [
-            validationRoutine(400, "ensure item_code, item_desc, and unit are all alphanumeric and defined."),
+            validationStrictRoutine(400, "ensure item_code, item_desc, and unit are all alphanumeric and defined."),
             extractMatchedRoutine,
             itemDoesNotExistRoutine(connection),
             async (req, res) => {
@@ -104,7 +133,7 @@ const inventoryRouter = (cors, connection) => {
         [body("item_code").notEmpty().isString().trim()],
         cors(),
         [
-            validationRoutine(400, "ensure item_code is alphanumeric and defined."),
+            validationStrictRoutine(400, "ensure item_code is alphanumeric and defined."),
             extractMatchedRoutine,
             itemExistsRoutine(connection),
             async (req, res) => {
@@ -148,7 +177,7 @@ const inventoryRouter = (cors, connection) => {
         ],
         cors(),
         [
-            validationRoutine(400, "ensure item_code, item_desc, and unit are all alphanumeric and defined."),
+            validationStrictRoutine(400, "ensure item_code, item_desc, and unit are all alphanumeric and defined."),
             extractMatchedRoutine,
             itemExistsRoutine(connection),
             async (req, res) => {
@@ -166,4 +195,4 @@ const inventoryRouter = (cors, connection) => {
     return router;
 };
 
-export default inventoryRouter;
+export default itemsRouter;
