@@ -15,7 +15,7 @@ export default function Adjustments() {
     closeNewRequest();
   }
 
-  const [searchType, setSearchType] = useState("itemCode"); // Default search type is "itemCode"
+  const [searchType, setSearchType] = useState("date"); // Default search type is "date"
 
   const handleSearchTypeChange = (e) => {
     setSearchType(e.target.value); // Update the search type based on the dropdown selection
@@ -27,7 +27,7 @@ export default function Adjustments() {
 
       <div className="search-filter">
         <select id="search-type" onChange={handleSearchTypeChange}>
-          <option value="givenDate">Given Date</option>
+          <option value="date">Given Date</option>
           <option value="itemCode">Item Code</option>
           <option value="warehouse">Warehouse</option>
 
