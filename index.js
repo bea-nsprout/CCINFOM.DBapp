@@ -20,10 +20,11 @@ const connection = await mysql.createConnection({
 
 
 app.use(express.json());
+app.use(cors());
 
-app.use(itemsRouter(cors, connection));
-app.use(warehouseRouter(cors, connection));
-app.use(inventoryRouter(cors, connection));
+app.use('/api/items', itemsRouter(connection));
+app.use('/api/warehouses', warehouseRouter(connection));
+app.use('/api/inventories', inventoryRouter(connection));
 
 app.use((err, req, res, next) => {
   console.log(err);

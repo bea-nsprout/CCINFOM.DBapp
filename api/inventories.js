@@ -2,13 +2,11 @@ import express from "express";
 import { validationStrictRoutine } from "./helper.js";
 import { query } from "express-validator";
 
-const inventoryRouter = (cors, connection) => {
-    const routeRoot = "/api/inventories";
+const inventoryRouter = (connection) => {
     const router = express.Router();
 
     router.get(
-        routeRoot + '/view/all',
-        cors(),
+        '/view/all',
         async (req, res) => {
             const [results] = await connection.execute(
                 `SELECT inv.item_code, item_desc, quantity, unit, w.warehouse_name

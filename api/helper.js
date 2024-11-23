@@ -24,3 +24,12 @@ export const validationStrictRoutine = (status, description) => {
     return routine
 
 }
+
+// export const validationPassRoutine = (queries) => {
+//     const routine = (req, res, next) => {
+//         const errors = validationResult(req);
+//         if(!errors.isEmpty()) {
+//             next('route')
+//         }
+//     }
+// }
