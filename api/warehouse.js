@@ -117,7 +117,7 @@ const warehouseRouter = (connection) => {
         async (req, res) => {
             const { location } = matchedData(req);
             const [results] = await connection.execute(
-                "SELECT warehouse_name, location FROM warehouses WHERE location LIKE ?;",
+                "SELECT warehouse_id, warehouse_name, location FROM warehouses WHERE location LIKE ?;",
                 [`%${location}%`]
             )
             res.status(200).json(results)
