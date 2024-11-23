@@ -61,3 +61,32 @@
 	
     	FROM warehouses w
 	ORDER BY w.warehouse_id;
+
+
+
+
+
+
+-- TRANSFER REPORT: number of transfers from past n days
+    SET @ndays = 1000;
+
+    SELECT warehouse_name, location,
+           IF(transfers_out is null, 0, transfers_out) AS transfers_out,
+           IF(transfers_in is null, 0, transfers_in) AS transfers_in
+    FROM warehouses w
+    LEFT JOIN (SELECT warehouse_id, COUNT(*) AS transfers_in
+            FROM transfers t
+            JOIN requests r ON t.request_id = r.request_id
+            JOIN warehouses w ON warehouse_to_id = warehouse_id
+            WHERE date_transferred BETWEEN (CURDATE() - INTERVAL @ndays DAY) AND CURDATE()
+            GROUP BY warehouse_to_id) AS received
+        ON received.warehouse_id = w.warehouse_id
+    LEFT JOIN ( SELECT warehouse_id, COUNT(*) AS transfers_out
+        FROM transfers t
+        JOIN requests r ON t.request_id = r.request_id
+        JOIN warehouses w ON warehouse_from_id = warehouse_id
+        WHERE date_transferred BETWEEN (CURDATE() - INTERVAL @ndays DAY) AND CURDATE()
+        GROUP BY warehouse_from_id) AS delivered
+        ON delivered.warehouse_id = w.warehouse_id
+    ORDER BY w.warehouse_id DESC;
+

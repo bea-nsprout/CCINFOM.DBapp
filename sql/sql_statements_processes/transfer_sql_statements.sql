@@ -1,9 +1,9 @@
 -- TRANSFER 
-	-- Create Transfer [ FIXED ]
-	SET @v1 = 90; -- Amount to transfer
+	-- Create Transfer
+	SET @v1 = 50; -- Amount to transfer
 
 	INSERT INTO transfers (request_id, personnel_id, date_transferred, truck_id, quantity)
-	VALUES (1, 1, CURDATE(), 'TRK0001', @v1);
+	VALUES (2, 2, CURDATE(), 'TRK001', @v1); /* Place valid Truck ID */
 
 	UPDATE requests r
 	SET r.qty_balance = r.qty_balance - @v1
@@ -14,39 +14,37 @@
 	JOIN transfers t ON r.request_id = t.request_id
 	SET wi.quantity = wi.quantity - @v1
 	WHERE wi.warehouse_id = r.warehouse_from_id AND t.request_id = 1 AND wi.quantity >= @v1;
-
-	-- SELECT * FROM transfer WHERE request_id = 1;
-	-- SELECT * FROM request WHERE request_id = 1;
-	-- SELECT * FROM warehouse_inventory;
     
 -- Modify an existing record and update qty_balance accordingly [ FIXED ]
-	SET @v1 = 30; -- New transfer quantity
+	SET @new_qty = 50; -- New transfer quantity
 	SET @transfer_id = 6; -- Transfer ID to modify
 
--- 	SELECT r.qty_total AS old_qty
--- 	FROM requests r
--- 	WHERE r.request_id = 2;
-    
-    	SELECT @old_qty := r.qty_balance
-    	FROM requests r
-    	JOIN transfers t ON r.request_id = t.request_id
-    	WHERE t.transfer_id = @transfer_id;
-    
-   	UPDATE transfers
-	SET quantity = @v1
-	WHERE transfer_id = @transfer_id;
-    
-	-- 1.1
-	UPDATE requests r
-	JOIN transfers t ON r.request_id = t.request_id
-	SET r.qty_balance = r.qty_total - @old_qty + @v1
-	WHERE t.transfer_id = @transfer_id;
-    
-    -- this is the old code for 1.1
-    -- UPDATE requests r
-	-- JOIN transfers t ON r.request_id = t.request_id
-	-- SET r.qty_balance = r.qty_total - @old_qty /* Old Quantity */ + @v1 /* New Quantity */
-	-- WHERE t.transfer_id = @transfer_id;
+    -- a. find and store relevant information
+    	SELECT @old_qty := quantity, @req_id := t.request_id, @item_code := r.item_code, @wh_to := r.warehouse_to_id, @wh_fr := r.warehouse_from_id
+    	FROM transfers t
+    	JOIN requests r ON r.request_id = t.request_id
+    	WHERE transfer_id = @transfer_id;
+
+        SET @add = @new_qty - @old_qty;
+
+    -- b. update transfer quantity
+        UPDATE transfers
+        SET quantity = quantity + @add
+        WHERE transfer_id = @transfer_id;
+
+    -- c. update request balance
+        UPDATE requests
+        SET qty_balance = qty_balance - @add
+        WHERE request_id = @req_id;
+
+    -- d. update inventories
+        UPDATE inventories
+        SET quantity = quantity + @add
+        WHERE item_code = @item_code AND warehouse_id = @wh_to;
+
+        UPDATE inventories
+        SET quantity = quantity - @add
+        WHERE item_code = @item_code AND warehouse_id = @wh_fr;
   
 -- delete existing record [ FIXED ]
 	SET @v1 = 14; /* transfer_id to be deleted */
