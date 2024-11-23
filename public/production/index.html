@@ -1,122 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Warehouse Logistics Database System - Production</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <header>
-        <h1>Warehouse Logistics Database System</h1>
-        <nav>
-            <a href="/">Home</a>
-            <a href="/inventory">Inventory</a>
-            <a href="/requests">Requests</a>
-            <a href="/transfers">Transfers</a>
-            <a href="/production" class="active">Production</a>
-        </nav>
+      <h1>Warehouse Logistics Database System</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/requests">Requests</a>
+        <a href="/transfers">Transfers</a>
+        <a href="/production" class="active">Production</a>
+      </nav>
     </header>
 
     <section class="page-header">
-        <h2>Production Management</h2>
-        <p>Track and manage production records for efficient warehouse operations.</p>
+      <h2>Production Management</h2>
+      <p>
+        Track and manage production records for efficient warehouse operations.
+      </p>
     </section>
 
     <div class="search-filter">
-        <label for="search">Search:</label>
-        <input type="text" id="search" placeholder="Enter production ID or item code...">
-        <select id="status-filter">
-            <option value="">Filter by Status</option>
-            <option value="pending">Pending</option>
-            <option value="completed">Completed</option>
-        </select>
-        <select id="warehouse-filter">
-            <option value="">Filter by Warehouse</option>
-            <option value="warehouse1">Warehouse 1</option>
-            <option value="warehouse2">Warehouse 2</option>
-        </select>
-        <button>Apply Filters</button>
+      <label for="search">Search:</label>
+      <input
+        type="text"
+        id="search"
+        placeholder="Enter production ID or item code..."
+      />
+      <select id="status-filter">
+        <option value="">Filter by Status</option>
+        <option value="pending">Pending</option>
+        <option value="completed">Completed</option>
+      </select>
+      <select id="warehouse-filter">
+        <option value="">Filter by Warehouse</option>
+        <option value="warehouse1">Warehouse 1</option>
+        <option value="warehouse2">Warehouse 2</option>
+      </select>
+      <button>Apply Filters</button>
     </div>
 
     <table class="production-table">
-        <thead>
-            <tr>
-                <th>Production ID</th>
-                <th>Item Code</th>
-                <th>Quantity Produced</th>
-                <th>Production Date</th>
-                <th>Warehouse</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>PD-00987</td>
-                <td>12345</td>
-                <td>50 pcs</td>
-                <td>2024-11-17</td>
-                <td>Warehouse 1</td>
-                <td><span class="status completed">Completed</span></td>
-                <td>
-                    <button class="edit" onclick="showEditModal()">Edit</button>
-                    <span class="vertical-line">|</span>
-                    <button class="delete" onclick="showDeleteModal()">Delete</button>
-                </td>
-            </tr>
-        </tbody>
+      <thead>
+        <tr>
+          <th>Production ID</th>
+          <th>Item Code</th>
+          <th>Quantity Produced</th>
+          <th>Production Date</th>
+          <th>Warehouse</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>PD-00987</td>
+          <td>12345</td>
+          <td>50 pcs</td>
+          <td>2024-11-17</td>
+          <td>Warehouse 1</td>
+          <td><span class="status completed">Completed</span></td>
+          <td>
+            <button class="edit" onclick="showEditModal()">Edit</button>
+            <span class="vertical-line">|</span>
+            <button class="delete" onclick="showDeleteModal()">Delete</button>
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <button id="new-production-btn">New Production Record</button>
 
     <div id="new-production-modal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Create New Production Record</h3>
-            <form>
-                <label for="item-code">Item Code:</label>
-                <input type="text" id="item-code" required>
-                
-                <label for="quantity-produced">Quantity Produced:</label>
-                <input type="number" id="quantity-produced" required>
-                
-                <label for="production-date">Production Date:</label>
-                <input type="date" id="production-date" required>
-                
-                <label for="warehouse-location">Warehouse Location:</label>
-                <select id="warehouse-location">
-                    <option value="warehouse1">Warehouse 1</option>
-                    <option value="warehouse2">Warehouse 2</option>
-                </select>
-                
-                <button type="submit">Submit Production</button>
-            </form>
-        </div>
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Create New Production Record</h3>
+        <form>
+          <label for="item-code">Item Code:</label>
+          <input type="text" id="item-code" required />
+
+          <label for="quantity-produced">Quantity Produced:</label>
+          <input type="number" id="quantity-produced" required />
+
+          <label for="production-date">Production Date:</label>
+          <input type="date" id="production-date" required />
+
+          <label for="warehouse-location">Warehouse Location:</label>
+          <select id="warehouse-location">
+            <option value="warehouse1">Warehouse 1</option>
+            <option value="warehouse2">Warehouse 2</option>
+          </select>
+
+          <button type="submit">Submit Production</button>
+        </form>
+      </div>
     </div>
 
     <footer>
-        <p>&copy; 2024 Warehouse Logistics Database System. All Rights Reserved.<br>Designed and Developed by CCINFOM</p>
+      <p>
+        &copy; 2024 Warehouse Logistics Database System. All Rights Reserved.<br />Designed
+        and Developed by CCINFOM
+      </p>
     </footer>
 
     <div id="editModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeEditModal()">&times;</span>
-            <p>Are you sure you want to edit this item?</p>
-            <button onclick="confirmEdit()">Yes</button>
-            <button onclick="closeEditModal()">No</button>
-        </div>
+      <div class="modal-content">
+        <span class="close" onclick="closeEditModal()">&times;</span>
+        <p>Are you sure you want to edit this item?</p>
+        <button onclick="confirmEdit()">Yes</button>
+        <button onclick="closeEditModal()">No</button>
+      </div>
     </div>
 
     <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeDeleteModal()">&times;</span>
-            <p>Are you sure you want to delete this item?</p>
-            <button onclick="confirmDelete()">Yes</button>
-            <button onclick="closeDeleteModal()">No</button>
-        </div>
+      <div class="modal-content">
+        <span class="close" onclick="closeDeleteModal()">&times;</span>
+        <p>Are you sure you want to delete this item?</p>
+        <button onclick="confirmDelete()">Yes</button>
+        <button onclick="closeDeleteModal()">No</button>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>

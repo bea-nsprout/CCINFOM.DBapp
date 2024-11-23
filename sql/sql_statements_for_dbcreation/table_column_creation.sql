@@ -3,7 +3,7 @@
 -- CREATE DATABASE warehouseDB;
 
 -- 4 core tables as follows:
-CREATE TABLE items (
+CREATE TABLE items ( 
 	item_code varchar(20) PRIMARY KEY NOT NULL,
     item_desc varchar(150) NOT NULL,
     unit varchar(10) NOT NULL,
