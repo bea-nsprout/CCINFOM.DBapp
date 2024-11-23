@@ -46,7 +46,7 @@ export default function Inventory() {
     }, []);
 
     useEffect(() => {
-        fetch("/api/items/all")
+        fetch("api/items/view")
             .then(response => response.json())
             .then(d => setData(d));
     }, [])

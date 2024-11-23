@@ -1,6 +1,6 @@
 import express from "express";
-import { body, query, validationResult } from "express-validator";
-import { validationRoutine, extractMatchedRoutine } from "./helper.js";
+import { body } from "express-validator";
+import { validationStrictRoutine, extractMatchedRoutine } from "./helper.js";
 
 
 const warehouseRouter = (cors, connection) => {
@@ -15,7 +15,7 @@ const warehouseRouter = (cors, connection) => {
         ],
         cors(),
         [
-            validationRoutine(400, "Ensure name and location is given."),
+            validationStrictRoutine(400, "Ensure name and location is given."),
             extractMatchedRoutine,
             async (req, res) => {
                 const { name, location } = res.locals.data;

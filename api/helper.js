@@ -6,7 +6,7 @@ export const extractMatchedRoutine = (req, res, next) => {
     next()
 }
 
-export const validationRoutine = (status, description) => {
+export const validationStrictRoutine = (status, description) => {
     const routine = (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {

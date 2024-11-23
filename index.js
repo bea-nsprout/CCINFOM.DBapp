@@ -3,8 +3,9 @@ import mysql from "mysql2/promise";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import inventoryRouter from "./api/items.js";
+import itemsRouter from "./api/items.js";
 import warehouseRouter from "./api/warehouse.js";
+import inventoryRouter from "./api/inventories.js";
 
 dotenv.config();
 
@@ -20,8 +21,9 @@ const connection = await mysql.createConnection({
 
 app.use(express.json());
 
-app.use(inventoryRouter(cors, connection));
+app.use(itemsRouter(cors, connection));
 app.use(warehouseRouter(cors, connection));
+app.use(inventoryRouter(cors, connection));
 
 app.use((err, req, res, next) => {
   console.log(err);
