@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Production() {
 
@@ -30,27 +30,27 @@ export default function Production() {
           <option value="itemCode">Item Code</option>
           <option value="date">Date</option>
           <option value="warehouse">Warehouse</option>
-          
+
         </select>
 
         {(searchType === "itemCode" || searchType == "warehouse") && (
-        <div id="search-box" style={{ display: "block" }}>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search..."
-          />
-        </div>  )
+          <div id="search-box" style={{ display: "block" }}>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search..."
+            />
+          </div>)
         }
 
         {searchType === "date" && (
-        <div id="search-date" style={{ display: "show" }}> 
-          <div className="date-range">
-            <input type="date" id="start-date" />
-            <span>to</span>
-            <input type="date" id="end-date" />
-          </div>
-        </div> )
+          <div id="search-date" style={{ display: "show" }}>
+            <div className="date-range">
+              <input type="date" id="start-date" />
+              <span>to</span>
+              <input type="date" id="end-date" />
+            </div>
+          </div>)
         }
 
         <button id="search-button">Search</button>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function Transfers() {
 
@@ -35,23 +35,23 @@ export default function Transfers() {
         </select>
 
         {(searchType === "itemCode" || searchType == "srcWarehouse" || searchType == "desWarehouse") && (
-        <div id="search-box" style={{ display: "block" }}>
-          <input
-            type="text"
-            id="search-input"
-            placeholder="Search..."
-          />
-        </div>  )
+          <div id="search-box" style={{ display: "block" }}>
+            <input
+              type="text"
+              id="search-input"
+              placeholder="Search..."
+            />
+          </div>)
         }
 
         {searchType === "date" && (
-        <div id="search-date" style={{ display: "show" }}>
-          <div className="date-range">
-            <input type="date" id="start-date" />
-            <span>to</span>
-            <input type="date" id="end-date" />
-          </div>
-        </div> )
+          <div id="search-date" style={{ display: "show" }}>
+            <div className="date-range">
+              <input type="date" id="start-date" />
+              <span>to</span>
+              <input type="date" id="end-date" />
+            </div>
+          </div>)
         }
 
         <select id="status-filter">
