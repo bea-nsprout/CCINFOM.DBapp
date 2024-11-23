@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function showEditModal() {
     document.getElementById("editModal").style.display = "flex";
@@ -13,18 +13,18 @@ function confirmEdit() {
     closeEditModal();
 }
 
-function showDeleteModal() {
-    document.getElementById("deleteModal").style.display = "flex";
-}
+// function showDeleteModal() {
+//     document.getElementById("deleteModal").style.display = "flex";
+// }
 
-function closeDeleteModal() {
-    document.getElementById("deleteModal").style.display = "none";
-}
+// function closeDeleteModal() {
+//     document.getElementById("deleteModal").style.display = "none";
+// }
 
-function confirmDelete() {
-    alert("Item deleted successfully!");
-    closeDeleteModal();
-}
+// function confirmDelete() {
+//     alert("Item deleted successfully!");
+//     closeDeleteModal();
+// }
 
 export default function Inventory() {
     const [data, setData] = useState(null);
@@ -33,8 +33,6 @@ export default function Inventory() {
         const exitModal = (event) => {
             if (event.target === document.getElementById("editModal")) {
                 closeEditModal();
-            } else if (event.target === document.getElementById("deleteModal")) {
-                closeDeleteModal();
             }
         };
 
@@ -85,8 +83,8 @@ export default function Inventory() {
                             <th>Item Name</th>
                             <th>Quantity</th>
                             <th>Unit</th>
-                            <th>Location</th>
-                            <th>Actions</th>
+                            <th>Warehouse</th>
+                            <th>Edit Quantity</th>
                         </tr>
                     </thead>
 
@@ -97,17 +95,11 @@ export default function Inventory() {
                                     <tr key={index}>
                                         <td>{item.item_code}</td>
                                         <td>{item.item_desc}</td>
-                                        <td></td>
+                                        <td>{item.quantity}</td>
                                         <td>{item.unit}</td>
-                                        <td></td>
+                                        <td>{item.warehouse_name}</td>
                                         <td>
-                                            <button className="edit" onClick={showEditModal}>
-                                                Edit
-                                            </button>
-                                            <span className="vertical-line">|</span>
-                                            <button className="delete" onClick={showDeleteModal}>
-                                                Delete
-                                            </button>
+                                            <button className="edit" onClick={showEditModal}>Edit</button>
                                         </td>
                                     </tr>
                                 ))}
@@ -127,7 +119,7 @@ export default function Inventory() {
                 </div>
             </div>
 
-            {/* Delete Modal */}
+            {/* Delete Modal
             <div id="deleteModal" className="modal">
                 <div className="modal-content">
                     <span className="close" onClick={closeDeleteModal}>
@@ -137,7 +129,7 @@ export default function Inventory() {
                     <button onClick={confirmDelete}>Yes</button>
                     <button onClick={closeDeleteModal}>No</button>
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

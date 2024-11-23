@@ -5,6 +5,23 @@
 }
 
 body {
+    font-family: Arial, sans-serif;
+    color: #333;
+    background-color: #F5F9E9;
+}
+
+header {
+    background-color: #36453B;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #F5F9E9;
+    font-weight: bold;
   font-family: Arial, sans-serif;
   color: #333;
   background-color: #1a1a1a;
@@ -31,6 +48,32 @@ nav {
 }
 
 nav a {
+    color: #F5F9E9;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    position: relative;
+}
+
+.hero {
+    /* placeholder for img hehe */
+    background-image: url('warehouse.jpg');
+    background-size: cover;
+    background-position: center;
+    padding: 100px 20px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    background-color: #555c4e;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
   color: #333;
   text-decoration: none;
   font-weight: bold;
@@ -75,6 +118,18 @@ nav a {
 }
 
 .hero button {
+    padding: 10px 20px;
+    background-color: #36453B;
+    color: #F5F9E9;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.get-in-touch-header {
+    background-color: #F0F4ED;
+    padding: 35px 0;
+    text-align: center;
   padding: 10px 20px;
   background-color: #f2eeca;
   color: #333;
@@ -97,6 +152,10 @@ nav a {
 }
 
 .contact-section {
+    background-color: #555c4e;
+    color: #fff;
+    padding: 35px 20px;
+    text-align: center;
   background-color: #555c4e;
   color: #fff;
   padding: 60px 20px;
@@ -137,6 +196,9 @@ nav a {
 }
 
 .footer-links div h4 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 20px;
   font-size: 16px;
   font-weight: bold;
   margin-bottom: 10px;
@@ -151,6 +213,13 @@ nav a {
 }
 
 footer {
+    margin-top: 0px;
+    font-size: 12px;
+    color: #F5F9E9;
+    text-align: center;
+    padding: 10px 0;
+    border-top: 0px solid #444;
+    background-color: #36453B;
   margin-top: 1px;
   font-size: 12px;
   color: #fff;
