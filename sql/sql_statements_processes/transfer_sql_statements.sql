@@ -84,20 +84,12 @@
 	WHERE im.item_code = '0001010000YGGO036Y'
    	ORDER BY t.transfer_id DESC;
 
-	-- status PENDING
+	-- status
     	SELECT t.transfer_id, r.item_code, t.quantity, r.warehouse_from_id, r.warehouse_to_id,
     	t.date_transferred, IF(quantity > 0, 'PENDING', 'COMPLETED') AS status
     	FROM transfers t
     	JOIN requests r ON t.request_id = r.request_id
-	WHERE quantity > 0
-   	ORDER BY t.transfer_id DESC;
-    
-    	-- status COMPLETE
-    	SELECT t.transfer_id, r.item_code, t.quantity, r.warehouse_from_id, r.warehouse_to_id,
-    	t.date_transferred, IF(quantity > 0, 'PENDING', 'COMPLETED') AS status
-    	FROM transfers t
-    	JOIN requests r ON t.request_id = r.request_id
-	WHERE quantity = 0
+	WHERE IF(quantity > 0, 'PENDING', 'COMPLETED') = 'PENDING'
    	ORDER BY t.transfer_id DESC;
 
 	-- warehouse from 
