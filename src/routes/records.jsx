@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 export default function Records() {
-  // const [data, setData] = useState(null);
-
 
 
   const [dataItem, setItems] = useState(null); // For items
@@ -177,8 +175,8 @@ export default function Records() {
     Promise.all([
       fetch("api/items/view/all").then((response) => response.json()),
       fetch("api/warehouses/view").then((response) => response.json()),
-      // fetch("api/trucks/view").then((response) => response.json()),
-      // fetch("api/personnel/view").then((response) => response.json()),
+      fetch("api/trucks/view").then((response) => response.json()),
+      fetch("api/personnel/view").then((response) => response.json()),
     ])
       .then(([itemsData, warehousesData, trucksData, personnelData]) => {
         setItems(itemsData);
@@ -190,9 +188,6 @@ export default function Records() {
         console.error("Error fetching data:", error);
       });
   }, []);
-
-
-
 
   return (
     <>
@@ -228,8 +223,28 @@ export default function Records() {
         </div>
 
         <div className="masterlist-content">
+
           {/* Items Tab */}
-          {masterlistTab === "items" && (
+          {masterlistTab === "items" && (<>
+
+            {/* Search Section */}
+            <section className="hero inventory-hero">
+              <div className="hero-content">
+                <div className="search-container">
+                  <select className="search-dropdown">
+                    <option value="item_code">Item Code</option>
+                    <option value="item_desc">Item Description</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="search-bar"
+                  />
+                  <button className="search-button">Search</button>
+                </div>
+              </div>
+            </section>
+
             <table className="masterlist-table">
               <thead>
                 <tr>
@@ -288,187 +303,256 @@ export default function Records() {
               <button id="new-item-btn" onClick={showNewItem}>New Item</button>
             </table>
 
+          </>
 
-          )}
+
+          )
+          }
 
 
 
           {/* Warehouses Tab */}
-          {masterlistTab === "warehouses" && (
-            <table className="masterlist-table">
-              <thead>
-                <tr>
-                  <th>Warehouse ID</th>
-                  <th>Location</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  dataWarehouse == null ? "LOADING" :
-                    dataWarehouse.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.warehouse_name}</td>
-                        <td>{item.location}</td>
-                        <td>
-                          <button className="edit" onClick={showEditModal}>
-                            Edit
-                          </button>
-                          <span className="vertical-line">|</span>
-                          <button className="delete" onClick={showDeleteModal}>
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-              </tbody>
+          {
+            masterlistTab === "warehouses" && (<>
 
-              {/* Edit Item Modal */}
-              <div id="editModal" className="modal">
-                <div className="modal-content">
-                  <span className="close" onClick={closeEditModal}>
-                    &times;
-                  </span>
-                  <h3>Edit Warehouse</h3>
-                  <form>
-                    <label for="warehouse_id">Warehouse ID:</label>
-                    <input type="text" id="warehouse_id" required />
-
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" required />
-
-                    <button type="submit" onClick={confirmEdit}>Edit</button>
-                  </form>
+              {/* Search Section */}
+              <section className="hero inventory-hero">
+                <div className="hero-content">
+                  <div className="search-container">
+                    <select className="search-dropdown">
+                      <option value="warehouse">Warehouse</option>
+                      <option value="location">Location</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="search-bar"
+                    />
+                    <button className="search-button">Search</button>
+                  </div>
                 </div>
-              </div>
+              </section>
 
-              <button id="new-warehouse-btn" onClick={showNewWarehouse}>New Warehouse</button>
-            </table>
-          )}
+              <table className="masterlist-table">
+                <thead>
+                  <tr>
+                    <th>Warehouse ID</th>
+                    <th>Location</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    dataWarehouse == null ? "LOADING" :
+                      dataWarehouse.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.warehouse_name}</td>
+                          <td>{item.location}</td>
+                          <td>
+                            <button className="edit" onClick={showEditModal}>
+                              Edit
+                            </button>
+                            <span className="vertical-line">|</span>
+                            <button className="delete" onClick={showDeleteModal}>
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+
+                {/* Edit Item Modal */}
+                <div id="editModal" className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={closeEditModal}>
+                      &times;
+                    </span>
+                    <h3>Edit Warehouse</h3>
+                    <form>
+                      <label for="warehouse_id">Warehouse ID:</label>
+                      <input type="text" id="warehouse_id" required />
+
+                      <label for="location">Location:</label>
+                      <input type="text" id="location" required />
+
+                      <button type="submit" onClick={confirmEdit}>Edit</button>
+                    </form>
+                  </div>
+                </div>
+
+                <button id="new-warehouse-btn" onClick={showNewWarehouse}>New Warehouse</button>
+              </table>
+
+            </>
+            )
+          }
 
 
 
           {/* Trucks Tab */}
-          {masterlistTab === "trucks" && (
-            <table className="masterlist-table">
-              <thead>
-                <tr>
-                  <th>Truck ID</th>
-                  <th>Warehouse</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {
-                  dataWarehouse == null ? "LOADING" :
-                    dataWarehouse.map((item, index) => (
-                      <tr key={index}>
-                        <td>{item.warehouse_name}</td>
-                        <td>{item.location}</td>
-                        <td>
-                          <button className="edit" onClick={showEditModal}>
-                            Edit
-                          </button>
-                          <span className="vertical-line">|</span>
-                          <button className="delete" onClick={showDeleteModal}>
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-              </tbody>
+          {
+            masterlistTab === "trucks" && (<>
 
-              {/* Edit Item Modal */}
-              <div id="editModal" className="modal">
-                <div className="modal-content">
-                  <span className="close" onClick={closeEditModal}>
-                    &times;
-                  </span>
-                  <h3>Edit Truck</h3>
-                  <form>
-                    <label for="truck_id">Truck ID:</label>
-                    <input type="text" id="truck_id" required />
-
-                    <label for="location">Location:</label>
-                    <input type="text" id="location" required />
-
-                    <button type="submit" onClick={confirmEdit}>Edit</button>
-                  </form>
+              {/* Search Section */}
+              <section className="hero inventory-hero">
+                <div className="hero-content">
+                  <div className="search-container">
+                    <select className="search-dropdown">
+                      <option value="truck">Truck</option>
+                      <option value="warehouse">Warehouse</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="search-bar"
+                    />
+                    <button className="search-button">Search</button>
+                  </div>
                 </div>
-              </div>
+              </section>
 
-              <button id="new-truck-btn" onClick={showNewTrucks}>New Truck</button>
-            </table>
-          )}
+
+              <table className="masterlist-table">
+                <thead>
+                  <tr>
+                    <th>Truck ID</th>
+                    <th>Warehouse</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    dataTrucks == null ? "LOADING" :
+                      dataTrucks.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.truck_id}</td>
+                          <td>{item.warehouse_name}</td>
+                          <td>
+                            <button className="edit" onClick={showEditModal}>
+                              Edit
+                            </button>
+                            <span className="vertical-line">|</span>
+                            <button className="delete" onClick={showDeleteModal}>
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+
+                {/* Edit Item Modal */}
+                <div id="editModal" className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={closeEditModal}>
+                      &times;
+                    </span>
+                    <h3>Edit Truck</h3>
+                    <form>
+                      <label for="truck_id">Truck ID:</label>
+                      <input type="text" id="truck_id" required />
+
+                      <label for="location">Location:</label>
+                      <input type="text" id="location" required />
+
+                      <button type="submit" onClick={confirmEdit}>Edit</button>
+                    </form>
+                  </div>
+                </div>
+
+                <button id="new-truck-btn" onClick={showNewTrucks}>New Truck</button>
+              </table>
+
+            </>
+            )
+          }
 
           {/* Personnel Tab */}
-          {masterlistTab === "personnel" && (
-            <table className="masterlist-table">
-              <thead>
-                <tr>
-                  <th>First Name</th>
-                  <th>Last Name</th>
-                  <th>Position</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>John</td>
-                  <td>Doe</td>
-                  <td>Manager</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
-                <tr>
-                  <td>Jane</td>
-                  <td>Smith</td>
-                  <td>Driver</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
-              </tbody>
+          {
+            masterlistTab === "personnel" && (<>
 
-              {/* Edit Item Modal */}
-              <div id="editModal" className="modal">
-                <div className="modal-content">
-                  <span className="close" onClick={closeEditModal}>
-                    &times;
-                  </span>
-                  <h3>Edit Personnel</h3>
-                  <form>
-                    <label for="first_name_id">First Name:</label>
-                    <input type="text" id="first_name_id" required />
-
-                    <label for="last_name_id">Last Name:</label>
-                    <input type="text" id="last_name_id" required />
-
-                    <label for="position">Position:</label>
-                    <input type="text" id="Position" required />
-
-                    <button type="submit" onClick={confirmEdit}>Edit</button>
-                  </form>
+              {/* Search Section */}
+              <section className="hero inventory-hero">
+                <div className="hero-content">
+                  <div className="search-container">
+                    <select className="search-dropdown">
+                      <option value="first_name">First Name</option>
+                      <option value="last_name">Last Name</option>
+                      <option value="position">Position</option>
+                    </select>
+                    <input
+                      type="text"
+                      placeholder="Search..."
+                      className="search-bar"
+                    />
+                    <button className="search-button">Search</button>
+                  </div>
                 </div>
-              </div>
+              </section>
 
-              <button id="new-personnel-btn" onClick={showNewPersonnel}>New Personnel</button>
-            </table>
-          )}
-        </div>
-      </section>
+
+
+              <table className="masterlist-table">
+                <thead>
+                  <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Position</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    dataPersonnel == null ? "LOADING" :
+                      dataPersonnel.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.first_name}</td>
+                          <td>{item.last_name}</td>
+                          <td>{item.position}</td>
+                          <td>
+                            <button className="edit" onClick={showEditModal}>
+                              Edit
+                            </button>
+                            <span className="vertical-line">|</span>
+                            <button className="delete" onClick={showDeleteModal}>
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                </tbody>
+
+                {/* Edit Item Modal */}
+                <div id="editModal" className="modal">
+                  <div className="modal-content">
+                    <span className="close" onClick={closeEditModal}>
+                      &times;
+                    </span>
+                    <h3>Edit Personnel</h3>
+                    <form>
+                      <label for="first_name_id">First Name:</label>
+                      <input type="text" id="first_name_id" required />
+
+                      <label for="last_name_id">Last Name:</label>
+                      <input type="text" id="last_name_id" required />
+
+                      <label for="position">Position:</label>
+                      <input type="text" id="Position" required />
+
+                      <button type="submit" onClick={confirmEdit}>Edit</button>
+                    </form>
+                  </div>
+                </div>
+
+                <button id="new-personnel-btn" onClick={showNewPersonnel}>New Personnel</button>
+              </table>
+            </>
+            )
+          }
+        </div >
+      </section >
 
       {/* Delete Modal */}
-      <div id="deleteModal" className="modal">
+      < div id="deleteModal" className="modal" >
         <div className="modal-content">
           <span className="close" onClick={closeDeleteModal}>
             &times;
@@ -477,7 +561,7 @@ export default function Records() {
           <button onClick={confirmDelete} id="confirmDelete">Yes</button>
           <button onClick={closeDeleteModal}>No</button>
         </div>
-      </div>
+      </div >
 
       <div id="new-item-modal" className="modal">
         <div className="modal-content">

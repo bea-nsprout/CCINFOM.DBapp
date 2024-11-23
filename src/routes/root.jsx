@@ -13,6 +13,8 @@ export default function Root() {
           <Link to="/requests">Requests</Link>
           <Link to="/transfers">Transfers</Link>
           <Link to="/production">Production</Link>
+          <Link to="/adjustments">Adjustments</Link>
+          <Link to="/reports">Reports</Link>
         </nav>
       </header>
 

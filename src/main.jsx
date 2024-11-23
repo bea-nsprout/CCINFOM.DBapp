@@ -12,6 +12,8 @@ import Records from "./routes/records";
 import Requests from "./routes/requests";
 import Transfers from "./routes/transfers";
 import Production from "./routes/production";
+import Adjustments from "./routes/adjustments";
+import Reports from "./routes/reports";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
       {
         path: "production",
         element: <Production />,
+      },
+      {
+        path: "adjustments",
+        element: <Adjustments />,
+      },
+      {
+        path: "reports",
+        element: <Reports />,
       },
     ],
   },
