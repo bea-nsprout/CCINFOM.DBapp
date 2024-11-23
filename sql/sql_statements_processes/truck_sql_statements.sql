@@ -23,20 +23,24 @@
 
 -- VIEW
 	-- No Filter
-	SELECT *
-	FROM trucks;
+	SELECT truck_id, warehouse_name, w.archived
+	FROM trucks tr
+	JOIN warehouses w on w.warehouse_id = tr.warehouse_id;
 
 	-- Truck Plate Number
-	SELECT *
-	FROM trucks
-	WHERE truck_id = 'TRK001';
+	SELECT truck_id, warehouse_name, w.archived
+	FROM trucks tr
+	JOIN warehouses w on w.warehouse_id = tr.warehouse_id
+    WHERE truck_id LIKE '%TRK%';
 
 	-- Warehouse
-	SELECT *
-	FROM trucks
-	WHERE warehouse_id = 1;
+	SELECT truck_id, warehouse_name, w.archived
+	FROM trucks tr
+	JOIN warehouses w on w.warehouse_id = tr.warehouse_id
+	WHERE warehouse_name LIKE '% A%';
 
 	-- Active Status
-	SELECT *
-	FROM trucks
-	WHERE archived = 0;
+	SELECT truck_id, warehouse_name, w.archived
+	FROM trucks tr
+	JOIN warehouses w on w.warehouse_id = tr.warehouse_id
+	WHERE tr.archived = false /*replace_variable*/;
