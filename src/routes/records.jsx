@@ -7,8 +7,8 @@ export default function Records() {
 
   const [dataItem, setItems] = useState(null); // For items
   const [dataWarehouse, setWarehouses] = useState(null); // For warehouses
-  const [dataTrucks, setTrucks] = useState([]); // For trucks
-  const [dataPersonnel, setPersonnel] = useState([]); // For personnel
+  const [dataTrucks, setTrucks] = useState(null); // For trucks
+  const [dataPersonnel, setPersonnel] = useState(null); // For personnel
 
 
   const [masterlistTab, setMasterlistTab] = useState("items");
@@ -112,8 +112,8 @@ export default function Records() {
     Promise.all([
       fetch("api/items/view/all").then((response) => response.json()),
       fetch("api/warehouses/view").then((response) => response.json()),
-      // fetch("api/trucks/view").then((response) => response.json()),
-      // fetch("api/personnel/view").then((response) => response.json()),
+      fetch("api/trucks/view").then((response) => response.json()),
+      fetch("api/personnel/view").then((response) => response.json()),
     ])
       .then(([itemsData, warehousesData, trucksData, personnelData]) => {
         setItems(itemsData);
@@ -163,8 +163,28 @@ export default function Records() {
         </div>
 
         <div className="masterlist-content">
+          
           {/* Items Tab */}
-          {masterlistTab === "items" && (
+          {masterlistTab === "items" && ( <>
+
+          {/* Search Section */}
+          <section className="hero inventory-hero">
+            <div className="hero-content">
+              <div className="search-container">
+                <select className="search-dropdown">
+                  <option value="item_code">Item Code</option>
+                  <option value="item_name">Item Description</option>
+                </select>
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  className="search-bar"
+                />
+                <button className="search-button">Search</button>
+              </div>
+            </div>
+          </section>
+
             <table className="masterlist-table">
               <thead>
                 <tr>
@@ -221,13 +241,34 @@ export default function Records() {
               <button id="new-item-btn" onClick={showNewItem}>New Item</button>
             </table>
 
+            </>
+
             
           )}
 
 
 
           {/* Warehouses Tab */}
-          {masterlistTab === "warehouses" && (
+          {masterlistTab === "warehouses" && ( <>
+
+            {/* Search Section */}
+            <section className="hero inventory-hero">
+            <div className="hero-content">
+            <div className="search-container">
+            <select className="search-dropdown">
+              <option value="item_code">Warehouse</option>
+              <option value="item_name">Location</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="search-bar"
+            />
+            <button className="search-button">Search</button>
+            </div>
+            </div>
+            </section>
+
             <table className="masterlist-table">
               <thead>
                 <tr>
@@ -277,12 +318,34 @@ export default function Records() {
 
               <button id="new-warehouse-btn" onClick={showNewWarehouse}>New Warehouse</button>
             </table>
+
+            </>
           )}
 
 
 
           {/* Trucks Tab */}
-          {masterlistTab === "trucks" && (
+          {masterlistTab === "trucks" && ( <>
+
+            {/* Search Section */}
+            <section className="hero inventory-hero">
+            <div className="hero-content">
+            <div className="search-container">
+            <select className="search-dropdown">
+              <option value="item_code">Truck</option>
+              <option value="item_name">Warehouse</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Search..."
+              className="search-bar"
+            />
+            <button className="search-button">Search</button>
+            </div>
+            </div>
+            </section>
+
+
             <table className="masterlist-table">
               <thead>
                 <tr>
@@ -293,11 +356,11 @@ export default function Records() {
               </thead>
               <tbody>
               {
-                dataWarehouse == null ? "LOADING" :
-                    dataWarehouse.map((item, index) => (
+                dataTrucks == null ? "LOADING" :
+                    dataTrucks.map((item, index) => (
                         <tr key={index}>
+                            <td>{item.truck_id}</td>
                             <td>{item.warehouse_name}</td>
-                            <td>{item.location}</td>
                             <td>
                               <button className="edit" onClick={showEditModal}>
                                 Edit
@@ -332,6 +395,8 @@ export default function Records() {
 
               <button id="new-truck-btn" onClick={showNewTrucks}>New Truck</button>
             </table>
+
+            </>
           )}
 
           {/* Personnel Tab */}
@@ -346,30 +411,23 @@ export default function Records() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>John</td>
-                  <td>Doe</td>
-                  <td>Manager</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
-                <tr>
-                  <td>Jane</td>
-                  <td>Smith</td>
-                  <td>Driver</td>
-                  <button className="edit" onClick={showEditModal}>
-                    Edit
-                  </button>
-                  <span className="vertical-line">|</span>
-                  <button className="delete" onClick={showDeleteModal}>
-                    Delete
-                  </button>
-                </tr>
+              {
+                dataPersonnel == null ? "LOADING" :
+                    dataPersonnel.map((item, index) => (
+                        <tr key={index}>
+                            <td>{item.truck_id}</td>
+                            <td>{item.warehouse_name}</td>
+                            <td>
+                              <button className="edit" onClick={showEditModal}>
+                                Edit
+                              </button>
+                              <span className="vertical-line">|</span>
+                              <button className="delete" onClick={showDeleteModal}>
+                                Delete
+                              </button>
+                            </td>
+                        </tr>
+                    ))}
               </tbody>
 
               {/* Edit Item Modal */}
