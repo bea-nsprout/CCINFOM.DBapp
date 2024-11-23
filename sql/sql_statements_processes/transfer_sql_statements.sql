@@ -20,25 +20,32 @@
 	-- SELECT * FROM warehouse_inventory;
     
 -- Modify an existing record and update qty_balance accordingly [ FIXED ]
-	SET @v1 = 50; -- New transfer quantity
+	SET @v1 = 30; -- New transfer quantity
 	SET @transfer_id = 6; -- Transfer ID to modify
 
-	SELECT r.qty_total AS old_qty
+-- 	SELECT r.qty_total AS old_qty
+-- 	FROM requests r
+-- 	WHERE r.request_id = 2;
+    
+    	SELECT @old_qty := r.qty_balance
     	FROM requests r
-    	WHERE r.request_id = 2;
+    	JOIN transfers t ON r.request_id = t.request_id
+    	WHERE t.transfer_id = @transfer_id;
     
    	UPDATE transfers
 	SET quantity = @v1
 	WHERE transfer_id = @transfer_id;
-
+    
+	-- 1.1
 	UPDATE requests r
 	JOIN transfers t ON r.request_id = t.request_id
-	SET r.qty_balance = r.qty_total - 100 /* Old Quantity */ + @v1 /* New Quantity */
+	SET r.qty_balance = r.qty_total - @old_qty + @v1
 	WHERE t.transfer_id = @transfer_id;
     
-	-- SELECT * FROM transfer WHERE transfer_id = @transfer_id;
-	-- SELECT * FROM request r
-	-- JOIN transfer t ON r.request_id = t.request_id
+    -- this is the old code for 1.1
+    -- UPDATE requests r
+	-- JOIN transfers t ON r.request_id = t.request_id
+	-- SET r.qty_balance = r.qty_total - @old_qty /* Old Quantity */ + @v1 /* New Quantity */
 	-- WHERE t.transfer_id = @transfer_id;
   
 -- delete existing record [ FIXED ]
