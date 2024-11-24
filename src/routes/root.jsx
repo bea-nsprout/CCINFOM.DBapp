@@ -8,13 +8,31 @@ export default function Root() {
         <h1>Warehouse Logistics Database System</h1>
         <nav>
           <Link to="/">Home</Link>
-          <Link to="/records">Records</Link>
           <Link to="/inventory">Inventory</Link>
           <Link to="/requests">Requests</Link>
           <Link to="/transfers">Transfers</Link>
           <Link to="/production">Production</Link>
           <Link to="/adjustments">Adjustments</Link>
-          <Link to="/reports">Reports</Link>
+          <div className="dropdown">
+            <Link className="dropbtn">Records</Link>
+            <div className="dropdown-content">
+              <Link to="/itemRecords">Items</Link>
+              <Link to="/warehouseRecords">Warehouses</Link>
+              <Link to="/truckRecords">Trucks</Link>
+              <Link to="/personnelRecords">Personnels</Link>
+            </div>
+          </div>
+
+          <div className="dropdown">
+            <Link className="dropbtn">Reports</Link>
+            <div className="dropdown-content">
+              <Link to="/inventoryReports">Inventory</Link>
+              <Link to="/productionReports">Production</Link>
+              <Link to="/requestReports">Request</Link>
+              <Link to="/transferReports">Transfer</Link>
+              <Link to="/adjustmentReports">Adjustment</Link>
+            </div>
+          </div>
         </nav>
       </header>
 

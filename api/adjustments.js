@@ -51,9 +51,11 @@ const adjustmentRouter = (connection) => {
     // View all adjustment records
     router.get('/view',
         async (req, res) => {
-            const [results] = await connection.execute(`SELECT time_log, warehouse_name, item_code, qty_adjusted
+            const [results] = await connection.execute(`SELECT  CONVERT_TZ(a.time_log, '+00:00', '+08:00') AS time_log_php,
+                w.warehouse_name, a.item_code, a.qty_adjusted
                 FROM adjustments a
-                JOIN warehouses w ON w.warehouse_id = a.warehouse_id;`
+                JOIN warehouses w ON w.warehouse_id = a.warehouse_id
+                ORDER BY time_log_php DESC;`
             );
             res.status(200).json(results);
         }
@@ -70,14 +72,15 @@ const adjustmentRouter = (connection) => {
         validationStrictRoutine(400, ""),
         async (req, res) => {
             const { start_date, end_date, item_code, warehouse_name } = matchedData(req);
-            let query = `SELECT time_log, warehouse_name, item_code, qty_adjusted
-                FROM adjustments a
-                JOIN warehouses w ON w.warehouse_id = a.warehouse_id
-                WHERE 1=1`;
+            let query = `SELECT  CONVERT_TZ(a.time_log, '+00:00', '+08:00') AS time_log_php,
+                                w.warehouse_name, a.item_code, a.qty_adjusted
+                        FROM adjustments a
+                        JOIN warehouses w ON w.warehouse_id = a.warehouse_id
+                        WHERE 1=1`;
             const params = [];
 
             if (start_date && end_date) {
-                query += ` AND DATE(time_log) BETWEEN ? AND ?`;
+                query += ` AND DATE(time_log_php) BETWEEN ? AND ?`;
                 params.push(start_date, end_date);
             }
             if (item_code) {
@@ -88,6 +91,8 @@ const adjustmentRouter = (connection) => {
                 query += ` AND warehouse_name LIKE ?`;
                 params.push(`%${warehouse_name}%`);
             }
+
+            query += `  ORDER BY time_log_php DESC`
             const [results] = await connection.execute(query, params);
             res.status(200).json(results);
         }

@@ -5,9 +5,9 @@ export default function Transfers() {
   const [warehouses, setWarehouses] = useState([]);
   const [searchType, setSearchType] = useState("itemCode"); // Default search type
   const [searchInput, setSearchInput] = useState(""); // Search input for text-based filters
-  const [statusFilter, setStatusFilter] = useState(""); // Status filter
   const [startDate, setStartDate] = useState(""); // Start date for date range
   const [endDate, setEndDate] = useState(""); // End date for date range
+  const [selectedTransfer, setSelectedTransfer] = useState(null); // Selected transfer for editing or deleting
 
   // Fetch initial data
   useEffect(() => {
@@ -54,9 +54,6 @@ export default function Transfers() {
         queryParams.append("date_transferred", startDate);
         queryParams.append("end_date", endDate);
       }
-      if (statusFilter) {
-        queryParams.append("status", statusFilter.toUpperCase());
-      }
 
       const response = await fetch(`/api/transfers/view?${queryParams.toString()}`);
       const data = await response.json();
@@ -66,10 +63,100 @@ export default function Transfers() {
     }
   };
 
+  // Filter data based on the search query
+  const filteredData = transfers.filter((record) => {
+    let matchesSearch = true;
+
+    if (searchType === 'itemCode') {
+        matchesSearch = record.item_code.toLowerCase().includes(searchInput.toLowerCase());
+    }
+    if (searchType === 'srcWarehouse') {
+        matchesSearch = record.warehouse_from.toLowerCase().includes(searchInput.toLowerCase());
+    }
+    if (searchType === 'desWarehouse') {
+        matchesSearch = record.warehouse_to.toLowerCase().includes(searchInput.toLowerCase());
+    }
+    if (searchType === 'date') {
+        const recordDate = new Date(record.date_transferred);
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        end.setDate(end.getDate() + 1); // Make end date inclusive
+        matchesSearch = recordDate >= start && recordDate < end;
+    }
+
+    return matchesSearch;
+  });
+
+  // Show Edit Modal
+  const showEditModal = (transfer) => {
+    setSelectedTransfer(transfer);
+    document.getElementById("editDialog").showModal();
+  };
+
+  // Handle Input Change
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setSelectedTransfer((prev) => ({ ...prev, [name]: value }));
+  };
+
+  // Handle Edit Submit
+  const handleEditSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const transferData = {};
+    data.forEach((value, key) => transferData[key] = value);
+    try {
+      const response = await fetch("/api/transfers/modify", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(transferData),
+      });
+      if (response.ok) {
+        alert("Transfer edited successfully!");
+        document.getElementById("editDialog").close();
+        fetchTransfers();
+      } else {
+        console.error("Error editing transfer:", response);
+      }
+    } catch (error) {
+      console.error("Error editing transfer:", error);
+    }
+  };
+
+  // Show Delete Modal
+  const showDeleteModal = (transfer) => {
+    setSelectedTransfer(transfer);
+    document.getElementById("deleteDialog").showModal();
+  };
+
+  // Handle Delete Submit
+  const handleDeleteSubmit = async (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    const transferData = {};
+    data.forEach((value, key) => transferData[key] = value);
+    try {
+      const response = await fetch("/api/transfers/delete", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(transferData),
+      });
+      if (response.ok) {
+        alert("Transfer deleted successfully!");
+        fetchTransfers();
+      } else {
+        console.error("Error deleting transfer:", response);
+      }
+    } catch (error) {
+      console.error("Error deleting transfer:", error);
+    } finally {
+      document.getElementById("deleteDialog").close();
+    }
+  };
+
   // Create a new transfer
   const createTransfer = async (event) => {
     event.preventDefault();
-
     const transferData = {
       request_id: 1, // Replace with the actual request ID
       personnel_id: 1, // Replace with actual personnel ID
@@ -132,12 +219,6 @@ export default function Transfers() {
           </div>
         )}
 
-        <select id="status-filter" onChange={(e) => setStatusFilter(e.target.value)}>
-          <option value="">Filter by Status</option>
-          <option value="pending">Pending</option>
-          <option value="completed">Completed</option>
-        </select>
-
         <button id="search-button" onClick={handleSearch}>Search</button>
       </div>
 
@@ -151,43 +232,32 @@ export default function Transfers() {
             <th>From Warehouse</th>
             <th>To Warehouse</th>
             <th>Transfer Date</th>
-            <th>Status</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {transfers.length === 0 ? (
+          {filteredData.length === 0 ? (
             <tr>
               <td colSpan="8">No transfers found</td>
             </tr>
           ) : (
-            transfers.map((transfer) => (
+            filteredData.map((transfer) => (
               <tr key={transfer.transfer_id}>
                 <td>{transfer.transfer_id}</td>
                 <td>{transfer.item_code}</td>
                 <td>{transfer.quantity}</td>
-                <td>{transfer.warehouse_from_id}</td>
-                <td>{transfer.warehouse_to_id}</td>
+                <td>{transfer.warehouse_from}</td>
+                <td>{transfer.warehouse_to}</td>
                 <td>{transfer.date_transferred}</td>
-                <td>{transfer.status}</td>
                 <td>
-                  <button onClick={() => alert("Edit functionality not yet implemented!")}>
-                    Edit
-                  </button>
-                  <button onClick={() => alert("Delete functionality not yet implemented!")}>
-                    Delete
-                  </button>
+                  <button onClick={() => showEditModal(transfer)}>Edit</button>
+                  <button onClick={() => showDeleteModal(transfer)}>Delete</button>
                 </td>
               </tr>
             ))
           )}
         </tbody>
       </table>
-
-      {/* Create Transfer Modal */}
-      <button id="new-transfer-btn" onClick={() => document.getElementById("new-transfer-modal").style.display = "flex"}>
-        New Transfer
-      </button>
 
       <div id="new-transfer-modal" className="modal">
         <div className="modal-content">
@@ -227,6 +297,49 @@ export default function Transfers() {
           </form>
         </div>
       </div>
+
+      { /* Edit Transfer Modal */}
+        <dialog id="editDialog" className="dialog">
+          <div className="dialog-content">
+            <button
+              className="close"
+              onClick={() => document.getElementById("editDialog").close()}
+              aria-label="Close"
+            >
+              &times;
+            </button>
+            <h3>Edit Transfer</h3>
+            <form onSubmit={handleEditSubmit}>
+              <label htmlFor="transfer_id">Transfer ID:</label>
+              <input type="text" name="transfer_id" value={selectedTransfer?.transfer_id} readOnly />
+
+              <label htmlFor="new_quantity">New Quantity:</label>
+              <input type="number" name="new_qty" onChange={handleInputChange} defaultValue={selectedTransfer?.quantity} />
+
+              <button type="submit">Edit</button>
+            </form>
+          </div>
+        </dialog>
+
+        { /* Delete Transfer Modal */ }
+          <dialog id="deleteDialog" className="dialog delete">
+            <div className="dialog-content">
+              <button
+                className="close"
+                onClick={() => document.getElementById("deleteDialog").close()}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <h3>Delete Transfer</h3>
+              <form onSubmit={handleDeleteSubmit}>
+                <input type="hidden" name="transfer_id" value={selectedTransfer?.transfer_id} />
+                <button type="submit" style={{ background: "red" }}>Yes</button>
+              </form>
+              <button onClick={() => document.getElementById("deleteDialog").close()}>Close</button>
+            </div>
+          </dialog>
+
     </>
   );
 }

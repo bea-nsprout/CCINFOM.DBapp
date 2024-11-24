@@ -48,7 +48,7 @@ const inventoryRouter = (connection) => {
         validationStrictRoutine(400, ""),
         async (req, res) => {
             const { item_code, warehouse_name, quantity_gt_zero } = matchedData(req);
-            let query = `SELECT inv.item_code, item_desc, quantity, unit, w.warehouse_name
+            let query = `SELECT inv.item_code, item_desc, quantity, unit, w.warehouse_name, w.warehouse_id
                 FROM inventories inv
                 JOIN items i ON inv.item_code = i.item_code
                 JOIN warehouses w ON inv.warehouse_id = w.warehouse_id

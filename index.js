@@ -9,6 +9,10 @@ import inventoryRouter from "./api/inventories.js";
 import trucksHandler from "./api/trucks.js";
 import personnelRouter from "./api/personnel.js";
 import requestRouter from "./api/requests.js";
+import transferRouter from "./api/transfer.js";
+import productionRouter from "./api/production.js";
+import adjustmentRouter from "./api/adjustments.js";
+import reportRouter from "./api/reports.js";
 
 dotenv.config();
 
@@ -31,12 +35,14 @@ app.use('/api/inventories', inventoryRouter(connection));
 app.use('/api/trucks', trucksHandler(connection));
 app.use('/api/personnel', personnelRouter(connection));
 app.use('/api/requests', requestRouter(connection));
+app.use('/api/transfers', transferRouter(connection));
+app.use('/api/productions', productionRouter(connection));
+app.use('/api/adjustments', adjustmentRouter(connection));
+app.use('/api/reports', reportRouter(connection));
 
-
-//hi
 app.use((err, req, res, next) => {
   console.log(err);
-  res.code(500).json({ error: "internal server error." });
+  res.status(500).json({ error: "internal server error." });
 })
 
 app.listen(port, () => {

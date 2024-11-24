@@ -113,3 +113,9 @@
 	WHERE r.warehouse_to_id = 1
    	ORDER BY t.transfer_id DESC;
  
+SELECT t.transfer_id, r.item_code, t.quantity, wfr.warehouse_name AS warehouse_from, wto.warehouse_name AS warehouse_to, t.date_transferred, IF(t.quantity > 0, 'PENDING', 'COMPLETED') AS status
+                FROM transfers t
+                JOIN requests r ON t.request_id = r.request_id
+                JOIN warehouses wto ON wto.warehouse_id = r.warehouse_to_id
+                JOIN warehouses wfr ON wfr.warehouse_id = r.warehouse_from_id
+                ORDER BY t.transfer_id DESC;

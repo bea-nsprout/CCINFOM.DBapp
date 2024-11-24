@@ -82,11 +82,6 @@ export default function Inventory() {
                 <div className="hero-content">
                     <h1>Inventory Management</h1>
                     <div className="search-container">
-                        <select className="search-dropdown">
-                            <option value="item_code">Item Code</option>
-                            <option value="item_name">Item Name</option>
-                            <option value="warehouse">Warehouse</option>
-                        </select>
                         <input
                             type="text"
                             placeholder="Search..."
@@ -94,7 +89,6 @@ export default function Inventory() {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                         />
-                        <button className="search-button">Search</button>
                     </div>
                 </div>
             </section>
@@ -150,7 +144,7 @@ export default function Inventory() {
                     <h3>Edit Quantity</h3>
                     {selectedItem && (
                         <form onSubmit={confirmEdit}>
-                            <label htmlFor="quantity">Item Code:</label>
+                            <label htmlFor="itemcode">Item Code:</label>
                             <p>{selectedItem.item_code}</p>
 
                             <label htmlFor="item-name">Item Name:</label>

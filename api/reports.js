@@ -1,6 +1,6 @@
 import express from "express";
-import { matchedData, query, body } from "express-validator";
-import { assertDefined, validationStrictRoutine } from "./helper.js";
+import { matchedData, query } from "express-validator";
+import { validationStrictRoutine } from "./helper.js";
 
 const reportRouter = (connection) => {
     const router = express.Router();
@@ -35,11 +35,12 @@ const reportRouter = (connection) => {
         validationStrictRoutine(400, ""),
         async (req, res) => {
             const { ndays } = matchedData(req);
+            console.log(ndays);
             const [results] = await connection.execute(`SELECT w.warehouse_name, w.location,
                 (SELECT SUM(p.qty_produced)
                  FROM productions p
                  WHERE p.warehouse_id = w.warehouse_id AND p.date_produced BETWEEN (CURDATE() - INTERVAL ? DAY) AND CURDATE()
-                ) AS Total_Produced_Past_30_Days
+                ) AS total_produced
                 FROM warehouses w
                 ORDER BY w.warehouse_id;`,
                 [ndays]
@@ -121,6 +122,7 @@ const reportRouter = (connection) => {
                 GROUP BY a.warehouse_id;`,
                 [ndays]
             );
+            console.log("YES")
             res.status(200).json(results);
         }
     );

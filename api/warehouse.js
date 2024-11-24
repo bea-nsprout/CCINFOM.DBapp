@@ -51,18 +51,17 @@ const warehouseRouter = (connection) => {
 
     router.post("/new",
         [
-            body("warehouse_name").notEmpty().isString().trim(),
+            body("name").notEmpty().isString().trim(),
             body("location").notEmpty().isString().trim(),
         ],
         [
-            (req) => console.log(req),
             extractMatchedRoutine,
             validationStrictRoutine(400, "Ensure name and location is given."),
             assertWarehouseDoesNotExistsRoutine(connection),
             async (req, res) => {
-                const { warehouse_name, location } = res.locals.data;
+                const { name, location } = res.locals.data;
                 await Promise.all([
-                    connection.execute(`INSERT INTO warehouses (warehouse_name, location) VALUES (?, ?);`, [warehouse_name, location]),
+                    connection.execute(`INSERT INTO warehouses (warehouse_name, location) VALUES (?, ?);`, [name, location]),
                     connection.execute(`SET @last_whID = LAST_INSERT_ID();`)
                 ]);
 
@@ -86,14 +85,13 @@ const warehouseRouter = (connection) => {
         validationStrictRoutine(400, "ensure name and location are text and id is numeric."),
         async (req, res) => {
             const { warehouse_name, location, warehouse_id } = res.locals.data;
-            console.log(warehouse_id, warehouse_name, location)
 
             await connection.execute(
                 `UPDATE warehouses SET warehouse_name = ?, location = ? WHERE warehouse_id = ?;`,
                 [warehouse_name, location, warehouse_id]
             )
 
-            res.status(200).json({ message: "successfully updated warehouse." });
+            res.status(200).json({ success: true, message: "successfully updated warehouse." });
         }
     )
 
@@ -157,21 +155,37 @@ const warehouseRouter = (connection) => {
         async (req, res) => {
             const { id } = matchedData(req);
             await connection.execute(`SET @warehouse_id = ?;`, [id]);
-            const [no_existing_item] = await connection.execute(`SELECT NOT EXISTS (  SELECT 1
-                FROM inventories  WHERE warehouse_id = @warehouse_id AND quantity > 0  )
-                AND NOT EXISTS (  SELECT 1  FROM requests  WHERE warehouse_from_id = @warehouse_id OR warehouse_to_id = @warehouse_id  ) 
-                AND NOT EXISTS (  SELECT 1  FROM productions  WHERE warehouse_id = @warehouse_id  )
-                AND NOT EXISTS (  SELECT 1 FROM trucks  WHERE warehouse_id = @warehouse_id  ) AS no_existing_item;`);
+            const [[{ no_existing_item }]] = await connection.execute(`SELECT NOT EXISTS (
+            SELECT 1
+            FROM inventories
+            WHERE warehouse_id = @warehouse_id AND quantity > 0
+        ) AND NOT EXISTS (
+            SELECT 1
+            FROM requests
+            WHERE warehouse_from_id = @warehouse_id OR warehouse_to_id = @warehouse_id
+        ) AND NOT EXISTS (
+            SELECT 1
+            FROM productions
+            WHERE warehouse_id = @warehouse_id
+        ) AND NOT EXISTS (
+            SELECT 1
+            FROM trucks
+            WHERE warehouse_id = @warehouse_id
+        ) AND NOT EXISTS (SELECT 1
+            FROM adjustments
+            WHERE warehouse_id = @warehouse_id
+        ) AS no_existing_item;
+`);
 
             if (!no_existing_item) {
-                res.status(400).json({ error: "warehouse has items in it." });
+                res.status(400).json({ success: false, error: "warehouse has items in it." });
                 return;
             }
 
             await connection.execute(`DELETE FROM inventories WHERE warehouse_id = @warehouse_id;`);
             await connection.execute(`DELETE FROM warehouses WHERE warehouse_id = @warehouse_id;`);
 
-            res.status(200).json({ error: "warehouse is successfully deleted." });
+            res.status(200).json({ success: true, message: "warehouse is successfully deleted." });
         }
     )
 

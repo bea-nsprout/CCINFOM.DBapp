@@ -5,20 +5,33 @@
 		     personnel_id,
                      date_requested,
                      item_code,
-                     qty_balance, 
+                     qty_balance,
                      qty_total, 
                      warehouse_from_id, 
                      warehouse_to_id) 
-	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 99, 100, 1, 2);
+	VALUES (1 , CURDATE(), '0001010000YGGO036Y', 100, 100, 1, 2);
  
 -- Modify an existing record [ DONE ]
-	SET @new_qty_balance = 50; /* provide the qty_balance */
 
-	UPDATE requests
+    SET @reqid   = 1;
+    SET @new_total = 110;
+
+    SELECT @old_total := qty_total
+    FROM requests
+    WHERE request_id = @reqid;
+
+    SET @change = @new_total - @old_total;
+
+    UPDATE requests
+    SET qty_balance = qty_balance + @change
+    WHERE request_id = @reqid;
+
+    UPDATE requests
 	SET
-    	qty_balance = @new_qty_balance 
+    	qty_balance = @new_qty_balance
 		/* provide the request_id */
-	WHERE qty_total >= @new_qty_balance AND request_id = 3;
+	WHERE request_id = @req_id;
+
 
 -- delete existing record -- [ DONE ]
 	DELETE FROM requests

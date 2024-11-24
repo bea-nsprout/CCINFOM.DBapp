@@ -82,7 +82,6 @@ const itemsRouter = (connection) => {
         "/view/all",
         [
             async (req, res) => {
-                console.log("HI");
 
                 const [results] = await connection.execute(
                     "SELECT * FROM items",
@@ -133,10 +132,32 @@ const itemsRouter = (connection) => {
             async (req, res) => {
                 const { item_code } = res.locals.data;
 
+                await connection.execute("SET @itemcode = ?;", [item_code]);
+
+                const [thing] = await connection.execute("SELECT @itemcode");
+                console.log(thing);
+
                 const [[{ no_existing_item }]] = await connection.execute(
-                    `SELECT NOT EXISTS ( SELECT 1 FROM inventories WHERE item_code = ? AND quantity > 0) AS no_existing_item;`,
-                    [item_code],
+                    `SELECT NOT EXISTS (
+            SELECT 1
+            FROM inventories
+            WHERE item_code = ? AND quantity > 0
+        ) AND NOT EXISTS (
+            SELECT 1
+            FROM requests
+            WHERE item_code = ?
+        ) AND NOT EXISTS (
+            SELECT 1
+            FROM productions
+            WHERE item_code = ?
+        ) AND NOT EXISTS (
+            SELECT 1
+            FROM adjustments
+            WHERE item_code = ?
+        ) AS no_existing_item;
+;`, [item_code, item_code, item_code, item_code]
                 );
+                console.log(no_existing_item);
 
                 if (!no_existing_item) {
                     res
@@ -149,14 +170,22 @@ const itemsRouter = (connection) => {
                     return;
                 }
 
-                await connection.execute(
-                    `DELETE FROM inventories WHERE item_code = ?`,
-                    [item_code],
-                );
-                await connection.execute(
-                    `DELETE FROM items WHERE item_code = ?`,
-                    [item_code],
-                );
+                try {
+                    await connection.execute(
+                        `DELETE FROM inventories WHERE item_code = ?`,
+                        [item_code],
+                    );
+                    await connection.execute(
+                        `DELETE FROM items WHERE item_code = ?`,
+                        [item_code],
+                    );
+
+                } catch (error) {
+                    res.status(400).json({ success: false, message: "could not delete item." });
+                    console.log(error);
+                    return;
+                }
+
 
                 res.status(200).json({ success: true, message: "successfully deleted " + item_code });
             },
@@ -168,7 +197,7 @@ const itemsRouter = (connection) => {
         [
             body("item_code").notEmpty().isString().trim(),
             body("item_desc").notEmpty().isString().trim(),
-            body("unit").notEmpty().isString().trim(),
+            body("unit").notEmpty().isString().trim().isLength({ min: 0, max: 10 }),
         ],
         [
             validationStrictRoutine(400, "ensure item_code, item_desc, and unit are all alphanumeric and defined."),

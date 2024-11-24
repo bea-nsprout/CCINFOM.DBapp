@@ -68,47 +68,55 @@ const trucksHandler = (connection) => {
         validationStrictRoutine(400, ""),
         async (req, res) => {
             const { id } = matchedData(req);
-            await connection.execute(`DELETE FROM trucks WHERE truck_id = ?`, [id]);
-            res.status(200).json({ success: true });
+            try {
+                await connection.execute(`DELETE FROM trucks WHERE truck_id = ?`, [id]);
+            } catch (err) {
+                console.log(err);
+                res.status(400).json({ sucess: false, error: "cannot delete truck." });
+                return;
+            }
+            res.status(200).json({ success: true, message: "successfully deleted truck." });
         }
     )
 
-    router.put('/modify',
-        [body("truckid").isString().notEmpty().optional(),
-        body("warehouseid").isString().notEmpty().optional(),
+    router.post('/modify',
+        [body("truck_id").isString().notEmpty().optional(),
+        body("warehouse_id").isString().notEmpty().optional(),
         ],
+        (req, res, next) => { console.log(matchedData(req)); next() },
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { truckid, warehouseid } = matchedData(req);
-            await connection.execute(`UPDATE trucks SET warehouse_id = ? WHERE truck_id = ?;`, [truckid, warehouseid]);
-            res.status(200).json({ success: true });
+            const { truck_id, warehouse_id } = matchedData(req);
+            await connection.execute(`UPDATE trucks SET warehouse_id = ? WHERE truck_id = ?;`, [warehouse_id, truck_id]);
+            res.status(200).json({ success: true, message: "successfully changed truck location." });
         }
     )
 
     router.post('/new',
         [
-            body("truckid").isString().notEmpty().optional(),
-            body("warehouseid").isString().notEmpty().optional()
+            body("truck_id").isString().notEmpty().optional(),
+            body("warehouse_id").isString().notEmpty().optional()
 
         ],
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { truckid, warehouseid } = matchedData(req);
+
+            const { truck_id, warehouse_id } = matchedData(req);
             const [[{ truck_id_exists }]] = await connection.execute(`SELECT EXISTS (
                                                                 SELECT 1
                                                                 FROM trucks t
                                                                 WHERE t.truck_id = ?
-                                                                ) AS truck_id_exists;`, [truckid]);
+                                                                ) AS truck_id_exists;`, [truck_id]);
             if (truck_id_exists) {
-                res.status(400).send("NO");
+                res.status(400).json({ success: false, error: "truck id already exists." });
                 return;
             }
 
             await connection.execute(`INSERT INTO trucks (truck_id, warehouse_id) VALUES (?, ?);`,
-                [truckid, warehouseid]
+                [truck_id, warehouse_id]
             )
 
-            res.status(200).json({ success: true });
+            res.status(200).json({ success: true, message: "successfully created new truck." });
         }
 
 

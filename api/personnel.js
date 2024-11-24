@@ -41,20 +41,19 @@ const personnelRouter = (connection) => {
 
     router.get('/view',
         [
-            query("firstname").isString().notEmpty().optional(),
-            query("lastname").isString().notEmpty().optional()
+            query("name").isString().notEmpty().optional()
         ],
-        assertDefined("firstname"),
-        assertDefined("lastname"),
+        assertDefined("name"),
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { firstname, lastname } = matchedData(req);
+            const { name } = matchedData(req);
+            console.log(name);
             const [results] = await connection.execute(
                 `SELECT first_name, last_name, position
  	FROM personnel
-	WHERE first_name = ? OR last_name = ?
+	WHERE first_name LIKE ? OR last_name LIKE ?
 	ORDER BY personnel_id;`,
-                [firstname, lastname]
+                [`%${name}%`, `%${name}%`]
             )
             res.status(200).json(results);
         }
@@ -63,7 +62,7 @@ const personnelRouter = (connection) => {
     router.get('/view',
         async (req, res) => {
             const [results] = await connection.execute(
-                `SELECT first_name, last_name, position
+                `SELECT personnel_id, first_name, last_name, position
 	FROM personnel
 	ORDER BY personnel_id`
             )
@@ -71,8 +70,8 @@ const personnelRouter = (connection) => {
         }
     )
 
-    router.delete('/delete',
-        [body("id").isString().notEmpty().optional()],
+    router.post('/delete',
+        [body("id").isNumeric().notEmpty()],
         validationStrictRoutine(400, ""),
         async (req, res) => {
             const { id } = matchedData(req);
@@ -83,31 +82,35 @@ const personnelRouter = (connection) => {
 	) AS personnel_in_requests;`, [id])
 
             if (personnel_in_requests) {
-                res.status(400).json({ success: false, error: "warehouse has items in it." });
+                res.status(400).json({ success: false, error: "personnel cannot be deleted." });
                 return;
             }
 
             await connection.execute(`DELETE p
-	FROM personnels p
+	FROM personnel p
 	LEFT JOIN requests r ON p.personnel_id = r.personnel_id
     	LEFT JOIN transfers t ON p.personnel_id = t.personnel_id
 	WHERE p.personnel_id = ? AND r.personnel_id IS NULL AND t.personnel_id IS NULL;`, [id]);
-            res.status(200).json({ success: true });
+            res.status(200).json({ success: true, message: "successfully deleted personel" });
         }
     )
 
-    router.post('/modify/position',
-        [body("id").isNumeric().notEmpty(),
-        body("position").isString().notEmpty(),
+    router.post('/modify',
+        [
+            body("personnel_id").isNumeric().notEmpty(),
+            body("position").isString().notEmpty(),
+            body("first_name").isString().notEmpty(),
+            body("last_name").isString().notEmpty(),
         ],
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { id, position } = matchedData(req);
+            console.log("YOW");
+            const { personnel_id, first_name, last_name, position } = matchedData(req);
             await connection.execute(`	UPDATE personnel
-    	SET position = ?
-    	WHERE personnel_id = ?;`, [position, id]);
+    SET position = ?, first_name = ?, last_name = ?
+    	WHERE personnel_id = ?;`, [position, first_name, last_name, personnel_id]);
 
-            res.status(200).json({ success: true });
+            res.status(200).json({ success: true, message: "successfully modified personnel." });
         }
     )
 
@@ -122,26 +125,27 @@ const personnelRouter = (connection) => {
     	SET archived = ?
     	WHERE personnel_id = ?;`, [status, id]);
 
-            res.status(200).json({ success: true });
+            res.status(200).json({ success: true, message: "successfully modified status." });
         }
     )
 
     router.post('/new',
         [
-            body("firstname").isString().notEmpty().optional(),
-            body("lastname").isString().notEmpty().optional(),
-            body("position").isString().notEmpty().optional()
+            body("first_name").isString().notEmpty(),
+            body("last_name").isString().notEmpty(),
+            body("position").isString().notEmpty()
         ],
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { firstname, lastname, position } = matchedData(req);
+            console.log("HI");
+            const { first_name, last_name, position } = matchedData(req);
 
             await connection.execute(`INSERT INTO personnel (first_name, last_name, position) VALUES
 		(?, ?, ?);`,
-                [firstname, lastname, position]
+                [first_name, last_name, position]
             )
 
-            res.status(200).json({ success: true });
+            res.status(200).json({ success: true, message: "successfully created new personnel." });
         }
 
 

@@ -286,3 +286,81 @@ nav a.active {
   background-color: #36453b;
   color: #fff;
 }
+
+
+.dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  /* Adjust as needed */
+  max-width: 500px;
+  /* Ensure it's not too wide */
+  padding: 20px;
+  background: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+button {
+  margin-top: 20px;
+}
+
+
+.dialog h3 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.dialog label {
+  display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+  text-align: left;
+}
+
+.dialog input,
+.dialog select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.dialog button[type="submit"] {
+  background-color: #36453b;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.delete form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

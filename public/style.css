@@ -227,3 +227,9 @@ footer {
   padding: 10px 0;
   border-top: 1px solid #444;
 }
+
+
+nav {
+  display: flex;
+  gap: 15px;
+}

@@ -66,7 +66,7 @@
 -- DELETE
     -- 1. PRE-DELETE PROCESS: before warehouse can be deleted, check first if in inventory, request, or production contains data, to avoid orphans
     
-    SET @warehouse_id = 12 /*warehouseid to check for deletion*/;
+    SET @warehouse_id = 8 /*warehouseid to check for deletion*/;
     
 	SELECT NOT EXISTS (
 			SELECT 1
@@ -82,9 +82,12 @@
 			WHERE warehouse_id = @warehouse_id
 		) AND NOT EXISTS (
 			SELECT 1
-            		FROM trucks
+            FROM trucks
 			WHERE warehouse_id = @warehouse_id
-		) AS no_existing_item;
+		) AND NOT EXISTS (SELECT 1
+            FROM adjustments
+            WHERE warehouse_id = @warehouse_id
+        ) AS no_existing_item;
         
 			-- return true if no instance of items in given warehouse, PROCEED TO NEXT SQL STATEMENT
 			-- return false if has instance of item/s in given warehouse, ASK USER TO 'ARCHIVE' INSTEAD

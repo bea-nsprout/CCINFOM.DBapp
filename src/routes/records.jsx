@@ -23,7 +23,7 @@ export default function Records() {
     const editModal = document.getElementById("editModal");
     editModal.style.display = "flex";
 
-    const fields = editModal.querySelector("form").querySelectorAll("input");
+    const fields = editModal.querySelector("form").querySelectorAll("input, select");
     for (let i = 0; i < fields.length; i++) {
       fields[i].value = item[fields[i].name] || "";
     }
@@ -48,7 +48,6 @@ export default function Records() {
   }
 
   function confirmDelete() {
-    console.log(deleteIdSelection);
 
     let sqlQuery = "";
     let body = {};
@@ -71,6 +70,8 @@ export default function Records() {
         body = { id: deleteIdSelection }
         break;
     }
+
+    console.log(body);
 
 
     fetch(sqlQuery, {
@@ -136,8 +137,6 @@ export default function Records() {
     const object = {};
     data.forEach((value, key) => object[key] = value);
 
-    console.log(object)
-
     let sql = `http://localhost:3000/api/${masterlistTab}/modify/`
 
     fetch(sql, {
@@ -156,8 +155,6 @@ export default function Records() {
     const data = new FormData(event.target);
     const object = {};
     data.forEach((value, key) => object[key] = value);
-
-    console.log(object);
 
     fetch("http://localhost:3000/api/items/new", {
       method: "POST",
@@ -180,7 +177,6 @@ export default function Records() {
     const object = {};
     data.forEach((value, key) => object[key] = value);
 
-    console.log(object);
 
     fetch("http://localhost:3000/api/warehouses/new", {
       method: "POST",
@@ -203,8 +199,6 @@ export default function Records() {
     const object = {};
     data.forEach((value, key) => object[key] = value);
 
-    console.log(object);
-
     fetch("http://localhost:3000/api/trucks/new", {
       method: "POST",
       mode: "cors",
@@ -225,10 +219,9 @@ export default function Records() {
     const data = new FormData(event.target);
     const object = {};
     data.forEach((value, key) => object[key] = value);
-
     console.log(object);
 
-    fetch("http://localhost:3000/api/personnels/new", {
+    fetch("http://localhost:3000/api/personnel/new", {
       method: "POST",
       mode: "cors",
       headers: { "Content-Type": "application/json" },
@@ -241,6 +234,9 @@ export default function Records() {
       }
 
     )
+  }
+  function closeNewRequest() {
+
   }
 
   function confirmNewRequest() {
@@ -379,13 +375,13 @@ export default function Records() {
                   </span>
                   <h3>Edit Item</h3>
                   <form onSubmit={handleEditSubmit}>
-                    <label for="item_code">Item Code:</label>
+                    <label htmlFor="item_code">Item Code:</label>
                     <input type="text" name="item_code" readOnly />
 
-                    <label for="item_desc">Item Description:</label>
+                    <label htmlFor="item_desc">Item Description:</label>
                     <input type="text" name="item_desc" required />
 
-                    <label for="unit">Unit:</label>
+                    <label htmlFor="unit">Unit:</label>
                     <input type="text" name="unit" required />
 
                     <input type="hidden" name="index" />
@@ -464,13 +460,13 @@ export default function Records() {
                     </span>
                     <h3>Edit Warehouse</h3>
                     <form onSubmit={handleEditSubmit}>
-                      <label for="warehouse_id">Warehouse ID</label>
+                      <label htmlFor="warehouse_id">Warehouse ID</label>
                       <input type="text" name="warehouse_id" readOnly />
 
-                      <label for="warehouse_name">Warehouse Name:</label>
+                      <label htmlFor="warehouse_name">Warehouse Name:</label>
                       <input type="text" name="warehouse_name" required />
 
-                      <label for="location">Location:</label>
+                      <label htmlFor="location">Location:</label>
                       <input type="text" name="location" required />
 
                       <button type="submit" onClick={confirmEdit}>Edit</button>
@@ -545,15 +541,15 @@ export default function Records() {
                       &times;
                     </span>
                     <h3>Edit Truck</h3>
-                    <form>
-                      <label for="truck_id">Truck ID:</label>
+                    <form onSubmit={handleEditSubmit}>
+                      <label htmlFor="truck_id">Truck ID:</label>
                       <input type="text" name="truck_id" readOnly />
 
                       <label htmlFor="warehouse">Warehouse</label>
-                      <select id="warehouse">
+                      <select id="warehouse" name="warehouse_id">
                         {dataWarehouse.map((warehouse) => (
-                          <option key={dataWarehouse.warehouse_id} value={dataWarehouse.warehouse_id}>
-                            {warehouse.location}
+                          <option key={warehouse.warehouse_id} value={warehouse.warehouse_id}>
+                            {warehouse.warehouse_name + " - " + warehouse.location}
                           </option>
                         ))}
                       </select>
@@ -632,14 +628,16 @@ export default function Records() {
                       &times;
                     </span>
                     <h3>Edit Personnel</h3>
-                    <form>
-                      <label for="first_name">First Name:</label>
+                    <form onSubmit={handleEditSubmit}>
+                      <input type="hidden" name="personnel_id" />
+
+                      <label htmlFor="first_name">First Name:</label>
                       <input type="text" name="first_name" required />
 
-                      <label for="last_name">Last Name:</label>
+                      <label htmlFor="last_name">Last Name:</label>
                       <input type="text" name="last_name" required />
 
-                      <label for="position">Position:</label>
+                      <label htmlFor="position">Position:</label>
                       <input type="text" name="position" required />
 
                       <button type="submit" onClick={confirmEdit}>Edit</button>
@@ -672,13 +670,13 @@ export default function Records() {
           <span className="close" onClick={closeNewItem}>&times;</span>
           <h3>Create New Item</h3>
           <form onSubmit={handleNewItemRequest}>
-            <label for="item_code">Item Code:</label>
+            <label htmlFor="item_code">Item Code:</label>
             <input type="text" name="item_code" required />
 
-            <label for="item_desc">Item Description:</label>
+            <label htmlFor="item_desc">Item Description:</label>
             <input type="text" name="item_desc" required />
 
-            <label for="unit">Unit:</label>
+            <label htmlFor="unit">Unit:</label>
             <input type="text" name="unit" required />
 
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
@@ -691,10 +689,10 @@ export default function Records() {
           <span className="close" onClick={closeNewWarehouse}>&times;</span>
           <h3>Create New Warehouse</h3>
           <form onSubmit={handleNewWarehouseRequest}>
-            <label for="name">Warehouse Name:</label>
+            <label htmlFor="name">Warehouse Name:</label>
             <input type="text" name="name" required />
 
-            <label for="location">Location:</label>
+            <label htmlFor="location">Location:</label>
             <input type="text" name="location" required />
 
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
@@ -707,12 +705,16 @@ export default function Records() {
           <span className="close" onClick={closeNewTrucks}>&times;</span>
           <h3>Create New Trucks</h3>
           <form onSubmit={handleNewTruckRequest}>
-            <label for="truckid">Truck ID:</label>
-            <input type="text" name="truckid" required />
+            <label htmlFor="truck_id">Truck ID:</label>
+            <input type="text" name="truck_id" required />
 
-            <label for="warehouseid">Truck ID:</label>
-            <input type="text" name="warehouseid" required />
-
+            <select id="warehouse" name="warehouse_id" required>
+              {dataWarehouse?.map((warehouse) => (
+                <option key={warehouse.warehouse_id} value={warehouse.warehouse_id}>
+                  {warehouse.warehouse_name + " - " + warehouse.location}
+                </option>
+              ))}
+            </select>
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
           </form>
         </div>
@@ -723,13 +725,14 @@ export default function Records() {
           <span className="close" onClick={closeNewPersonnel}>&times;</span>
           <h3>Create New Personnel</h3>
           <form onSubmit={handleNewPersonnelRequest}>
-            <label for="firstname">First Name:</label>
-            <input type="text" name="firstname" required />
 
-            <label for="lastname">Last Name:</label>
-            <input type="text" name="lastname" required />
+            <label htmlFor="first_name">First Name:</label>
+            <input type="text" name="first_name" required />
 
-            <label for="position">Position:</label>
+            <label htmlFor="last_name">Last Name:</label>
+            <input type="text" name="last_name" required />
+
+            <label htmlFor="position">Position:</label>
             <input type="text" name="position" required />
 
             <button type="submit" onClick={confirmNewRequest}>Add Record</button>
