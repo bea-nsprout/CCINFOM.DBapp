@@ -94,7 +94,8 @@ const productionRouter = (connection) => {
     // View all production records
     router.get('/view',
         async (req, res) => {
-            const [results] = await connection.execute(`SELECT p.production_id, p.item_code, p.qty_produced, p.date_produced, w.warehouse_name
+            const [results] = await connection.execute(`
+                SELECT p.production_id, p.item_code, p.qty_produced, CONVERT_TZ(p.date_produced, '+00:00', '+08:00') AS date_produced, w.warehouse_name
                 FROM productions p
                 JOIN warehouses w ON w.warehouse_id = p.warehouse_id
                 ORDER BY p.production_id DESC;`

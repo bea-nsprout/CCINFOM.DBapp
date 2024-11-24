@@ -278,7 +278,7 @@ export default function Production() {
             <label htmlFor="quantity-produced">Quantity Produced:</label>
             <input type="number" id="quantity-produced" required />
             <label htmlFor="production-date">Production Date:</label>
-            <input type="date" id="production-date" required />
+            <input type="date" id="production-date" />
             <label htmlFor="warehouse-location">Warehouse:</label>
             <select id="warehouse-location">
               {warehouses.map((warehouse) => (
