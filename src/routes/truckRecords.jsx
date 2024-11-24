@@ -99,7 +99,7 @@ export default function TruckRecords() {
   async function confirmDelete() {
 
     const sqlQuery = "http://localhost:3000/api/trucks/delete/";
-    const body = { item_code: deleteIdSelection }
+    const body = { id: deleteIdSelection }
 
     try {
       const response = await fetch(sqlQuery, {
