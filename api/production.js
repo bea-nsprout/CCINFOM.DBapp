@@ -15,16 +15,37 @@ const productionRouter = (connection) => {
         ],
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { item_code, date_produced, qty_produced, warehouse_id } = matchedData(req);
-            const date = date_produced ? date_produced : 'CURDATE()';
-            await connection.execute(`INSERT INTO productions (item_code, date_produced, qty_produced, warehouse_id) VALUES (?, ${date}, ?, ?);`,
-                [item_code, qty_produced, warehouse_id]
-            );
-            await connection.execute(`UPDATE inventories SET quantity = quantity + ? WHERE item_code = ? AND warehouse_id = ?;`,
-                [qty_produced, item_code, warehouse_id]
-            );
-            res.status(200).json({ success: true });
+            try {
+                const { item_code, date_produced, qty_produced, warehouse_id } = matchedData(req);
+
+                // Use the date_produced if provided, otherwise default to CURDATE()
+                const sql = `
+                    INSERT INTO productions (item_code, date_produced, qty_produced, warehouse_id) 
+                    VALUES (?, ?, ?, ?);
+                `;
+                const date = date_produced || null; // Use `null` for defaulting to CURDATE() in SQL
+
+                await connection.execute(sql, [
+                    item_code,
+                    date || new Date().toISOString().slice(0, 10), // Fallback to today's date if no date_produced
+                    qty_produced,
+                    warehouse_id,
+                ]);
+
+                // Update the inventory
+                await connection.execute(`
+                    UPDATE inventories 
+                    SET quantity = quantity + ? 
+                    WHERE item_code = ? AND warehouse_id = ?;
+                `, [qty_produced, item_code, warehouse_id]);
+
+                res.status(200).json({ success: true });
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({ success: false, message: error.message });
+            }
         }
+
     );
 
     // Modify an existing production record
