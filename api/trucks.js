@@ -22,17 +22,17 @@ const trucksHandler = (connection) => {
     )
 
     router.get('/view',
-        [query("warehouse").isString().notEmpty().optional()],
-        assertDefined("warehouse"),
+        [query("warehouse_id").isNumeric().notEmpty().optional()],
+        assertDefined("warehouse_id"),
         validationStrictRoutine(400, ""),
         async (req, res) => {
-            const { warehouse } = matchedData(req);
+            const { warehouse_id } = matchedData(req);
             const [results] = await connection.execute(
                 `SELECT truck_id, warehouse_name
 	            FROM trucks tr
 	            JOIN warehouses w on w.warehouse_id = tr.warehouse_id
-	            WHERE warehouse_name LIKE ?`,
-                [`%${warehouse}%`]
+	            WHERE w.warehouse_id = ?`,
+                [warehouse_id]
             )
             res.status(200).json(results);
         }

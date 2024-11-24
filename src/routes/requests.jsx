@@ -19,7 +19,7 @@ export default function Requests() {
     fetchWarehouses();
     fetchPersonnel();
     fetchItems();
-    fetchTrucks();
+    fetchTrucks(selectedItem);
   }, []);
 
   // Fetch all requests
@@ -69,9 +69,13 @@ export default function Requests() {
     }
   }
 
-  const fetchTrucks = async () => {
+  const fetchTrucks = async (selectedItem) => {
     try {
-      const response = await fetch("/api/trucks/view");
+      const queryParams = new URLSearchParams();
+      console.log(selectedItem);
+      queryParams.append("warehouse_id", selectedItem?.warehouse_from_id);
+      console.log(queryParams.toString());
+      const response = await fetch(`/api/trucks/view?${queryParams.toString()}`);
       const data = await response.json();
       console.log(data);
       setTrucks(data);
@@ -275,9 +279,10 @@ export default function Requests() {
 
   const [selectedRequest, setSelectedRequest] = useState(null);
 
-  const handleNewTransfer = (request) => {
+  const handleNewTransfer = async (request) => {
     setSelectedRequest(request); // Store the selected row data
     document.getElementById("new-transfer-modal").style.display = "flex"; // Open the modal
+    await fetchTrucks(request);
   };
 
 
